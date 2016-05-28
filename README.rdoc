@@ -1,7 +1,4 @@
 === EspnScrape
-[![GitHub](http://img.shields.io/badge/github-lsegal/yard-blue.svg)](http://github.com/meissadia/espnscrape)
-[![Documentation](http://img.shields.io/badge/docs-rdoc.info-blue.svg)](http://rubydoc.org/gems/espnscrape/frames)
-[![Gem Version](https://badge.fury.io/rb/yard.svg)](http://github.com/meissadia/espnscrape/releases)
 
 == Introduction
 The EspnScrape Ruby GEM is a data scraper for the redesigned 2016 version of ESPN.com.
