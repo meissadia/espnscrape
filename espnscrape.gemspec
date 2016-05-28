@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version     = '0.1.0'
   s.date        = Date.today.to_s
   s.summary     = "Programmatic access to sports data"
-  s.description = %Q(  (Currently NBA ONLY) Updated for the 2016 site redesign. EspnScrape allows you to easily integrate logistic and statistical information about your favorite sports and teams in your own development projects. )
+  s.description = %Q(  (Currently NBA ONLY) Updated for the 2016 site redesign. EspnScrape allows you to easily integrate logistic and statistical information about your favorite sports and teams in your own development projects. Easily access data via Structs (dot notation!), Hashes (can be passed directly to ActiveRecord) or String arrays.)
   s.authors     = ["Meissa Dia"]
   s.email       = 'meissadia@gmail.com'
   s.files       = Dir.glob("{bin,lib}/**/*")

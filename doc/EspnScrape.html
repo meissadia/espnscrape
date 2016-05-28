@@ -259,7 +259,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#from_array-class_method" title="from_array (class method)">+ (Object) <strong>from_array</strong>(field_names = [], source = []) </a>
+      <a href="#player-class_method" title="player (class method)">+ (NbaPlayer) <strong>player</strong>(espn_id) </a>
     
 
     
@@ -274,55 +274,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Create dictionary from array.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#from_array2d-class_method" title="from_array2d (class method)">+ (Object) <strong>from_array2d</strong>(field_names = [], source = []) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Create dictionary from 2d array.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#player-class_method" title="player (class method)">+ (Object) <strong>player</strong>(espn_id) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Return new Player object.</p>
+<p>Return new NbaPlayer object.</p>
 </div></span>
   
 </li>
@@ -355,7 +307,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#schedule-class_method" title="schedule (class method)">+ (NbaSchedule) <strong>schedule</strong>(team_id = &#39;&#39;) </a>
+      <a href="#schedule-class_method" title="schedule (class method)">+ (NbaSchedule) <strong>schedule</strong>(team_id) </a>
     
 
     
@@ -394,7 +346,79 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return list of NBA teams.</p>
+<p>Return NbaTeamList.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_hash-class_method" title="to_hash (class method)">+ (Hash) <strong>to_hash</strong>(field_names = [], source = []) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create Hash from array.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_hashes-class_method" title="to_hashes (class method)">+ ([Hash]) <strong>to_hashes</strong>(field_names = [], source = []) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create Hash Array.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_structs-class_method" title="to_structs (class method)">+ ([Struct]) <strong>to_structs</strong>(field_names = [], source = []) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create Struct Array.</p>
 </div></span>
   
 </li>
@@ -438,7 +462,7 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='id identifier rubyid_getBoxscore'>getBoxscore</span><span class='lparen'>(</span><span class='int'>493848273</span><span class='rparen'>)</span></code></pre>
+      <pre class="example code"><code><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_boxscore'>boxscore</span><span class='lparen'>(</span><span class='int'>493848273</span><span class='rparen'>)</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -493,197 +517,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="from_array-class_method">
-  
-    + (<tt>Object</tt>) <strong>from_array</strong>(field_names = [], source = []) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Create dictionary from array</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>field_names</span>
-      
-      
-        <span class='type'>(<tt>Array</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>[]</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>Symbols of fields</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>source</span>
-      
-      
-        <span class='type'>(<tt>Array</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>[]</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>Source data</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 86</span>
-
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_array'>from_array</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_fl'>fl</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>                <span class='comment'># Resulting Field List
-</span>  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='int'>0</span>                <span class='comment'># Source cursor
-</span>
-  <span class='comment'># Create k:v  (from source) for each key (from field names)
-</span>  <span class='id identifier rubyid_field_names'>field_names</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
-    <span class='id identifier rubyid_fl'>fl</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_idx'>idx</span> <span class='op'>+=</span> <span class='int'>1</span>
-  <span class='kw'>end</span>
-  <span class='kw'>return</span> <span class='id identifier rubyid_fl'>fl</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="from_array2d-class_method">
-  
-    + (<tt>Object</tt>) <strong>from_array2d</strong>(field_names = [], source = []) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Create dictionary from 2d array</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>field_names</span>
-      
-      
-        <span class='type'>(<tt>Array</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>[]</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>Symbols of fields</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>source</span>
-      
-      
-        <span class='type'>(<tt>[Array]</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>[]</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>Source data</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-102
-103
-104
-105
-106
-107
-108
-109</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 102</span>
-
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_array2d'>from_array2d</span> <span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='comment'># Process each row of Source table
-</span>  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
-    <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_from_array'>from_array</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='kw'>return</span> <span class='id identifier rubyid_fl_a'>fl_a</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <h3 class="signature " id="player-class_method">
   
-    + (<tt>Object</tt>) <strong>player</strong>(espn_id) 
+    + (<tt><span class='object_link'><a href="NbaPlayer.html" title="NbaPlayer (class)">NbaPlayer</a></span></tt>) <strong>player</strong>(espn_id) 
   
 
   
@@ -692,13 +528,21 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return new Player object</p>
+<p>Return new NbaPlayer object</p>
 
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_player'>player</span><span class='lparen'>(</span><span class='int'>2991473</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -714,6 +558,19 @@
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="NbaPlayer.html" title="NbaPlayer (class)">NbaPlayer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -721,12 +578,12 @@
       <pre class="lines">
 
 
-78
-79
-80</pre>
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_player'>player</span><span class='lparen'>(</span><span class='id identifier rubyid_espn_id'>espn_id</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'>NbaPlayer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_espn_id'>espn_id</span>
@@ -759,7 +616,7 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='id identifier rubyid_getRoster'>getRoster</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UTA</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
+      <pre class="example code"><code><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_roster'>roster</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UTA</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -816,7 +673,7 @@
       <div class="method_details ">
   <h3 class="signature " id="schedule-class_method">
   
-    + (<tt><span class='object_link'><a href="NbaSchedule.html" title="NbaSchedule (class)">NbaSchedule</a></span></tt>) <strong>schedule</strong>(team_id = &#39;&#39;) 
+    + (<tt><span class='object_link'><a href="NbaSchedule.html" title="NbaSchedule (class)">NbaSchedule</a></span></tt>) <strong>schedule</strong>(team_id) 
   
 
   
@@ -836,7 +693,7 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='id identifier rubyid_getSchedule'>getSchedule</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UTA</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
+      <pre class="example code"><code><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UTA</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -849,8 +706,6 @@
       
         <span class='type'>(<tt>String</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
       
       
     </li>
@@ -884,7 +739,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 72</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='id identifier rubyid_team_id'>team_id</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='id identifier rubyid_team_id'>team_id</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'>NbaSchedule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_team_id'>team_id</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -904,7 +759,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return list of NBA teams</p>
+<p>Return NbaTeamList</p>
 
 
   </div>
@@ -946,12 +801,347 @@
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="to_hash-class_method">
+  
+    + (<tt>Hash</tt>) <strong>to_hash</strong>(field_names = [], source = []) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create Hash from array</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>field_names</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Symbols of fields</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Source data</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Hash</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fl'>fl</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>                <span class='comment'># Resulting Field List
+</span>  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='int'>0</span>                <span class='comment'># Source cursor
+</span>
+  <span class='comment'># Create k:v (from source) for each key (from field names)
+</span>  <span class='id identifier rubyid_field_names'>field_names</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+    <span class='id identifier rubyid_fl'>fl</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_idx'>idx</span> <span class='op'>+=</span> <span class='int'>1</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_fl'>fl</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_hashes-class_method">
+  
+    + (<tt>[Hash]</tt>) <strong>to_hashes</strong>(field_names = [], source = []) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create Hash Array</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>field_names</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Symbols of fields</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>[Array]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Source data</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>[Hash]</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Hash Array</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+105
+106
+107
+108
+109
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 105</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_hashes'>to_hashes</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='comment'># Process each row of Source table
+</span>  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+    <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_fl_a'>fl_a</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_structs-class_method">
+  
+    + (<tt>[Struct]</tt>) <strong>to_structs</strong>(field_names = [], source = []) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create Struct Array</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>field_names</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Symbols of fields</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>[Array]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Source data</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>[Struct]</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Struct Array</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 118</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_structs'>to_structs</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='op'>=</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='comment'># Process each row of Source table
+</span>  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+    <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>&lt;&lt;</span> <span class='const'>Struct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_fl_a'>fl_a</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
     <div id="footer">
-  Generated on Fri May 27 23:17:09 2016 by
+  Generated on Sat May 28 04:24:03 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.3).
 </div>

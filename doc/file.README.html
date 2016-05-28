@@ -62,19 +62,40 @@
     <iframe id="search_frame"></iframe>
 
     <div id="content"><div id='filecontents'>
-<h3 id="label-README">README</h3>
+<h3 id="label-EspnScrape">EspnScrape</h3>
 
 <h2 id="label-Introduction">Introduction</h2>
 
-<p>EspnScrape is a data scraper built in Ruby. Tabular data is returned in
-String arrays. Methods are also provided to convert data to Hash objects to
-allow dot notation access if preferred.</p>
+<p>The EspnScrape Ruby GEM is a data scraper for the redesigned 2016 version
+of ESPN.com. It provides a number of ways to simplify data collection and
+interaction such as:</p>
 
-<pre class="code ruby"><code class="ruby">Note: Currently only for NBA</code></pre>
+<pre class="code ruby"><code class="ruby">1. Structs - Intuitively access data via dot notation.
+2. Hashes - Can be passed directly to ActiveRecord CRUD methods for easy database interaction.
+3. String arrays - Raw data for you to manipulate as you see fit.</code></pre>
+
+<h3 id="label-Restrictions">Restrictions</h3>
+
+<pre class="code ruby"><code class="ruby">Currently only for NBA</code></pre>
+
+<h3 id="label-Note">Note</h3>
+
+<pre class="code ruby"><code class="ruby">EspnScrape is not associated with ESPN or the NBA.</code></pre>
 
 <h2 id="label-Quick+Start">Quick Start</h2>
 
 <h3 id="label-Installation">Installation</h3>
+
+<p>In your Rails application&#39;s Gemfile</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>espnscrape</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Then</p>
+
+<pre class="code ruby"><code class="ruby">&gt; bundle install</code></pre>
+
+<p>Or, install manually</p>
 
 <pre class="code ruby"><code class="ruby">&gt; gem install espnscrape</code></pre>
 
@@ -85,13 +106,65 @@ allow dot notation access if preferred.</p>
 
 <h4 id="label-Access+a+Boxscore">Access a Boxscore</h4>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bs'>bs</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_boxscore'>boxscore</span><span class='lparen'>(</span><span class='int'>400828991</span><span class='rparen'>)</span> <span class='comment'># Returns multidimensional array
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bs'>bs</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_boxscore'>boxscore</span><span class='lparen'>(</span><span class='int'>400828991</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_stats'>stats</span> <span class='op'>=</span> <span class='id identifier rubyid_bs'>bs</span><span class='period'>.</span><span class='id identifier rubyid_homePlayers'>homePlayers</span> <span class='comment'># Returns multidimensional array of Home Player stats
+</span>
+<span class='comment'># Convert String array to Hash array
+</span><span class='id identifier rubyid_symbols'>symbols</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='op'>::</span><span class='const'>FS_BOXSCORE</span>
+<span class='id identifier rubyid_stat_hashes'>stat_hashes</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_to_hashes'>to_hashes</span><span class='lparen'>(</span><span class='id identifier rubyid_symbols'>symbols</span><span class='comma'>,</span> <span class='id identifier rubyid_stats'>stats</span><span class='rparen'>)</span> <span class='comment'># Returns array of Hashes
+</span><span class='id identifier rubyid_stat_hashes'>stat_hashes</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='lbracket'>[</span><span class='symbol'>:p_name</span><span class='rbracket'>]</span> <span class='comment'># Player Name
+</span><span class='id identifier rubyid_stat_hashes'>stat_hashes</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='lbracket'>[</span><span class='symbol'>:pts</span><span class='rbracket'>]</span>    <span class='comment'># Player Points
+</span>
+<span class='comment'># Convert String array to Struct array
+</span><span class='id identifier rubyid_stat_structs'>stat_structs</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_to_structs'>to_structs</span><span class='lparen'>(</span><span class='id identifier rubyid_symbols'>symbols</span><span class='comma'>,</span> <span class='id identifier rubyid_stats'>stats</span><span class='rparen'>)</span> <span class='comment'># Returns array of Structs
+</span><span class='id identifier rubyid_stat_structs'>stat_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_p_name'>p_name</span> <span class='comment'># Player Name
+</span><span class='id identifier rubyid_stat_structs'>stat_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_pts'>pts</span>    <span class='comment'># Player Points
 </span></code></pre>
 
-<h4 id="label-Access+a+Boxscore+as+an+array+of+objects">Access a Boxscore as an array of objects</h4>
+<h4 id="label-Access+a+Roster">Access a Roster</h4>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_symbols'>symbols</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='op'>::</span><span class='const'>FS_BOXSCORE</span>
-<span class='id identifier rubyid_bs_objects'>bs_objects</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_from_array2d'>from_array2d</span><span class='lparen'>(</span><span class='id identifier rubyid_symbols'>symbols</span><span class='comma'>,</span> <span class='id identifier rubyid_bs'>bs</span><span class='rparen'>)</span> <span class='comment'># Returns array of Hashes
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_roster'>roster</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_roster'>roster</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UTA</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='comment'># Returns multidimensional array of Roster info
+</span>
+<span class='comment'># Roster as an array of objects
+</span><span class='id identifier rubyid_symbols'>symbols</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='op'>::</span><span class='const'>FS_ROSTER</span>
+<span class='id identifier rubyid_r_structs'>r_structs</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_to_structs'>to_structs</span><span class='lparen'>(</span><span class='id identifier rubyid_symbols'>symbols</span><span class='comma'>,</span> <span class='id identifier rubyid_roster'>roster</span><span class='rparen'>)</span> <span class='comment'># Returns array of Hashes
+</span><span class='id identifier rubyid_r_structs'>r_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_p_name'>p_name</span> <span class='comment'># Player Name
+</span><span class='id identifier rubyid_r_structs'>r_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_pos'>pos</span>    <span class='comment'># Player Position
+</span><span class='id identifier rubyid_r_structs'>r_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_salary'>salary</span> <span class='comment'># Player Salary
+</span></code></pre>
+
+<h4 id="label-Access+a+Schedule">Access a Schedule</h4>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_schedule'>schedule</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UTA</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_past'>past</span> <span class='op'>=</span> <span class='id identifier rubyid_schedule'>schedule</span><span class='period'>.</span><span class='id identifier rubyid_getPastGames'>getPastGames</span>     <span class='comment'># 2d array of completed games
+</span><span class='id identifier rubyid_future'>future</span> <span class='op'>=</span> <span class='id identifier rubyid_schedule'>schedule</span><span class='period'>.</span><span class='id identifier rubyid_getFutureGames'>getFutureGames</span> <span class='comment'># 2d array of upcoming games
+</span><span class='id identifier rubyid_schedule'>schedule</span><span class='period'>.</span><span class='id identifier rubyid_getNextTeamId'>getNextTeamId</span>           <span class='comment'># String ID of next opponent
+</span>
+<span class='comment'># Past Schedule Games as Objects
+</span><span class='id identifier rubyid_symbols'>symbols</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='op'>::</span><span class='const'>FS_SCHEDULE_PAST</span>
+<span class='id identifier rubyid_r_structs'>r_structs</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_to_structs'>to_structs</span><span class='lparen'>(</span><span class='id identifier rubyid_symbols'>symbols</span><span class='comma'>,</span> <span class='id identifier rubyid_past'>past</span><span class='rparen'>)</span> <span class='comment'># Returns array of Hashes
+</span><span class='id identifier rubyid_r_structs'>r_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_gdate'>gdate</span>      <span class='comment'># Game Date
+</span><span class='id identifier rubyid_r_structs'>r_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_t_abbr'>t_abbr</span>     <span class='comment'># Team Abbreviation
+</span><span class='id identifier rubyid_r_structs'>r_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_team_score'>team_score</span> <span class='comment'># Team Point Total
+</span><span class='id identifier rubyid_r_structs'>r_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_opp_score'>opp_score</span>  <span class='comment'># Opponent Point Total
+</span></code></pre>
+
+<h4 id="label-Access+a+Player">Access a Player</h4>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_player'>player</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_player'>player</span><span class='lparen'>(</span><span class='int'>2991473</span><span class='rparen'>)</span> <span class='comment'># Returns an NbaPlayer object
+</span><span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>   <span class='comment'>#=&gt; &quot;Anthony Bennett&quot;
+</span><span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_weight'>weight</span> <span class='comment'>#=&gt; &quot;245&quot;
+</span></code></pre>
+
+<h4 id="label-Access+the+NBA+Team+List">Access the NBA Team List</h4>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_team_list'>team_list</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_teamList'>teamList</span><span class='period'>.</span><span class='id identifier rubyid_teamList'>teamList</span> <span class='comment'># 2d array of Team info
+</span>
+<span class='id identifier rubyid_symbols'>symbols</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='op'>::</span><span class='const'>FS_TEAM</span>
+<span class='id identifier rubyid_t_structs'>t_structs</span> <span class='op'>=</span> <span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_to_structs'>to_structs</span><span class='lparen'>(</span><span class='id identifier rubyid_symbols'>symbols</span><span class='comma'>,</span> <span class='id identifier rubyid_team_list'>team_list</span><span class='rparen'>)</span> <span class='comment'># Hash array
+</span><span class='id identifier rubyid_t_structs'>t_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_t_name'>t_name</span>   <span class='comment'>#=&gt; &#39;Boston Celtics&#39;
+</span><span class='id identifier rubyid_t_structs'>t_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_t_abbr'>t_abbr</span>   <span class='comment'>#=&gt; &#39;BOS&#39;
+</span><span class='id identifier rubyid_t_structs'>t_structs</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_division'>division</span> <span class='comment'>#=&gt; &#39;Atlantic&#39;
 </span></code></pre>
 
 <h2 id="label-Documentation">Documentation</h2>
@@ -117,7 +190,7 @@ allow dot notation access if preferred.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Fri May 27 23:17:09 2016 by
+  Generated on Sat May 28 04:24:03 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.3).
 </div>
