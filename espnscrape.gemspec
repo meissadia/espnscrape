@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.email       = 'meissadia@gmail.com'
   s.files       = Dir.glob("{bin,lib}/**/*")
   s.platform    = Gem::Platform.local
-  s.homepage    = 'http://macrocal.surge.sh'
+  s.homepage    = 'https://github.com/meissadia/espnscrape'
   s.license     = 'GNU GPLv3'
   s.add_runtime_dependency 'nokogiri', '~> 1.6'
   s.add_development_dependency "minitest", '~> 0'
