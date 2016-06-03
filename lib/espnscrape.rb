@@ -29,12 +29,12 @@ class EspnScrape
   FS_ROSTER = [:t_abbr,:p_num,:p_name,:p_eid,:pos,:age,:h_ft,:h_in,:weight,:college,:salary]
 
   # Field Symbols for Schedule PAST game
-  #[TeamId, Game #, Game Time, TV?, Game Date, Home?, OppID, Win?, Team Score, Opp Score, boxscore_id, wins, losses, game_datetime]
-  FS_SCHEDULE_PAST = [:t_abbr,:game_num,:gtime,:tv,:gdate,:home,:opp_abbr,:win,:team_score,:opp_score,:boxscore_id,:wins,:losses, :g_datetime]
+  #[TeamId, Game #, Game Time, TV?, Game Date, Home?, OppID, Win?, Team Score, Opp Score, boxscore_id, wins, losses, game_datetime, season_type]
+  FS_SCHEDULE_PAST = [:t_abbr,:game_num,:gtime,:tv,:gdate,:home,:opp_abbr,:win,:team_score,:opp_score,:boxscore_id,:wins,:losses, :g_datetime, :season_type]
 
   # Field Symbols for Schedule FUTURE game
-  #[TeamId, Game #, Win?, boxscore_id, Game Date, Home?, OppID, Game Time, TV?, game_datetime]
-  FS_SCHEDULE_FUTURE = [:t_abbr,:game_num,:win,:boxscore_id,:gdate,:home,:opp_abbr,:gtime, :tv, :g_datetime]
+  #[TeamId, Game #, Win?, boxscore_id, Game Date, Home?, OppID, Game Time, TV?, game_datetime, season_type]
+  FS_SCHEDULE_FUTURE = [:t_abbr,:game_num,:win,:boxscore_id,:gdate,:home,:opp_abbr,:gtime, :tv, :g_datetime, :season_type]
 
   # Field Symbols for TEAM
   #[TeamId, Team Name, Division, Conference]
@@ -66,11 +66,12 @@ class EspnScrape
 
   # Return an NbaSchedule object
   # @param team_id [String]
+  # @param s_type [String] Season Type
   # @return [NbaSchedule]
   # @example
   #   EspnScrape.schedule('UTA')
-  def self.schedule(team_id)
-    return NbaSchedule.new team_id
+  def self.schedule(team_id, s_type='')
+    return NbaSchedule.new team_id, '', s_type
   end
 
   # Return new NbaPlayer object
@@ -86,7 +87,7 @@ class EspnScrape
   # @param field_names [Array] Symbols of fields
   # @param source [Array] Source data
   # @return [Hash] Hash
-  def self.to_hash(field_names=[], source=[])
+  def self.to_hash(field_names, source)
     fl = {}                # Resulting Field List
     idx = 0                # Source cursor
 
@@ -102,7 +103,7 @@ class EspnScrape
   # @param field_names [Array] Symbols of fields
   # @param source [[Array]] Source data
   # @return [[Hash]] Hash Array
-  def self.to_hashes(field_names=[], source=[])
+  def self.to_hashes(field_names, source)
     fl_a = []
     # Process each row of Source table
     source.each do |s|
@@ -115,7 +116,7 @@ class EspnScrape
   # @param field_names [Array] Symbols of fields
   # @param source [[Array]] Source data
   # @return [[Struct]] Struct Array
-  def self.to_structs(field_names=[], source=[])
+  def self.to_structs(field_names, source)
     fl_a = []
     # Process each row of Source table
     source.each do |s|

@@ -1,19 +1,25 @@
 # Sets VERSION of EspnScrape
 module Version
   # GEM version
-  VERSION = '0.1.0'
-  # Changes for 0.1.0
+  VERSION = '0.1.1'
+  # Changes for 0.1.1
   # @note
-  # => + Major API changes
-  # => + Added README.rdoc
-  # => + Integrated ActiveRecord Wrapper methods into EspnScrape class
-  # => - Removed seperate ActiveRecord Wrapper module
-  # => + Changed GEM license to GNU GPLv3
+  # => + Added Preseason and Playoff access
+  # => + Added Season Type to schedule rows
+  # => + Converted README to Markdown
   CHANGES = true
 end
 
 
 ########################### Version History ####################################
+# Changes for 0.1.0
+# @note
+# => + Major API changes
+# => + Added README.rdoc
+# => + Integrated ActiveRecord Wrapper methods into EspnScrape class
+# => - Removed seperate ActiveRecord Wrapper module
+# => + Changed GEM license to GNU GPLv3
+
 # Changes for 0.0.8
 # => - NbaPlayer: Fix bug in extracting bio->college info
 

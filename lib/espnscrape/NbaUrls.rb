@@ -9,9 +9,10 @@ module NbaUrls
 		return 'http://espn.go.com/nba/teams'
 	end
 	# teamScheduleUrl
+	# @param seasontype [INT] 1-Pre 2-Regular 3-Playoff
 	# @return (see #boxScoreUrl)
-	def teamScheduleUrl
-		return 'http://espn.go.com/nba/team/schedule/_/name/%s/seasontype/2/'
+	def teamScheduleUrl(seasontype=2)
+		return "http://espn.go.com/nba/team/schedule/_/name/%s/seasontype/#{seasontype}"
 	end
 	# teamRosterUrl
 	# @return (see #boxScoreUrl)

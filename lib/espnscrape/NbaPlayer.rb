@@ -19,16 +19,30 @@ class NbaPlayer
     readInfo(doc)
   end
 
-  private 
+  private
   # Extract basic bio info info class attributes
   def readInfo(d)
-    @name = d.xpath("//div[@class='mod-content']/h1")[0].text.strip
-    @position = d.xpath("//ul[@class='general-info']/li")[0].text.strip
+    @name = d.xpath("//div[@class='mod-content']/*/h1 | //div[@class='mod-content']/h1")[0].text.strip
+    @position = d.xpath("//ul[@class='general-info']/li")[0].text.gsub(/#\d*\s*/,'')
     @college = d.xpath('//ul[contains(@class,"player-metadata")]/li/span[text() = "College"]/parent::li').text.gsub('College','')
-    height, weight = d.xpath("//ul[@class='general-info']/li")[1].text.split(',')
-    @weight = weight.strip.split(' ')[0]
-    @h_ft, @h_in = height.strip.split('\'')
-    @h_in = @h_in.gsub('"','').strip
+    h_w = d.xpath("//ul[@class='general-info']/li")[1]
+    if !h_w.nil?
+      height, weight = d.xpath("//ul[@class='general-info']/li")[1].text.split(',')
+    end
+
+    if(!weight.nil? && !weight.empty?)
+      @weight = weight.strip.split(' ')[0]
+    else
+      @weight = 0
+    end
+
+    if(!height.nil? && !height.empty?)
+      @h_ft, @h_in = height.strip.split('\'')
+      @h_in = @h_in.gsub('"','').strip
+    else
+      @h_ft = 0
+      @h_in = 0
+    end
   end
 
 end

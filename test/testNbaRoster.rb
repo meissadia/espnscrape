@@ -4,7 +4,7 @@ require_relative '../lib/espnscrape'
 class TestNbaRoster < Minitest::Test
   include NbaUrls
 
-	def test_initialize
+  def test_initialize
     team_id = 'UTA'
     roster = NbaRoster.new(team_id)
 

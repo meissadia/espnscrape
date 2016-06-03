@@ -16,5 +16,13 @@ class TestNbaPlayer < Minitest::Test
     assert_equal "Keith Appling", player.name, "Player Name => Error"
     assert_equal "Michigan State", player.college, "Player College => Error"
     assert_equal "PG", player.position, "Player Position => Error"
+
+    # Test Non-NBA Player
+    player = EspnScrape.player(2233514)
+    player = EspnScrape.player(2995725)
+    player = EspnScrape.player(2585991)
+    player = EspnScrape.player(3945381)
+    # puts player.inspect
+
   end
 end
