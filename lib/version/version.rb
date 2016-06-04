@@ -1,17 +1,22 @@
 # Sets VERSION of EspnScrape
 module Version
   # GEM version
-  VERSION = '0.1.1'
-  # Changes for 0.1.1
+  VERSION = '0.1.2'
+  # Changes for 0.1.2
   # @note
-  # => + Added Preseason and Playoff access
-  # => + Added Season Type to schedule rows
-  # => + Converted README to Markdown
+  # => + Fixed NbaPlayer.age bug
+  # => + Add .yardopts to display README on RubyDocs
   CHANGES = true
 end
 
 
 ########################### Version History ####################################
+# Changes for 0.1.1
+# @note
+# => + Added Preseason and Playoff access
+# => + Added Season Type to schedule rows
+# => + Converted README to Markdown
+
 # Changes for 0.1.0
 # @note
 # => + Major API changes

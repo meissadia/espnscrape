@@ -25,6 +25,13 @@ class NbaPlayer
     @name = d.xpath("//div[@class='mod-content']/*/h1 | //div[@class='mod-content']/h1")[0].text.strip
     @position = d.xpath("//ul[@class='general-info']/li")[0].text.gsub(/#\d*\s*/,'')
     @college = d.xpath('//ul[contains(@class,"player-metadata")]/li/span[text() = "College"]/parent::li').text.gsub('College','')
+
+    # Age
+    age_text = d.xpath('//ul[contains(@class,"player-metadata")]/li/span[text() = "Born"]/parent::li').text
+    /:\s(?<age_num>\d\d)/ =~ age_text
+    @age = age_num
+
+    # Height/Weight
     h_w = d.xpath("//ul[@class='general-info']/li")[1]
     if !h_w.nil?
       height, weight = d.xpath("//ul[@class='general-info']/li")[1].text.split(',')
