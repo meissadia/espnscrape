@@ -93,10 +93,12 @@ t_structs.first.t_abbr   #=> 'BOS'
 t_structs.first.division #=> 'Atlantic'
 ```
 ## Documentation
-Available on [RubyDoc](http://www.rubydoc.info/gems/espnscrape/) or locally:
-    > gem install yard
-    > yard doc
-    > yard server
+Available on [RubyDoc](http://www.rubydoc.info/gems/espnscrape/) or locally:  
+```
+> gem install yard
+> yard doc
+> yard server
+```
 
 ## Requirements
 #### Ruby version
