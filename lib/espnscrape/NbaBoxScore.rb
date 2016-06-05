@@ -1,4 +1,4 @@
-require 'time'
+require 'date'
 require_relative './DebugUtils.rb'
 
 # Access NBA boxscore data
