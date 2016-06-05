@@ -1,7 +1,7 @@
 # Access NBA team schedule data
 class NbaSchedule
 	include NbaUrls
-include DebugUtils
+	include DebugUtils
 
 	attr_reader :game_list, :next_game
 
@@ -165,7 +165,7 @@ include DebugUtils
 								game_time = txt + ' ET'
 								tmp << game_time
 							elsif cnt == 3 				# TV
-								if cell.children[0].node_name == 'img' || txt != " "
+								if (cell.children[0].node_name == 'img' || txt != " ")
 									tmp << true
 								else
 									tmp << false
