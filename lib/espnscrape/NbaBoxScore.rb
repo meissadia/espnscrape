@@ -1,4 +1,6 @@
+require 'time'
 require_relative './DebugUtils.rb'
+
 # Access NBA boxscore data
 class NbaBoxScore
 	include NbaUrls
