@@ -1,7 +1,7 @@
 # Access NBA boxscore data
 class NbaBoxScore
 	include NbaUrls
-	require_relative './Util'
+	require_relative './Util.rb'
 
 	# @return [String] Game Date
 	attr_accessor :gameDate
