@@ -13,6 +13,6 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/meissadia/espnscrape'
   s.license     = 'GNU GPLv3'
   s.add_runtime_dependency 'nokogiri', '~> 1.6'
-  s.add_development_dependency "minitest"
-  s.add_development_dependency "rake"
+  s.add_development_dependency "minitest", '~> 5.4'
+  s.add_development_dependency 'rake', '~> 10.4.2'
 end
