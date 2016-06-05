@@ -1,7 +1,7 @@
 # Access list of NBA teams
 class NbaTeamList
 	include NbaUrls
-	require_relative './Util.rb'
+	require_relative 'Util.rb'
 
 	# @return [String] Table Title
 	attr_accessor :header
