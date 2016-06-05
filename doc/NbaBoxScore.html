@@ -142,7 +142,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return away team name.</p>
+<p>Away Team Name.</p>
 </div></span>
   
 </li>
@@ -169,7 +169,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns array of away team player stats.</p>
+<p>Away Team Stats Array.</p>
 </div></span>
   
 </li>
@@ -196,7 +196,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns array of away team combined stats.</p>
+<p>Away Team Combined Stats.</p>
 </div></span>
   
 </li>
@@ -223,7 +223,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return game date.</p>
+<p>Game Date.</p>
 </div></span>
   
 </li>
@@ -250,7 +250,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns home team name.</p>
+<p>Home Team Name.</p>
 </div></span>
   
 </li>
@@ -277,7 +277,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns array of home team player stats.</p>
+<p>Home Team Stats Array.</p>
 </div></span>
   
 </li>
@@ -304,7 +304,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns array of home team combined stats.</p>
+<p>Home Team Combined Stats.</p>
 </div></span>
   
 </li>
@@ -344,6 +344,30 @@
   
     <span class="summary_desc"><div class='inline'>
 <p>Scrape Box Score Data.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#printTotals-instance_method" title="#printTotals (instance method)">- (Object) <strong>printTotals</strong>(teamTotals, colWidth = 5) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Print a totals row.</p>
 </div></span>
   
 </li>
@@ -420,6 +444,8 @@
       <pre class="lines">
 
 
+36
+37
 38
 39
 40
@@ -434,12 +460,10 @@
 49
 50
 51
-52
-53
-54</pre>
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_game_id'>game_id</span><span class='rparen'>)</span>
 	<span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_game_id'>game_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span><span class='rparen'>)</span>
@@ -482,7 +506,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return away team name</p>
+<p>Returns Away Team Name</p>
 
 
   </div>
@@ -499,6 +523,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Away Team Name</p>
+</div>
+      
     </li>
   
 </ul>
@@ -509,12 +538,12 @@
       <pre class="lines">
 
 
+11
 12
-13
-14</pre>
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_awayName'>awayName</span>
   <span class='ivar'>@awayName</span>
@@ -538,7 +567,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns array of away team player stats</p>
+<p>Returns Away Team Stats Array</p>
 
 
   </div>
@@ -555,9 +584,21 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Away Team Stats Array</p>
+</div>
+      
     </li>
   
 </ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="EspnScrape.html#FS_BOXSCORE-constant" title="EspnScrape::FS_BOXSCORE (constant)">EspnScrape::FS_BOXSCORE</a></span></li>
+    
+  </ul>
 
 </div><table class="source_code">
   <tr>
@@ -565,12 +606,12 @@
       <pre class="lines">
 
 
+15
 16
-17
-18</pre>
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_awayPlayers'>awayPlayers</span>
   <span class='ivar'>@awayPlayers</span>
@@ -594,7 +635,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns array of away team combined stats</p>
+<p>Returns Away Team Combined Stats</p>
 
 
   </div>
@@ -611,9 +652,21 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Away Team Combined Stats</p>
+</div>
+      
     </li>
   
 </ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="EspnScrape.html#FS_BOXSCORE_TOTALS-constant" title="EspnScrape::FS_BOXSCORE_TOTALS (constant)">EspnScrape::FS_BOXSCORE_TOTALS</a></span></li>
+    
+  </ul>
 
 </div><table class="source_code">
   <tr>
@@ -621,12 +674,12 @@
       <pre class="lines">
 
 
+19
 20
-21
-22</pre>
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_awayTotals'>awayTotals</span>
   <span class='ivar'>@awayTotals</span>
@@ -650,7 +703,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return game date</p>
+<p>Returns Game Date</p>
 
 
   </div>
@@ -666,6 +719,11 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
+      
+        &mdash;
+        <div class='inline'>
+<p>Game Date</p>
+</div>
       
     </li>
   
@@ -706,7 +764,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns home team name</p>
+<p>Returns Home Team Name</p>
 
 
   </div>
@@ -723,6 +781,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Home Team Name</p>
+</div>
+      
     </li>
   
 </ul>
@@ -733,12 +796,12 @@
       <pre class="lines">
 
 
-24
-25
-26</pre>
+22
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_homeName'>homeName</span>
   <span class='ivar'>@homeName</span>
@@ -762,7 +825,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns array of home team player stats</p>
+<p>Returns Home Team Stats Array</p>
 
 
   </div>
@@ -779,9 +842,21 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Home Team Stats Array</p>
+</div>
+      
     </li>
   
 </ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="EspnScrape.html#FS_BOXSCORE-constant" title="EspnScrape::FS_BOXSCORE (constant)">EspnScrape::FS_BOXSCORE</a></span></li>
+    
+  </ul>
 
 </div><table class="source_code">
   <tr>
@@ -789,12 +864,12 @@
       <pre class="lines">
 
 
-28
-29
-30</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_homePlayers'>homePlayers</span>
   <span class='ivar'>@homePlayers</span>
@@ -818,7 +893,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns array of home team combined stats</p>
+<p>Returns Home Team Combined Stats</p>
 
 
   </div>
@@ -835,9 +910,21 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Home Team Combined Stats</p>
+</div>
+      
     </li>
   
 </ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="EspnScrape.html#FS_BOXSCORE_TOTALS-constant" title="EspnScrape::FS_BOXSCORE_TOTALS (constant)">EspnScrape::FS_BOXSCORE_TOTALS</a></span></li>
+    
+  </ul>
 
 </div><table class="source_code">
   <tr>
@@ -845,12 +932,12 @@
       <pre class="lines">
 
 
-32
-33
-34</pre>
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_homeTotals'>homeTotals</span>
   <span class='ivar'>@homeTotals</span>
@@ -863,10 +950,77 @@
   </div>
 
 
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="printTotals-instance_method">
+  
+    - (<tt>Object</tt>) <strong>printTotals</strong>(teamTotals, colWidth = 5) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Print a totals row</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>teamTotals</span>
+      
+      
+        <span class='type'>(<tt>[Integer]</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Team Totals</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaBoxScore.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_printTotals'>printTotals</span><span class='lparen'>(</span><span class='id identifier rubyid_teamTotals'>teamTotals</span><span class='comma'>,</span> <span class='id identifier rubyid_colWidth'>colWidth</span><span class='op'>=</span><span class='int'>5</span><span class='rparen'>)</span>
+	<span class='id identifier rubyid_printTable'>printTable</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_teamTotals'>teamTotals</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_colWidth'>colWidth</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Team Totals</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 </div>
 
     <div id="footer">
-  Generated on Fri Jun  3 20:57:23 2016 by
+  Generated on Sat Jun  4 22:58:14 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.3).
 </div>

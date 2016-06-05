@@ -4,10 +4,9 @@ require 'open-uri'
 class TestNbaUrls < Minitest::Test
 	include NbaUrls
 	def test_get_tid
-		expected = ['OKC','POR','BKN', 'UTA', 'JAM']
 		# Test all special cases
-		tnames = ['Oklahoma City Thunder', 'Portland Trail Blazers',
-			'Brooklyn Nets', 'Utah Jazz', 'Jambo']
+		tnames = ['Oklahoma City Thunder', 'Portland Trail Blazers', 'Brooklyn Nets', 'Utah Jazz', 'Jambo']
+		expected = ['OKC','POR','BKN', 'UTA', 'JAM']
 			result = []
 			tnames.each do |x|
 				result << getTid(x)
@@ -17,9 +16,10 @@ class TestNbaUrls < Minitest::Test
 	end
 
 	def test_format_team_url
-		assert_equal "http://espn.go.com/nba/team/roster/_/name/utah/",
-		formatTeamUrl('uta', teamRosterUrl)
-		assert_equal "http://espn.go.com/nba/team/roster/_/name/ny/",
-		formatTeamUrl('nyk', teamRosterUrl)
+		teams = [["uta",'utah'],["nop",'no'],["sas",'sa'],["was",'wsh'],["pho",'phx'],["gsw",'gs'],["nyk",'ny']]
+		url = "%s"
+		teams.each { |team_id, expected|
+			assert_equal expected, formatTeamUrl(team_id, url)
+		}
 	end
 end

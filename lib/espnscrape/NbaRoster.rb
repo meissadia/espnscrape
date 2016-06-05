@@ -2,20 +2,19 @@
 
 class NbaRoster
 	include NbaUrls
+	require_relative './Util'
 
-	# Return coach Name
+	# Returns Coach Name
 	# @return [String] Coach Name
-	# @example
-	# 	r.coach #=> "Jerry Sloan"
 	attr_reader :coach
 
 	# Returns Team Roster
-	# @return [[[String]]] 2d Array of Players
-	# @note Roster Row :  [TeamId, Jersey #, Player Name, ESPN Player ID, Position, Age, Height ft, Height in, Weight, College, Salary]
+	# @return [[[String]]] Player List Table ({EspnScrape::FS_ROSTER Row Description})
+	# @see EspnScrape::FS_ROSTER
 	attr_reader :players
 
 	# Scrape Roster Data
-	# @param team_id [String] Three letter TeamID
+	# @param team_id [String] Team ID
 	# @example
 	# 	r = NbaRoster.new("UTA")
 	def initialize(team_id)
@@ -59,15 +58,6 @@ class NbaRoster
 				end
 			end
 			return @players
-		end
-	end
-
-	# CSV String representation
-	# @return [String]
-	def toString()
-		res = ''
-		@players.each do |p|
-			res = res + p.join(',')
 		end
 	end
 end

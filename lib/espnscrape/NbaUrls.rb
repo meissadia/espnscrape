@@ -1,37 +1,37 @@
 # Methods and Urls to access ESPN NBA data
 module NbaUrls
-	# @return [String] URL
+	# @return [String] URL to access Boxscore
 	def boxScoreUrl
 		return 'http://scores.espn.go.com/nba/boxscore?gameId='
 	end
-	# @return (see #boxScoreUrl)
+
+	# @return [String] URL to access NBA Team List
 	def teamListUrl
 		return 'http://espn.go.com/nba/teams'
 	end
-	# teamScheduleUrl
+
 	# @param seasontype [INT] 1-Pre 2-Regular 3-Playoff
-	# @return (see #boxScoreUrl)
-	def teamScheduleUrl(seasontype=2)
+	# @return [String] URL to access Team Schedule
+	def teamScheduleUrl(seasontype='')
 		return "http://espn.go.com/nba/team/schedule/_/name/%s/seasontype/#{seasontype}"
 	end
-	# teamRosterUrl
-	# @return (see #boxScoreUrl)
+
+	# @return [String] URL to access Team Roster
 	def teamRosterUrl
 		return 'http://espn.go.com/nba/team/roster/_/name/%s/'
 	end
-	# playerUrl
-	# @return (see #boxScoreUrl)
+
+	# @return [String] URL to access Player profile
 	def playerUrl
 		return 'http://espn.go.com/nba/player/_/id/'
 	end
 
 	# Generate team specific URL
-	# @param team_id [String] Three letter representation of Team
-	# @param url [String] String with url data location
-	# @return [String] Resulting URL
+	# @param team_id [String] Team ID
+	# @param url [String] URL String
+	# @return [String] Formatted URL
 	# @example
 	# 	NbaUrls.formatTeamUrl('uta', NbaUrls.teamRosterUrl) #=> "http://espn.go.com/nba/team/roster/_/name/utah/"
-	#
 	def formatTeamUrl(team_id, url)
 		team_id = team_id.downcase
 		case team_id
@@ -53,9 +53,9 @@ module NbaUrls
 		return url % [team_id]
 	end
 
-	# Derive three letter TeamID from Team Name
-	# @param team_name [String] City Team Name
-	# @return [String] TeamID
+	# Derive three letter Team ID from Team Name
+	# @param team_name [String] Full Team Name
+	# @return [String] Team ID
 	# @example
 	# 	getTid("Oklahoma City Thunder") #=> "OKC"
 	#

@@ -2,33 +2,31 @@ require 'Date'
 # Access NBA boxscore data
 class NbaBoxScore
 	include NbaUrls
+	require_relative './Util'
 
-	# Return game date
-	# @return [String]
+	# @return [String] Game Date
 	attr_accessor :gameDate
 
-	# Return away team name
-	# @return [String]
+	# @return [String] Away Team Name
 	attr_accessor :awayName
 
-	# Returns array of away team player stats
-	# @return [[[Integer]]]
+	# @return [[[Integer]]] Away Team Stats Array
+	# @see EspnScrape::FS_BOXSCORE
 	attr_accessor :awayPlayers
 
-	# Returns array of away team combined stats
-	# @return [[Integer]]
+	# @return [[Integer]] Away Team Combined Stats
+	# @see EspnScrape::FS_BOXSCORE_TOTALS
 	attr_accessor :awayTotals
 
-	# Returns home team name
-	# @return [String]
+	# @return [String] Home Team Name
 	attr_accessor :homeName
 
-	# Returns array of home team player stats
-	# @return [[[Integer]]]
+	# @return [[[Integer]]] Home Team Stats Array
+	# @see EspnScrape::FS_BOXSCORE
 	attr_accessor :homePlayers
 
-	# Returns array of home team combined stats
-	# @return [[Integer]]
+	# @return [[Integer]] Home Team Combined Stats
+	# @see EspnScrape::FS_BOXSCORE_TOTALS
 	attr_accessor :homeTotals
 
 	# Scrape Box Score Data
@@ -51,6 +49,12 @@ class NbaBoxScore
 				@homePlayers, @homeTotals = readTeamStats(doc, 'home')
 			end
 		end
+	end
+
+	# Print a totals row
+	# @param teamTotals [[Integer]] Team Totals
+	def printTotals(teamTotals, colWidth=5)
+		printTable([teamTotals], colWidth, 'Team Totals')
 	end
 
 	private
@@ -163,6 +167,8 @@ class NbaBoxScore
 		team_row.children.each do |cell|
 			c_val = cell.text.strip
 			case cell.attribute("class").text
+			when 'name'
+				team_totals << tid
 			when 'fg', '3pt', 'ft'
 				# Made, Attempts
 				cell.text.split('-').each do |sp|
@@ -170,7 +176,7 @@ class NbaBoxScore
 				end
 			else
 				if(c_val.empty?)
-					c_val = 0
+					next
 				end
 				team_totals << c_val
 			end

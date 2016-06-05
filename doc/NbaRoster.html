@@ -144,7 +144,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return coach Name.</p>
+<p>Returns Coach Name.</p>
 </div></span>
   
 </li>
@@ -218,30 +218,6 @@
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#toString-instance_method" title="#toString (instance method)">- (String) <strong>toString</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>CSV String representation.</p>
-</div></span>
-  
-</li>
-
-      
     </ul>
   
 
@@ -299,7 +275,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Three letter TeamID</p>
+<p>Team ID</p>
 </div>
       
     </li>
@@ -313,6 +289,7 @@
       <pre class="lines">
 
 
+20
 21
 22
 23
@@ -354,11 +331,10 @@
 59
 60
 61
-62
-63</pre>
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaRoster.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaRoster.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_team_id'>team_id</span><span class='rparen'>)</span>
 	<span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_team_id'>team_id</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -427,21 +403,13 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return coach Name</p>
+<p>Returns Coach Name</p>
 
 
   </div>
 </div>
 <div class="tags">
   
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-      <pre class="example code"><code><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_coach'>coach</span> <span class='comment'>#=&gt; &quot;Jerry Sloan&quot;</span></code></pre>
-    
-  </div>
-
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -467,12 +435,12 @@
       <pre class="lines">
 
 
+9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaRoster.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaRoster.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_coach'>coach</span>
   <span class='ivar'>@coach</span>
@@ -496,15 +464,6 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'>
-<p>Roster Row :  [TeamId, Jersey #, Player Name, ESPN Player ID, Position,
-Age, Height ft, Height in, Weight, College, Salary]</p>
-</div>
-  </div>
-
-
 <p>Returns Team Roster</p>
 
 
@@ -524,12 +483,19 @@ Age, Height ft, Height in, Weight, College, Salary]</p>
       
         &mdash;
         <div class='inline'>
-<p>2d Array of Players</p>
+<p>Player List Table (<span class='object_link'><a href="EspnScrape.html#FS_ROSTER-constant" title="EspnScrape::FS_ROSTER (constant)">Row Description</a></span>)</p>
 </div>
       
     </li>
   
 </ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="EspnScrape.html#FS_ROSTER-constant" title="EspnScrape::FS_ROSTER (constant)">EspnScrape::FS_ROSTER</a></span></li>
+    
+  </ul>
 
 </div><table class="source_code">
   <tr>
@@ -537,12 +503,12 @@ Age, Height ft, Height in, Weight, College, Salary]</p>
       <pre class="lines">
 
 
+14
 15
-16
-17</pre>
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaRoster.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaRoster.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_players'>players</span>
   <span class='ivar'>@players</span>
@@ -555,76 +521,10 @@ Age, Height ft, Height in, Weight, College, Salary]</p>
   </div>
 
 
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="toString-instance_method">
-  
-    - (<tt>String</tt>) <strong>toString</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>CSV String representation</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-67
-68
-69
-70
-71
-72</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaRoster.rb', line 67</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_toString'>toString</span><span class='lparen'>(</span><span class='rparen'>)</span>
-	<span class='id identifier rubyid_res'>res</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
-	<span class='ivar'>@players</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
-		<span class='id identifier rubyid_res'>res</span> <span class='op'>=</span> <span class='id identifier rubyid_res'>res</span> <span class='op'>+</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-	<span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
-
 </div>
 
     <div id="footer">
-  Generated on Fri Jun  3 20:57:23 2016 by
+  Generated on Sat Jun  4 22:58:14 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.3).
 </div>

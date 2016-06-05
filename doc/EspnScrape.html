@@ -90,15 +90,11 @@
     
   
     
-      <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="Version.html" title="Version (module)">Version</a></span></dd>
-      
-    
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/espnscrape.rb</dd>
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/espnscrape.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -119,13 +115,35 @@
   
     <dl class="constants">
       
+        <dt id="VERSION-constant" class="">VERSION =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Gem Version</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.2.0</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
         <dt id="FS_BOXSCORE-constant" class="">FS_BOXSCORE =
           <div class="docstring">
   <div class="discussion">
     
-<p>Field Symbols for BOXSCORE</p>
-<dl class="rdoc-list label-list"><dt>TeamId, Game #, Player Name (short), ESPN Player ID, Position, Minutes, Field Goals Made, Field Goals Attempted, 3P Made, 3P Attempted, Free Throws Made, Free Throws Attempted, Offensive Rebounds, Defensive Rebounds, Total Rebounds, Assists, Steals, Blocks, Turnovers, Personal Fouls, Plus/Minus, Points, Starter?
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Field Symbols for <span class='object_link'><a href="NbaBoxScore.html" title="NbaBoxScore (class)">NbaBoxScore</a></span></p>
+<dl class="rdoc-list label-list"><dt>Team ID, Game #, Player Name (short), ESPN Player ID, Position, Minutes, Field Goals Made, Field Goals Attempted, 3P Made, 3P Attempted, Free Throws Made, Free Throws Attempted, Offensive Rebounds, Defensive Rebounds, Total Rebounds, Assists, Steals, Blocks, Turnovers, Personal Fouls, Plus/Minus, Points, Starter?
 <dd></dd></dl>
+</div>
+  </div>
+
 
 
   </div>
@@ -137,13 +155,43 @@
         </dt>
         <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:t_abbr</span><span class='comma'>,</span><span class='symbol'>:game_num</span><span class='comma'>,</span><span class='symbol'>:p_eid</span><span class='comma'>,</span><span class='symbol'>:p_name</span><span class='comma'>,</span><span class='symbol'>:pos</span><span class='comma'>,</span><span class='symbol'>:min</span><span class='comma'>,</span><span class='symbol'>:fgm</span><span class='comma'>,</span><span class='symbol'>:fga</span><span class='comma'>,</span><span class='symbol'>:tpm</span><span class='comma'>,</span><span class='symbol'>:tpa</span><span class='comma'>,</span><span class='symbol'>:ftm</span><span class='comma'>,</span><span class='symbol'>:fta</span><span class='comma'>,</span><span class='symbol'>:oreb</span><span class='comma'>,</span><span class='symbol'>:dreb</span><span class='comma'>,</span><span class='symbol'>:reb</span><span class='comma'>,</span><span class='symbol'>:ast</span><span class='comma'>,</span><span class='symbol'>:stl</span><span class='comma'>,</span><span class='symbol'>:blk</span><span class='comma'>,</span><span class='symbol'>:tos</span><span class='comma'>,</span><span class='symbol'>:pf</span><span class='comma'>,</span><span class='symbol'>:plus</span><span class='comma'>,</span><span class='symbol'>:pts</span><span class='comma'>,</span><span class='symbol'>:starter</span><span class='rbracket'>]</span></pre></dd>
       
+        <dt id="FS_BOXSCORE_TOTALS-constant" class="">FS_BOXSCORE_TOTALS =
+          <div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Field Symbols for <span class='object_link'><a href="NbaBoxScore.html#homeTotals-instance_method" title="NbaBoxScore#homeTotals (method)">NbaBoxScore#homeTotals</a></span> and <span class='object_link'><a href="NbaBoxScore.html#awayTotals-instance_method" title="NbaBoxScore#awayTotals (method)">NbaBoxScore#awayTotals</a></span></p>
+<dl class="rdoc-list label-list"><dt>Team ID, Field Goals Made, Field Goals Attempted, 3P Made, 3P Attempted, Free Throws Made, Free Throws Attempted, Offensive Rebounds, Defensive Rebounds, Total Rebounds, Assists, Steals, Blocks, Turnovers, Personal Fouls, Plus/Minus, Points, Starter?
+<dd></dd></dl>
+</div>
+  </div>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:t_abbr</span><span class='comma'>,</span><span class='symbol'>:fgm</span><span class='comma'>,</span><span class='symbol'>:fga</span><span class='comma'>,</span><span class='symbol'>:tpm</span><span class='comma'>,</span><span class='symbol'>:tpa</span><span class='comma'>,</span><span class='symbol'>:ftm</span><span class='comma'>,</span><span class='symbol'>:fta</span><span class='comma'>,</span><span class='symbol'>:oreb</span><span class='comma'>,</span><span class='symbol'>:dreb</span><span class='comma'>,</span><span class='symbol'>:reb</span><span class='comma'>,</span><span class='symbol'>:ast</span><span class='comma'>,</span><span class='symbol'>:stl</span><span class='comma'>,</span><span class='symbol'>:blk</span><span class='comma'>,</span><span class='symbol'>:tos</span><span class='comma'>,</span><span class='symbol'>:pf</span><span class='comma'>,</span><span class='symbol'>:pts</span><span class='rbracket'>]</span></pre></dd>
+      
         <dt id="FS_ROSTER-constant" class="">FS_ROSTER =
           <div class="docstring">
   <div class="discussion">
     
-<p>Field Symbols for ROSTER</p>
-<dl class="rdoc-list label-list"><dt>TeamId, Jersey #, Player Name, ESPN Player ID, Position, Age, Height ft, Height in, Weight, College, Salary
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Field Symbols for <span class='object_link'><a href="NbaRoster.html" title="NbaRoster (class)">NbaRoster</a></span></p>
+<dl class="rdoc-list label-list"><dt>Team ID, Jersey #, Player Name, ESPN Player ID, Position, Age, Height ft, Height in, Weight, College, Salary
 <dd></dd></dl>
+</div>
+  </div>
+
 
 
   </div>
@@ -159,9 +207,15 @@
           <div class="docstring">
   <div class="discussion">
     
-<p>Field Symbols for Schedule PAST game</p>
-<dl class="rdoc-list label-list"><dt>TeamId, Game #, Game Time, TV?, Game Date, Home?, OppID, Win?, Team Score, Opp Score, boxscore_id, wins, losses, game_datetime, season_type
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Field Symbols for <span class='object_link'><a href="NbaSchedule.html#getPastGames-instance_method" title="NbaSchedule#getPastGames (method)">NbaSchedule#getPastGames</a></span></p>
+<dl class="rdoc-list label-list"><dt>Team ID, Game #, Game Time, Televised?, Game Date, Home Game?, Opponent ID, Win?, Team Score, Opp Score, Boxscore ID, Wins, Losses, Game DateTime, Season Type
 <dd></dd></dl>
+</div>
+  </div>
+
 
 
   </div>
@@ -177,9 +231,15 @@
           <div class="docstring">
   <div class="discussion">
     
-<p>Field Symbols for Schedule FUTURE game</p>
-<dl class="rdoc-list label-list"><dt>TeamId, Game #, Win?, boxscore_id, Game Date, Home?, OppID, Game Time, TV?, game_datetime, season_type
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Field Symbols for <span class='object_link'><a href="NbaSchedule.html#getFutureGames-instance_method" title="NbaSchedule#getFutureGames (method)">NbaSchedule#getFutureGames</a></span></p>
+<dl class="rdoc-list label-list"><dt>Team ID, Game #, Win?, Boxscore ID, Game Date, Home Game?, Opponent ID, Game Time, Televised?, Game DateTime, Season Type
 <dd></dd></dl>
+</div>
+  </div>
+
 
 
   </div>
@@ -195,9 +255,15 @@
           <div class="docstring">
   <div class="discussion">
     
-<p>Field Symbols for TEAM</p>
-<dl class="rdoc-list label-list"><dt>TeamId, Team Name, Division, Conference
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Field Symbols for <span class='object_link'><a href="NbaTeamList.html#teamList-instance_method" title="NbaTeamList#teamList (method)">NbaTeamList#teamList</a></span></p>
+<dl class="rdoc-list label-list"><dt>Team ID, Team Name, Division, Conference
 <dd></dd></dl>
+</div>
+  </div>
+
 
 
   </div>
@@ -213,12 +279,6 @@
   
 
 
-
-  
-  
-  <h3 class="inherited">Constants included
-     from <span class='object_link'><a href="Version.html" title="Version (module)">Version</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Version.html#CHANGES-constant" title="Version::CHANGES (constant)">Version::CHANGES</a></span>, <span class='object_link'><a href="Version.html#VERSION-constant" title="Version::VERSION (constant)">Version::VERSION</a></span></p>
 
 
 
@@ -250,7 +310,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns an NbaBoxscore object.</p>
+<p>Returns an <span class='object_link'><a href="NbaBoxScore.html" title="NbaBoxScore (class)">NbaBoxScore</a></span> object.</p>
 </div></span>
   
 </li>
@@ -274,7 +334,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return new NbaPlayer object.</p>
+<p>Return new <span class='object_link'><a href="NbaPlayer.html" title="NbaPlayer (class)">NbaPlayer</a></span> object.</p>
 </div></span>
   
 </li>
@@ -298,7 +358,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns an NbaRoster object.</p>
+<p>Returns an <span class='object_link'><a href="NbaRoster.html" title="NbaRoster (class)">NbaRoster</a></span> object.</p>
 </div></span>
   
 </li>
@@ -322,7 +382,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return an NbaSchedule object.</p>
+<p>Return an <span class='object_link'><a href="NbaSchedule.html" title="NbaSchedule (class)">NbaSchedule</a></span> object.</p>
 </div></span>
   
 </li>
@@ -346,7 +406,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return NbaTeamList.</p>
+<p>Return <span class='object_link'><a href="NbaTeamList.html" title="NbaTeamList (class)">NbaTeamList</a></span>.</p>
 </div></span>
   
 </li>
@@ -428,12 +488,6 @@
   
 
 
-  
-  
-  
-  
-  
-  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -451,7 +505,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns an NbaBoxscore object</p>
+<p>Returns an <span class='object_link'><a href="NbaBoxScore.html" title="NbaBoxScore (class)">NbaBoxScore</a></span> object</p>
 
 
   </div>
@@ -477,6 +531,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Boxscore ID</p>
+</div>
+      
     </li>
   
 </ul>
@@ -491,6 +550,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>NbaBoxScore</p>
+</div>
+      
     </li>
   
 </ul>
@@ -501,12 +565,12 @@
       <pre class="lines">
 
 
-48
-49
-50</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_boxscore'>boxscore</span><span class='lparen'>(</span><span class='id identifier rubyid_game_id'>game_id</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'>NbaBoxScore</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_game_id'>game_id</span>
@@ -528,7 +592,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return new NbaPlayer object</p>
+<p>Return new <span class='object_link'><a href="NbaPlayer.html" title="NbaPlayer (class)">NbaPlayer</a></span> object</p>
 
 
   </div>
@@ -554,6 +618,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>ESPN Player ID</p>
+</div>
+      
     </li>
   
 </ul>
@@ -568,6 +637,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>NbaPlayer</p>
+</div>
+      
     </li>
   
 </ul>
@@ -578,12 +652,12 @@
       <pre class="lines">
 
 
-82
-83
-84</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_player'>player</span><span class='lparen'>(</span><span class='id identifier rubyid_espn_id'>espn_id</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'>NbaPlayer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_espn_id'>espn_id</span>
@@ -605,7 +679,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns an NbaRoster object</p>
+<p>Returns an <span class='object_link'><a href="NbaRoster.html" title="NbaRoster (class)">NbaRoster</a></span> object</p>
 
 
   </div>
@@ -631,6 +705,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Team ID</p>
+</div>
+      
     </li>
   
 </ul>
@@ -645,6 +724,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>NbaRoster</p>
+</div>
+      
     </li>
   
 </ul>
@@ -655,12 +739,12 @@
       <pre class="lines">
 
 
-57
-58
-59</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_roster'>roster</span><span class='lparen'>(</span><span class='id identifier rubyid_team_id'>team_id</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'>NbaRoster</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_team_id'>team_id</span>
@@ -682,7 +766,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return an NbaSchedule object</p>
+<p>Return an <span class='object_link'><a href="NbaSchedule.html" title="NbaSchedule (class)">NbaSchedule</a></span> object</p>
 
 
   </div>
@@ -693,7 +777,10 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UTA</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
+      <pre class="example code"><code><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UTA</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>    <span class='comment'># Schedule for Latest Season Type
+</span><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>BOS</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='comment'># Preseason Schedule
+</span><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>MIA</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='comment'># Regular Season Schedule
+</span><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>TOR</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>3</span><span class='rparen'>)</span> <span class='comment'># Playoff Schedule</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -708,6 +795,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>Team ID</p>
+</div>
+      
     </li>
   
     <li>
@@ -715,7 +807,7 @@
         <span class='name'>s_type</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Int</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
@@ -740,6 +832,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>NbaSchedule</p>
+</div>
+      
     </li>
   
 </ul>
@@ -750,12 +847,12 @@
       <pre class="lines">
 
 
-73
-74
-75</pre>
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_schedule'>schedule</span><span class='lparen'>(</span><span class='id identifier rubyid_team_id'>team_id</span><span class='comma'>,</span> <span class='id identifier rubyid_s_type'>s_type</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'>NbaSchedule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_team_id'>team_id</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_s_type'>s_type</span>
@@ -777,13 +874,21 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return NbaTeamList</p>
+<p>Return <span class='object_link'><a href="NbaTeamList.html" title="NbaTeamList (class)">NbaTeamList</a></span></p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='const'>EspnScrape</span><span class='period'>.</span><span class='id identifier rubyid_teamList'>teamList</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -793,6 +898,11 @@
         <span class='type'>(<tt><span class='object_link'><a href="NbaTeamList.html" title="NbaTeamList (class)">NbaTeamList</a></span></tt>)</span>
       
       
+      
+        &mdash;
+        <div class='inline'>
+<p>NbaTeamList</p>
+</div>
       
     </li>
   
@@ -804,12 +914,12 @@
       <pre class="lines">
 
 
-63
-64
-65</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_teamList'>teamList</span>
   <span class='kw'>return</span> <span class='const'>NbaTeamList</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -837,7 +947,18 @@
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>symbols  = EspnScrape::FS_TEAM
+team_row = EspnScrape.teamList.teamList.first
+hash     = EspnScrape.to_hash(symbols, team_row)
+=&gt; {:t_abbr=&gt;&quot;BOS&quot;, :t_name=&gt;&quot;Boston Celtics&quot;, :division=&gt;&quot;Atlantic&quot;, :conference=&gt;&quot;Eastern&quot;}</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -851,7 +972,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Symbols of fields</p>
+<p>Symbols to be used as field names</p>
 </div>
       
     </li>
@@ -899,26 +1020,26 @@
       <pre class="lines">
 
 
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100</pre>
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_fl'>fl</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>                <span class='comment'># Resulting Field List
-</span>  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='int'>0</span>                <span class='comment'># Source cursor
+  <span class='id identifier rubyid_fl'>fl</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>   <span class='comment'># Resulting Field List
+</span>  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='int'>0</span>   <span class='comment'># Source cursor
 </span>
-  <span class='comment'># Create k:v (from source) for each key (from field names)
+  <span class='comment'># Create key(from source):value(from field names) pairs
 </span>  <span class='id identifier rubyid_field_names'>field_names</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
     <span class='id identifier rubyid_fl'>fl</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_idx'>idx</span> <span class='op'>+=</span> <span class='int'>1</span>
@@ -948,7 +1069,19 @@
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>symbols = EspnScrape::FS_TEAM
+teams   = EspnScrape.teamList.teamList
+hash_a  = EspnScrape.to_hashes(symbols, teams)
+=&gt; [{:t_abbr=&gt;&quot;BOS&quot;, :t_name=&gt;&quot;Boston Celtics&quot;, :division=&gt;&quot;Atlantic&quot;, :conference=&gt;&quot;Eastern&quot;},
+    {:t_abbr=&gt;&quot;BKN&quot;, :t_name=&gt;&quot;Brooklyn Nets&quot;, :division=&gt;&quot;Atlantic&quot;, :conference=&gt;&quot;Eastern&quot;} ... ]</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -962,7 +1095,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Symbols of fields</p>
+<p>Symbols to be used as field names</p>
 </div>
       
     </li>
@@ -997,7 +1130,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Hash Array</p>
+<p>Array&lt;Hash&gt;</p>
 </div>
       
     </li>
@@ -1010,23 +1143,21 @@
       <pre class="lines">
 
 
-106
-107
-108
-109
-110
-111
-112
-113</pre>
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_hashes'>to_hashes</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='comment'># Process each row of Source table
-</span>  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
-    <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>             <span class='comment'># Resulting Hash Array
+</span>  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>    <span class='comment'># Process each row of Source table
+</span>    <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_fl_a'>fl_a</span>
 <span class='kw'>end</span></pre>
@@ -1053,7 +1184,19 @@
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>symbols = EspnScrape::FS_TEAM
+teams   = EspnScrape.teamList.teamList
+structs = EspnScrape.to_structs(symbols, teams)
+=&gt; [#&lt;struct t_abbr=&quot;BOS&quot;, t_name=&quot;Boston Celtics&quot;, division=&quot;Atlantic&quot;, conference=&quot;Eastern&quot;&gt;,
+    #&lt;struct t_abbr=&quot;BKN&quot;, t_name=&quot;Brooklyn Nets&quot;, division=&quot;Atlantic&quot;, conference=&quot;Eastern&quot;&gt; ... ]</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1067,7 +1210,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Symbols of fields</p>
+<p>Symbols to be used as field names</p>
 </div>
       
     </li>
@@ -1102,7 +1245,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Struct Array</p>
+<p>Array&lt;Struct&gt;</p>
 </div>
       
     </li>
@@ -1115,24 +1258,22 @@
       <pre class="lines">
 
 
-119
-120
-121
-122
-123
-124
-125
-126
-127</pre>
+145
+146
+147
+148
+149
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_structs'>to_structs</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='comment'># Process each row of Source table
-</span>  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
-    <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>             <span class='comment'># Resulting Hash Array
+</span>  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>    <span class='comment'># Process each row of Source table
+</span>    <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_field_names'>field_names</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_fl_a'>fl_a</span> <span class='op'>&lt;&lt;</span> <span class='const'>Struct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_fl_a'>fl_a</span>
@@ -1147,7 +1288,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Jun  3 20:57:22 2016 by
+  Generated on Sat Jun  4 22:58:13 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.3).
 </div>

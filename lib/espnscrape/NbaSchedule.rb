@@ -1,16 +1,21 @@
 # Access NBA team schedule data
 class NbaSchedule
 	include NbaUrls
+	require_relative './Util'
 
 	attr_reader :game_list, :next_game
 
 	# Read Schedule data for a given Team
-	# @param tid [String] Three letter TeamID
-	# @param file [String] file name for static data
+	# @param tid [String] Team ID
+	# @param file [String] HTML Test Data
+	# @param seasontype [Integer] Season Type
+	# @note
+	#  Season Types: 1-Preseason; 2-Regular Season; 3-Playoffs
 	# @example
-	# 	t = NbaSchedule.new('', 'test/testData.html')
-	# 	u = NbaSchedule.new('UTA')
-	def initialize(tid='', file='', seasontype='')
+	# 	test     = NbaSchedule.new('', 'test/testData.html')
+	# 	pre      = NbaSchedule.new('UTA', '', 1)
+	# 	playoffs = NbaSchedule.new('GSW', '', 3)
+	def initialize(tid, file='', seasontype='')
 		doc = ''
 		if file.empty? # Load Live Data
 			unless (tid.empty?)
@@ -58,40 +63,37 @@ class NbaSchedule
 
 	end
 
-	# Return Full Schedule
-	# @return [[[String]]] 2d array of Schedule data
-	# @note (see #getFutureGames)
-	# @note (see #getPastGames)
+	# @return [[[String]]] Table of All Schedule data
+	# @see EspnScrape::FS_SCHEDULE_FUTURE
+	# @see EspnScrape::FS_SCHEDULE_PAST
 	def getAllGames
 		return @game_list
 	end
 
-	# Return Schedule Info of next game
-	# @return [[[String]]] 2d array of Future Schedule data
+	# Returns Schedule info of next game
+	# @return [[String]] Future Schedule Row ({EspnScrape::FS_SCHEDULE_FUTURE Description})
 	# @note (see #getFutureGames)
 	# @example
-	# 	getNextGame() #=> ["UTA", 13, false, "NULL", "Nov 23", true, "OKC", "9:00PM", false, 2]
+	# 	getNextGame() #=> ["GSW", 19, false, 0, "Jun 5", true, "CLE", "8:00 PM ET", true, "2016-06-05 20:00:00", 3]
 	def getNextGame
 		return @game_list[@next_game]
 	end
 
-	# Return Schedule Info of last completed game
-	# @return [[String]] 2d array of Past Schedule data
+	# Returns Schedule info of last completed game
+	# @return [[String]] Past Schedule Row ({EspnScrape::FS_SCHEDULE_PAST Description})
 	# @note (see #getPastGames)
 	# @example
-	# 	getLastGame() #=> ["UTA", 12, "00:00:00", false, "Nov 20", false, "DAL", false, "93", "102", "400828071", "6", "6", 2]
+	# 	getLastGame() #=> ["UTA", 82, "00:00:00", false, "Apr 13", false, "LAL", false, "96", "101", "400829115", "40", "42", "2016-04-13 00:00:00", 2]
 	def getLastGame
 		return @game_list[@next_game-1]
 	end
 
-	# Return GameID of Next Game
-	# @return [Integer]
+	# @return [Integer] Game # of Next Game
 	def getNextGameId
 		return @next_game
 	end
 
-	# Return TeamID of next opponent
-	# @return [String]
+	# @return [String] Team ID of next opponent
 	# @example
 	#   getNextTeamid() #=> "OKC"
 	def getNextTeamId
@@ -99,28 +101,17 @@ class NbaSchedule
 		return getNextGame[gameIndex]
 	end
 
-	# Return Schedule info of Future Games
-	# @return [[object]]
-	# @note Future Games Layout: TeamID, GameID, Win?, boxscore_id, Game Date, Home?, OppID, Game Time, TV?, game_datetime, seasontype
+	# @return [[String]] Table of Future Games ({EspnScrape::FS_SCHEDULE_FUTURE Description})
+	# @note (see EspnScrape::FS_SCHEDULE_FUTURE)
 	def getFutureGames
 		return @game_list[@next_game, game_list.size]
 	end
 
 	# Return Schedule info of Past Games
-	# @return [[object]]
-	# @note Past Games Layout: TeamID, GameID, Game Time, TV?, Game Date, Home?, OppID, Win?, Team Score, Opp Score, boxscore_id, wins, losses, game_datetime, seasontype
+	# @return [[String]] Table of Past Games ({EspnScrape::FS_SCHEDULE_PAST Description})
+	# @note (see EspnScrape::FS_SCHEDULE_PAST)
 	def getPastGames
 		return @game_list[0, @next_game]
-	end
-
-	# Visualization Helper
-	# @return [String]
-	def toString
-		str = ''
-		@game_list.each do |game|
-			str = str + game.join(',')
-		end
-		return str
 	end
 
 	private

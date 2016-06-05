@@ -1,17 +1,16 @@
-# Access NBA team list
+# Access list of NBA teams
 class NbaTeamList
 	include NbaUrls
-	# Return header
-	# @return [String] header
+	require_relative './Util'
+
+	# @return [String] Table Title
 	attr_accessor :header
 
-	# Return teamList
-	# @return [[[String]]] teamList
-	# @example
-	#   tl.teamList =>  [Team 0][TeamID, TeamName, TeamDiv, TeamConf]
+	# @return [[[String]]] Table of NBA Teams
+	# @note (see EspnScrape::FS_TEAM)
 	attr_accessor :teamList
 
-	# Populate class attributes with Team Data
+	# Scrape Team Data
 	# @return [[String]] Resulting Team List
 	def initialize()
 
@@ -50,17 +49,6 @@ class NbaTeamList
 		if !@teamList.nil? && @teamList.size != 30
 			puts "NbaTeamList: %i teams collected!" % [@teamList.size]
 		end
-	end
-
-
-	# Generate String representation of Team List
-	# @return [String] Resulting team list string
-	def toString
-		res = ""
-		@teamList.each do |t|
-			res += t.join(',') + "\n"
-		end
-		return res
 	end
 
 	private

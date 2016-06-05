@@ -2,8 +2,20 @@
 class NbaPlayer
   include NbaUrls
 
-  # @return [String]
-  attr_accessor :name, :position, :age, :h_ft, :h_in, :college, :weight
+  # @return [String] Name
+  attr_accessor :name
+  # @return [String] Position
+  attr_accessor :position
+  # @return [Integer] Age
+  attr_accessor :age
+  # @return [String] College
+  attr_accessor :college
+  # @return [Integer] Weight
+  attr_accessor :weight
+  # @return [Integer] Height (ft)
+  attr_accessor :h_ft
+  # @return [Integer] Height (in)
+  attr_accessor :h_in
 
   def initialize(espn_player_id)
     espn_player_id = espn_player_id.to_s
@@ -24,12 +36,12 @@ class NbaPlayer
   def readInfo(d)
     @name = d.xpath("//div[@class='mod-content']/*/h1 | //div[@class='mod-content']/h1")[0].text.strip
     @position = d.xpath("//ul[@class='general-info']/li")[0].text.gsub(/#\d*\s*/,'')
-    @college = d.xpath('//ul[contains(@class,"player-metadata")]/li/span[text() = "College"]/parent::li').text.gsub('College','')
+    @college = d.xpath('//span[text() = "College"]/parent::li').text.gsub('College','')
 
     # Age
-    age_text = d.xpath('//ul[contains(@class,"player-metadata")]/li/span[text() = "Born"]/parent::li').text
+    age_text = d.xpath('//span[text() = "Born"]/parent::li').text
     /:\s(?<age_num>\d\d)/ =~ age_text
-    @age = age_num
+    @age = age_num.to_i
 
     # Height/Weight
     h_w = d.xpath("//ul[@class='general-info']/li")[1]
@@ -38,14 +50,15 @@ class NbaPlayer
     end
 
     if(!weight.nil? && !weight.empty?)
-      @weight = weight.strip.split(' ')[0]
+      @weight = weight.strip.split(' ')[0].to_i
     else
       @weight = 0
     end
 
     if(!height.nil? && !height.empty?)
       @h_ft, @h_in = height.strip.split('\'')
-      @h_in = @h_in.gsub('"','').strip
+      @h_in = @h_in.gsub('"','').strip.to_i
+      @h_ft = @h_ft.to_i
     else
       @h_ft = 0
       @h_in = 0

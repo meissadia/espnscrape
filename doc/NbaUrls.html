@@ -132,7 +132,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>URL.</p>
+<p>URL to access Boxscore.</p>
 </div></span>
   
 </li>
@@ -180,7 +180,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Derive three letter TeamID from Team Name.</p>
+<p>Derive three letter Team ID from Team Name.</p>
 </div></span>
   
 </li>
@@ -204,7 +204,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>playerUrl.</p>
+<p>URL to access Player profile.</p>
 </div></span>
   
 </li>
@@ -228,7 +228,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>URL.</p>
+<p>URL to access NBA Team List.</p>
 </div></span>
   
 </li>
@@ -252,7 +252,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>teamRosterUrl.</p>
+<p>URL to access Team Roster.</p>
 </div></span>
   
 </li>
@@ -261,7 +261,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#teamScheduleUrl-instance_method" title="#teamScheduleUrl (instance method)">- (String) <strong>teamScheduleUrl</strong>(seasontype = 2) </a>
+      <a href="#teamScheduleUrl-instance_method" title="#teamScheduleUrl (instance method)">- (String) <strong>teamScheduleUrl</strong>(seasontype = &#39;&#39;) </a>
     
 
     
@@ -276,7 +276,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>teamScheduleUrl.</p>
+<p>URL to access Team Schedule.</p>
 </div></span>
   
 </li>
@@ -303,7 +303,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns URL</p>
+<p>Returns URL to access Boxscore</p>
 
 
   </div>
@@ -322,7 +322,7 @@
       
         &mdash;
         <div class='inline'>
-<p>URL</p>
+<p>URL to access Boxscore</p>
 </div>
       
     </li>
@@ -390,7 +390,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Three letter representation of Team</p>
+<p>Team ID</p>
 </div>
       
     </li>
@@ -406,7 +406,7 @@
       
         &mdash;
         <div class='inline'>
-<p>String with url data location</p>
+<p>URL String</p>
 </div>
       
     </li>
@@ -425,7 +425,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Resulting URL</p>
+<p>Formatted URL</p>
 </div>
       
     </li>
@@ -499,7 +499,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Derive three letter TeamID from Team Name</p>
+<p>Derive three letter Team ID from Team Name</p>
 
 
   </div>
@@ -527,7 +527,7 @@
       
         &mdash;
         <div class='inline'>
-<p>City Team Name</p>
+<p>Full Team Name</p>
 </div>
       
     </li>
@@ -546,7 +546,7 @@
       
         &mdash;
         <div class='inline'>
-<p>TeamID</p>
+<p>Team ID</p>
 </div>
       
     </li>
@@ -626,7 +626,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>playerUrl</p>
+<p>Returns URL to access Player profile</p>
 
 
   </div>
@@ -645,7 +645,7 @@
       
         &mdash;
         <div class='inline'>
-<p>URL</p>
+<p>URL to access Player profile</p>
 </div>
       
     </li>
@@ -658,12 +658,12 @@
       <pre class="lines">
 
 
-24
 25
-26</pre>
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaUrls.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaUrls.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_playerUrl'>playerUrl</span>
 	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http://espn.go.com/nba/player/_/id/</span><span class='tstring_end'>&#39;</span></span>
@@ -685,7 +685,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns URL</p>
+<p>Returns URL to access NBA Team List</p>
 
 
   </div>
@@ -704,7 +704,7 @@
       
         &mdash;
         <div class='inline'>
-<p>URL</p>
+<p>URL to access NBA Team List</p>
 </div>
       
     </li>
@@ -717,12 +717,12 @@
       <pre class="lines">
 
 
-8
 9
-10</pre>
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaUrls.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaUrls.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_teamListUrl'>teamListUrl</span>
 	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http://espn.go.com/nba/teams</span><span class='tstring_end'>&#39;</span></span>
@@ -744,7 +744,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>teamRosterUrl</p>
+<p>Returns URL to access Team Roster</p>
 
 
   </div>
@@ -763,7 +763,7 @@
       
         &mdash;
         <div class='inline'>
-<p>URL</p>
+<p>URL to access Team Roster</p>
 </div>
       
     </li>
@@ -776,12 +776,12 @@
       <pre class="lines">
 
 
-19
 20
-21</pre>
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaUrls.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaUrls.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_teamRosterUrl'>teamRosterUrl</span>
 	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http://espn.go.com/nba/team/roster/_/name/%s/</span><span class='tstring_end'>&#39;</span></span>
@@ -794,7 +794,7 @@
       <div class="method_details ">
   <h3 class="signature " id="teamScheduleUrl-instance_method">
   
-    - (<tt>String</tt>) <strong>teamScheduleUrl</strong>(seasontype = 2) 
+    - (<tt>String</tt>) <strong>teamScheduleUrl</strong>(seasontype = &#39;&#39;) 
   
 
   
@@ -803,7 +803,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>teamScheduleUrl</p>
+<p>Returns URL to access Team Schedule</p>
 
 
   </div>
@@ -820,7 +820,7 @@
         <span class='type'>(<tt>INT</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>2</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
       
       
         &mdash;
@@ -844,7 +844,7 @@
       
         &mdash;
         <div class='inline'>
-<p>URL</p>
+<p>URL to access Team Schedule</p>
 </div>
       
     </li>
@@ -857,14 +857,14 @@
       <pre class="lines">
 
 
-14
 15
-16</pre>
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaUrls.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/espnscrape/NbaUrls.rb', line 15</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_teamScheduleUrl'>teamScheduleUrl</span><span class='lparen'>(</span><span class='id identifier rubyid_seasontype'>seasontype</span><span class='op'>=</span><span class='int'>2</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_teamScheduleUrl'>teamScheduleUrl</span><span class='lparen'>(</span><span class='id identifier rubyid_seasontype'>seasontype</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
 	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://espn.go.com/nba/team/schedule/_/name/%s/seasontype/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_seasontype'>seasontype</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
@@ -877,7 +877,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Jun  3 20:57:22 2016 by
+  Generated on Sat Jun  4 22:58:13 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.2.3).
 </div>
