@@ -104,11 +104,12 @@ Available on [RubyDoc](http://www.rubydoc.info/gems/espnscrape/) or locally:
 
 ## Requirements
 #### Ruby version
-*Built and tested on Ruby 2.2.3p173*
+*Ruby >= 1.9.2*
+*Rake ~> 10.4.2*
+*minitest ~> 5.4*
 
 #### Dependencies
 *Nokogiri 1.6*
-
 
 ## Testing
     > rake
