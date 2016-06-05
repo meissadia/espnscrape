@@ -29,6 +29,9 @@ class NbaSchedule
 		schedule = doc.xpath('//div/div/table/tr') #Schedule Rows
 		year1 = doc.xpath('//div[@id=\'my-teams-table\']/div/div/div/h1').text.split('-')[1].strip.to_i #Season Starting Year
 		season_indicator = doc.xpath("//tr[@class='stathead']").text.split[1].downcase # preseason/regular/postseason
+		if tid.empty?
+			tid = getTid(doc.title.split(/\d{4}/)[0].strip)
+		end
 
 		@game_list = []
 		@next_game = 0 # Cursor to start of Future Games
@@ -149,7 +152,7 @@ class NbaSchedule
 					tmp << 0							  		#boxscore_id
 					x.children.each do |cell|
 						if cnt < 4
-							txt = cell.text.chomp
+							txt = cell.text.strip
 							if cnt == 0 						# Game Date
 								gameDate = txt.split(',')[1].strip
 								tmp << gameDate
@@ -165,7 +168,7 @@ class NbaSchedule
 								game_time = txt + ' ET'
 								tmp << game_time
 							elsif cnt == 3 				# TV
-								if (cell.children[0].node_name == 'img' || txt != " ")
+								if (['a','img'].include?(cell.children[0].node_name) || txt.size > 1)
 									tmp << true
 								else
 									tmp << false

@@ -3,9 +3,10 @@ require_relative '../lib/espnscrape'
 
 class TestNbaSchedule < Minitest::Test
   include NbaUrls
+  include DebugUtils
   def test_initialize
     numGames = 82
-    schedule = NbaSchedule.new('UTA', 'test/testNbaScheduleData.html') # Data 11/21/15
+    schedule = NbaSchedule.new('', 'test/testNbaScheduleData.html') # Data 11/21/15
 
     # Test getAllGames
     assert_equal numGames, schedule.getAllGames.size, "NbaSchedule: Wrong Season Length"
