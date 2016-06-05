@@ -44,6 +44,7 @@ class TestNbaBoxScore < Minitest::Test
     # Boxscore with Non-NBA Team
     bs = NbaBoxScore.new 400832210
     assert_equal 'Milan Olimpia', bs.homeName
+    assert_equal '2015-10-06 00:00:00', bs.gameDate, "Game Date -> Incorrect"
 
   end
 end

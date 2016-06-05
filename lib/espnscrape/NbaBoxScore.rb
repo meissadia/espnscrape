@@ -1,4 +1,3 @@
-require 'Date'
 # Access NBA boxscore data
 class NbaBoxScore
 	include NbaUrls
