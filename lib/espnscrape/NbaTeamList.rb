@@ -1,7 +1,7 @@
 # Access list of NBA teams
 class NbaTeamList
 	include NbaUrls
-	include Util
+include DebugUtils
 
 	# @return [String] Table Title
 	attr_accessor :header

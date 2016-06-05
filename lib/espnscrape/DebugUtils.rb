@@ -1,5 +1,5 @@
 # Debug Utilities
-module Util
+module DebugUtils
 	# Print an array as a CSV string
 	# @param args [[object]]
 	# @return [String]

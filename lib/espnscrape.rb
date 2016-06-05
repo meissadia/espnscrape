@@ -14,7 +14,7 @@ require_relative 'espnscrape/NbaSchedule'
 require_relative 'espnscrape/NbaPlayer'
 
 # debug utilities
-require_relative 'espnscrape/Util'
+require_relative 'espnscrape/DebugUtils'
 
 # EspnScrape main class
 class EspnScrape

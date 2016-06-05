@@ -1,7 +1,7 @@
 # Access NBA team schedule data
 class NbaSchedule
 	include NbaUrls
-	include Util
+include DebugUtils
 
 	attr_reader :game_list, :next_game
 

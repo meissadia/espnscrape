@@ -1,7 +1,7 @@
 # Access NBA roster data
 class NbaRoster
 	include NbaUrls
-	include Util
+include DebugUtils
 
 	# Returns Coach Name
 	# @return [String] Coach Name

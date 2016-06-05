@@ -1,8 +1,8 @@
-require_relative 'Util.rb'
+require_relative './DebugUtils.rb'
 # Access NBA boxscore data
 class NbaBoxScore
 	include NbaUrls
-	include Util
+	include DebugUtils
 
 	# @return [String] Game Date
 	attr_accessor :gameDate
