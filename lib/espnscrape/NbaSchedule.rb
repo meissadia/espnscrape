@@ -1,7 +1,7 @@
 # Access NBA team schedule data
 class NbaSchedule
 	include NbaUrls
-	require_relative 'Util.rb'
+	include Util
 
 	attr_reader :game_list, :next_game
 

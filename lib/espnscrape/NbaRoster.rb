@@ -1,8 +1,7 @@
 # Access NBA roster data
-
 class NbaRoster
 	include NbaUrls
-	require_relative 'Util.rb'
+	include Util
 
 	# Returns Coach Name
 	# @return [String] Coach Name
