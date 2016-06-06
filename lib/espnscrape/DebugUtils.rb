@@ -13,7 +13,8 @@ module DebugUtils
 	def printTable(args, row_width=15, title='')
 		spc = row_width
 		puts title
-		args.each do |row|
+		args.each_with_index do |row, idx|
+			print "#{idx}. "
 			row.each do |td|
 				print td
 				print " "*(spc - td.to_s.length) if ((spc - td.to_s.length) > 0)

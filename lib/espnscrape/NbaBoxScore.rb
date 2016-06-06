@@ -35,21 +35,20 @@ class NbaBoxScore
 	# @param game_id [Integer] Boxscore ID
 	# @example
 	# 	bs = NbaBoxScore.new(400828035)
-	def initialize(game_id)
-		unless (game_id.nil?)
+	def initialize(game_id, file='')
+		if (!game_id.nil?)
 			url = boxScoreUrl + game_id.to_s
 			doc = Nokogiri::HTML(open(url))
-			if doc.nil?
-				puts "URL Unreachable: " + url
-				exit 1
-			end
+		else
+			doc = Nokogiri::HTML(open(file))
+		end
+		exit if doc.nil?
 
-			@gameDate = readGameDate(doc)
-			@awayName, @homeName = readTeamNames(doc)
-			if(@gameDate.index("00:00:00")) # Only past games have stats
-				@awayPlayers, @awayTotals = readTeamStats(doc, 'away')
-				@homePlayers, @homeTotals = readTeamStats(doc, 'home')
-			end
+		@gameDate = readGameDate(doc)
+		@awayName, @homeName = readTeamNames(doc)
+		if(@gameDate.index("00:00:00")) # Only past games have stats
+			@awayPlayers, @awayTotals = readTeamStats(doc, 'away')
+			@homePlayers, @homeTotals = readTeamStats(doc, 'home')
 		end
 	end
 
@@ -72,7 +71,7 @@ class NbaBoxScore
 	def readGameDate(d)
 		# Should be YYYY-MM-DD HH:MM:00
 		time = d.xpath('//span[contains(@class,"game-time")]')[0].text.strip
-		date = d.title.split('-')[2].gsub(',', "")
+		date = d.title.split('-')[2].delete(',')
 
 		# Future game time is populated via AJAX, so may not be available at the
 		# time the HTML is processed
@@ -104,6 +103,64 @@ class NbaBoxScore
 		return [away, home]
 	end
 
+	# Extract Player Stats
+	# @param row [[Nokogiri::XML::NodeSet]] Cumulative Team Stats
+	# @param tid [String] Team ID
+	# @return [[String]]  Processed Team Stats
+	def processPlayerRows(rows, tid)
+		result = []				  # Extracted Player Data
+		rows.each_with_index do |row, index|
+			curr_row = []		  # Array of data being processed
+			curr_row << tid 	# team_id
+			curr_row << '0' 	# game_id
+
+			row.children.each do |cell|		# Process Columns
+				c_val = cell.text.strip
+				case cell.attribute("class").text
+				when "name"
+					curr_row << cell.children[0].attribute("href").text[/id\/(\d+)/, 1] # Player ID
+					curr_row << cell.children[0].text.strip # Player Short Name (i.e. D. Wade)
+					curr_row << cell.children[1].text.strip # Position
+				when 'fg', '3pt', 'ft'
+					# Made-Attempts
+					curr_row += c_val.split('-')
+				else
+					curr_row << c_val
+				end
+			end
+
+			if(index < 5)   # Check if Starter
+				curr_row << "X"
+			end
+
+			result << curr_row  # Save processed data
+		end
+		return result
+	end
+
+	# Extract Team Stats
+	# @param row [[Nokogiri::XML::NodeSet]] Cumulative Team Stats
+	# @param tid [String]  Team ID
+	# @return [[String]]   Processed Team Stats
+	def processTeamRow(row, tid)
+		result = []
+		row.children.each do |cell|
+			c_val = cell.text.strip
+			case cell.attribute("class").text
+			when 'name'
+				result << tid
+			when 'fg', '3pt', 'ft'
+				# Made-Attempts
+				result += c_val.split('-')
+			else
+				if(c_val.empty?)
+					next
+				end
+				result << c_val
+			end
+		end
+		return result
+	end
 
 	# Reads the team stats from a Nokogiri::Doc
 	# @param d [Nokogiri::HTML::Document]
@@ -128,61 +185,11 @@ class NbaBoxScore
 			tid = getTid(@homeName)
 		end
 
-		player_rows = p_tab.xpath('tr[not(@class)]') 				# Ignore TEAM rows
-		team_row = p_tab.xpath('tr[@class="highlight"]')[0] # Ignore TEAM rows
+		player_rows = p_tab.xpath('tr[not(@class)]') 				   # Ignore TEAM rows
+		team_row    = p_tab.xpath('tr[@class="highlight"]')[0] # Ignore Percentage row
 
-		player_stats = []								# Array of processed data
-		row_count = 0									  # Starter Tracker
-
-		player_rows.each do |row|			  # Process Rows
-			tmp_array = Array.new					# Array of data being processed
-			tmp_array << tid 						  # team_id
-			tmp_array << '0' 					    # game_id
-
-			row.children.each do |cell|		# Process Columns
-				c_val = cell.text.strip
-				case cell.attribute("class").text
-				when "name"
-					tmp_array << cell.children[0].attribute("href").text[/id\/(\d+)/, 1] # Player ID
-					tmp_array << cell.children[0].text.strip # Player Short Name (i.e. D. Wade)
-					tmp_array << cell.children[1].text.strip # Position
-				when 'fg', '3pt', 'ft'
-					# Made, Attempts
-					cell.text.split('-').each do |sp|
-						tmp_array << sp.strip.gsub("\'","\\\'")
-					end
-				else
-					tmp_array << c_val
-				end
-			end
-
-			if(row_count < 5)   # Check if Starter
-				tmp_array << "X"
-			end
-
-			player_stats << tmp_array # Save processed data
-			row_count += 1 			# Starter Tracker
-		end
-
-		# Extract TEAM stats
-		team_totals = Array.new
-		team_row.children.each do |cell|
-			c_val = cell.text.strip
-			case cell.attribute("class").text
-			when 'name'
-				team_totals << tid
-			when 'fg', '3pt', 'ft'
-				# Made, Attempts
-				cell.text.split('-').each do |sp|
-					team_totals << sp.strip.gsub("\'","\\\'")
-				end
-			else
-				if(c_val.empty?)
-					next
-				end
-				team_totals << c_val
-			end
-		end
+		player_stats = processPlayerRows(player_rows, tid)
+		team_totals  = processTeamRow(team_row, tid)
 
 		return player_stats, team_totals
 	end

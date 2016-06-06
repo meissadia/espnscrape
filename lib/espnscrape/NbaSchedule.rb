@@ -16,7 +16,6 @@ class NbaSchedule
 	# 	pre      = NbaSchedule.new('UTA', '', 1)
 	# 	playoffs = NbaSchedule.new('GSW', '', 3)
 	def initialize(tid, file='', seasontype='')
-		doc = ''
 		if file.empty? # Load Live Data
 			unless (tid.empty?)
 				url = formatTeamUrl(tid, teamScheduleUrl(seasontype))
@@ -25,6 +24,7 @@ class NbaSchedule
 		else # Load File Data
 			doc = Nokogiri::HTML(open(file))
 		end
+		exit if doc.nil?
 
 		schedule = doc.xpath('//div/div/table/tr') #Schedule Rows
 		year1 = doc.xpath('//div[@id=\'my-teams-table\']/div/div/div/h1').text.split('-')[1].strip.to_i #Season Starting Year
@@ -36,33 +36,10 @@ class NbaSchedule
 		@game_list = []
 		@next_game = 0 # Cursor to start of Future Games
 
-		# If season type is provided, verify
-		case seasontype
-		when 1
-			if !season_indicator.include?("pre")
-				return nil
-			end
-		when 2
-			if !season_indicator.include?("regular")
-				return nil
-			end
-		when 3
-			if !season_indicator.include?("post")
-				return nil
-			end
-		else
-			# When no season type is provided, determine season type
-			if season_indicator.include?("pre")
-				seasontype = 1
-			elsif season_indicator.include?("regular")
-				seasontype = 2
-			elsif season_indicator.include?("post")
-				seasontype = 3
-			else
-				return nil
-			end
-		end
-		processSeason(schedule, tid, year1, seasontype)
+		seasonValid = verifySeasonType(seasontype, season_indicator)
+		seasontype  = findSeasonType(season_indicator) if seasontype.empty?
+
+		processSeason(schedule, tid, year1, seasontype) if seasonValid && !seasontype.nil?
 
 	end
 
@@ -119,143 +96,158 @@ class NbaSchedule
 
 	private
 
+	# Ensure requested season type is what is being processed
+	def verifySeasonType(type, indicator)
+		# If season type is provided, verify
+		case type
+		when 1
+			return false if !indicator.include?("pre")
+		when 2
+			return false if !indicator.include?("regular")
+		when 3
+			return false if !indicator.include?("post")
+		end
+		return true
+	end
+
+	# Determine season type from document data
+	def findSeasonType(indicator)
+		# Determine season type
+		return 1 if indicator.include?("pre")
+		return 2 if indicator.include?("regular")
+		return 3 if indicator.include?("post")
+		return nil
+	end
+
+	# Process Table of Schedule Data
 	def processSeason(schedule, tid, year1, seasontype)
-		year2 = year1 + 1 # Season Ending Year
-		game_id = 0 # 82-game counter
-		gameDate = ""
-		game_time = ""
-		row_type = ''
-		ws = 0
-		ls = 0
-		win = ''
+		game_date, game_time = '', ''
+		row_type  = ''		# (F)uture Game, (P)ast Game
+		game_id = 0       # 82-game counter
+		ws = ls	= 0			  # Playoff Win/Loss Counters
 
 		# Process Schedule lines
-		schedule.each do |x|
-			if ('a'..'z').include?(x.children[0].text[1,1]) # Non-Header Row
-				if x.children[2].text.include?(":")           # Special Case - Future Playoff games shown under 'Result' header
-					row_type = 'F'
-				end
-				tmp = [] 				# Table of Schedule rows
-				tmp << tid			# TeamID
-				game_id += 1
-				tmp << game_id   # GameID
+		schedule.each do |row|
+			if ('a'..'z').include?(row.children[0].text[1]) # Non-Header Row
+				row_type = 'F' if row.children[2].text.include?(":")  # Special Case - Future Playoff games shown under 'Result' header
 
-				cnt = 0
-				columns = x.children.size
-				if ( columns == 3 )
-					# =>  Postponed
+				tmp = [] 							# Processed row data
+				tmp << tid						# TeamID
+				tmp << game_id += 1   # GameID
+
+				if row.children.size == 3                  # => Postponed Game
 					game_id -= 1
 					next
-				elsif row_type == 'F'
-					# => Future Game
-					tmp << false 								#Win
-					tmp << 0							  		#boxscore_id
-					x.children.each do |cell|
-						if cnt < 4
-							txt = cell.text.strip
-							if cnt == 0 						# Game Date
-								gameDate = txt.split(',')[1].strip
-								tmp << gameDate
-							elsif cnt == 1 				 # Home/Away, Opp tid
-								if txt[0,1].include?('@') # Home?
-									tmp << false
-								else
-									tmp << true
-								end
-								x1 = cell.children.children.children[1].attributes['href'].text.split('/')[-1].split('-').join(' ')
-								tmp << getTid(x1) 	# OppID
-							elsif cnt == 2 				# Game Time
-								game_time = txt + ' ET'
-								tmp << game_time
-							elsif cnt == 3 				# TV
-								if (['a','img'].include?(cell.children[0].node_name) || txt.size > 1)
-									tmp << true
-								else
-									tmp << false
-								end
-							end
-						end
-						cnt += 1
-					end
-				else
-					# => Past Game
-					game_time = '00:00:00' 		# Game Time (Not shown for past games)
+				elsif row_type == 'F' 			               # => Future Game
+					game_date, game_time = futureGame(row, tmp)
+				else											                 # => Past Game
+					@next_game = game_id
+					game_time = '00:00:00' # Game Time (Not shown for past games)
 					tmp << game_time
-					tmp << false 						  # TV (NS)
-					x.children.each do |cell|
-						if cnt <= 3
-							txt = cell.text.chomp
-							if cnt == 0 				 # Game Date
-								gameDate = txt.split(',')[1].strip
-								tmp << gameDate
-							elsif cnt == 1
-								if txt[0,1].include?('@') # Home?
-									tmp << false
-								else
-									tmp << true
-								end
-								x0 = cell.children.children.children[1].attributes['href']
-								if x0.nil? # Non-NBA Team
-									tmp << cell.children.children.children[1].text.strip
-								else # NBA Team
-									x1 = x0.text.split('/')[-1].split('-').join(' ')
-									tmp << getTid(x1) 				# OppID
-								end
-							elsif cnt == 2 						  # Game Result
-								win =  (txt[0,1].include?('W') ? true : false)
-								tmp << win 								# Win?
-								txt2 = txt[1, txt.length].gsub(/\s?\d?OT/,'')
-								if !win
-									opp_score, team_score = txt2.split('-')
-								else
-									team_score, opp_score = txt2.split('-')
-								end
-								tmp << team_score << opp_score #Team Score, Opp Score
-								x0 = cell.children.children.children[1].attributes['href']
-								if x0.nil?
-									tmp << 0
-								else
-									bs_id = x0.text.split('=')[1]
-									tmp << bs_id 												# Boxscore ID
-								end
-							elsif cnt == 3 && seasontype != 3			#Team Record
-								wins, losses = txt.split('-')
-								tmp << wins << losses
-							elsif cnt == 3 && seasontype == 3			#Team Record Playoffs
-								win ? ws += 1 : ls +=1
-								tmp << ws << ls
-							end
-						end
-						cnt += 1
-						@next_game = game_id
-					end
+					tmp << false 					 # TV (NS)
+					game_date, ws, ls = pastGame(row, tmp, ws, ls, seasontype)
 				end
 			else # Header Row
-				if x.children.size < 2
-					next
-				elsif x.children[2].text.include?("TIME")
-					row_type = 'F'
-				elsif x.children[2].text.include?("RESULT")
-					row_type = 'P'
-				end
+				next if row.children.size < 2
+				row_type = 'F' if row.children[2].text.include?("TIME")
+				row_type = 'P' if row.children[2].text.include?("RESULT")
 			end
 
-			# => Adjust and format dates
 			if !tmp.nil?
-				if ['Oct', 'Nov', 'Dec'].include?(gameDate.split[0])
-					d = DateTime.parse(game_time + ' , ' + gameDate + "," + year1.to_s)
-				else
-					d = DateTime.parse(game_time + ' , ' + gameDate + "," + year2.to_s)
-				end
-				# puts "GameDate = %s" % [d.strftime("%Y-%m-%d %H:%M:%S")]
-				gameDate = d.strftime("%Y-%m-%d %H:%M:%S")
-				tmp << gameDate # Game DateTime
-
-				tmp << seasontype # Season Type
-
-				# => Store row
-				@game_list << tmp
+				tmp << formatGameDate(game_date, year1, game_time) # Game DateTime
+				tmp << seasontype 										 						 # Season Type
+				@game_list << tmp											 						 # Save processed row
 			end
 		end
 	end
+
+	# Process Past Game Row
+	def pastGame(row, result, ws, ls, seasonType)
+		row.children.each_with_index do |cell, cnt|
+			if cnt <= 3
+				txt = cell.text.chomp
+				if cnt == 0 				 									# Game Date
+					result << txt.split(',')[1].strip
+				elsif cnt == 1 			 									# Home Game? and Opponent ID
+					saveHomeOpponent(cell, result, txt)
+				elsif cnt == 2 			 									# Game Result
+					saveGameResult(cell, result, txt)
+				elsif cnt == 3 && seasonType != 3			# Team Record
+					wins, losses = txt.split('-')
+					result << wins << losses
+				elsif cnt == 3 && seasonType == 3			# Team Record Playoffs
+					result[7] ? ws += 1 : ls +=1
+					result << ws << ls
+				end
+			end
+		end
+		# 		 Game Date, wins, losses
+		return result[4], ws, ls
+	end
+
+	# Process Future Game Row
+	def futureGame(row, result)
+		result << false 							#Win
+		result << 0							  		#boxscore_id
+		row.children.each_with_index do |cell, cnt|
+			if cnt < 4
+				txt = cell.text.strip
+				if cnt == 0 						  # Game Date
+					result << txt.split(',')[1].strip
+				elsif cnt == 1 				    # Home/Away, Opp tid
+					saveHomeOpponent(cell, result, txt)
+				elsif cnt == 2 				    # Game Time
+					result << txt + ' ET'
+				elsif cnt == 3 			    	# TV
+					if (['a','img'].include?(cell.children[0].node_name) || txt.size > 1)
+						result << true
+					else
+						result << false
+					end
+				end
+			end
+		end
+		# 		 Game Date, Game Time
+		return result[4], result[7]
+	end
+
+	# Store Home? and Opponent ID
+	def saveHomeOpponent(cell, result, txt)
+		txt[0,1].include?('@') ? result << false : result << true      # Home Game?
+		x0 = cell.children.children.children[1].attributes['href']
+		if x0.nil? # Non-NBA Team
+			result << cell.children.children.children[1].text.strip
+		else 			 # NBA Team
+			result << getTid(x0.text.split('/')[-1].split('-').join(' ')) # Opponent ID
+		end
+	end
+
+	# Store Game Result
+	# Win?, Team Score, Opponent Score, Boxscore ID
+	def saveGameResult(cell, result, txt)
+		win = (txt[0,1].include?('W') ? true : false)
+		final_score = txt[1, txt.length].gsub(/\s?\d?OT/,'')
+		if win
+			team_score, opp_score = final_score.split('-')
+		else
+			opp_score, team_score = final_score.split('-')
+		end
+		boxID = cell.children.children.children[1].attributes['href']
+
+		result << win << team_score << opp_score # Win?, Team Score, Opponent Score
+		boxID.nil? ? result << 0 : result << boxID.text.split('=')[1] # Boxscore ID
+	end
+
+
+	#  Adjust and format dates
+	def formatGameDate(month_day, year, game_time='00:00:00')
+		if ['Oct', 'Nov', 'Dec'].include?(month_day.split[0])
+			d = DateTime.parse(game_time + ' , ' + month_day + "," + year.to_s)
+		else
+			d = DateTime.parse(game_time + ' , ' + month_day + "," + (year + 1).to_s)
+		end
+
+		return d.strftime("%Y-%m-%d %H:%M:%S") # Game DateTime String
+	end
+
 end

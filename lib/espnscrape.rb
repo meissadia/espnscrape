@@ -104,12 +104,10 @@ class EspnScrape
   #   => {:t_abbr=>"BOS", :t_name=>"Boston Celtics", :division=>"Atlantic", :conference=>"Eastern"}
   def self.to_hash(field_names, source)
     fl = {}   # Resulting Field List
-    idx = 0   # Source cursor
 
     # Create key(from source):value(from field names) pairs
-    field_names.each do |f|
+    field_names.each_with_index do |f,idx|
       fl[f] = source[idx]
-      idx += 1
     end
     return fl
   end

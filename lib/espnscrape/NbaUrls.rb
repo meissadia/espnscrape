@@ -60,26 +60,29 @@ module NbaUrls
 	# 	getTid("Oklahoma City Thunder") #=> "OKC"
 	#
 	def getTid(team_name)
-		abbr_tmp = team_name.split
-		abbr = ""
-		if abbr_tmp.size > 2
-			abbr_tmp.each do |x|
-				abbr << x[0]
+		result = ''
+		name_words = team_name.split
+		if name_words.size > 2
+			name_words.each do |word|
+				result << word[0]
 			end
-			abbr.upcase!
+			result.upcase!
 		else
-			abbr = abbr_tmp[0][0..2].upcase
+			result = name_words[0][0..2].upcase
 		end
+		return checkSpecial(result)
+	end
 
+	# Adjust Outlier Abbreviations
+	def checkSpecial(abbr)
 		case abbr
 		when 'OCT'
-			abbr = 'OKC'
+			return 'OKC'
 		when 'PTB'
-			abbr = 'POR'
+			return 'POR'
 		when 'BRO'
-			abbr = 'BKN'
+			return 'BKN'
 		end
-
 		return abbr
 	end
 end

@@ -4,24 +4,23 @@ require_relative '../lib/espnscrape'
 class TestEspnScrape < Minitest::Test
 
   def test_get_boxscore
-    game_id = 400828035
-    bs = EspnScrape.boxscore(game_id)
-    assert_equal "Utah Jazz", bs.awayName, "ES.boxscore.homeTeam"
+    bs = EspnScrape.boxscore(400828035)
+    assert_equal "Utah Jazz", bs.awayName, "Boxscore Error"
   end
 
   def test_get_roster
     r = EspnScrape.roster('UTA')
-    assert_equal false, r.nil?, "ES.roster.Set"
+    assert_equal false, r.nil?, "Roster Error"
   end
 
   def test_get_team_list
     tl = EspnScrape.teamList
-    assert_equal tl.teamList.size, 30, "Team Count => Incorrect"
+    assert_equal 30, tl.teamList.size,  "Team List Error"
   end
 
   def test_get_schedule
-    r = EspnScrape.schedule('UTA')
-    assert_equal false, r.nil?, "ES.Schedule.Set"
+    s = EspnScrape.schedule('UTA')
+    assert_equal true, s.getAllGames.count > 0, "Schedule Error"
   end
 
   def test_hashes

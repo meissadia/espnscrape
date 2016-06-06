@@ -2,7 +2,7 @@ require 'minitest/autorun'
 
 class TestNbaTeamList < Minitest::Test
   include NbaUrls
-  def test_initialize
+  def test_live_data
     tl = NbaTeamList.new
 
     # Test Team Count

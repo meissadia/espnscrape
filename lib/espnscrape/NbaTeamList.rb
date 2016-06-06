@@ -12,29 +12,17 @@ class NbaTeamList
 
 	# Scrape Team Data
 	# @return [[String]] Resulting Team List
-	def initialize()
-
-		url = teamListUrl 							# Open static URL
-		doc = Nokogiri::HTML(open(url))
-		if doc.nil?
-			puts "NbaTeamList URL Unreachable: " + url
-			return nil
+	def initialize(file='')
+		if (file.empty?)
+			doc = Nokogiri::HTML(open(teamListUrl))
+		else
+			doc = Nokogiri::HTML(open(file))
 		end
-
-		# Define XPATH variables
-		xpath_tname = "//h5/a/text()"
-		xpath_division = "//div/div/div/div/div[2]"
+		exit if doc.nil?
 
 		# Collect
 		@header = doc.xpath("//h2")[0].text.strip # Table Header
-		team_names = doc.xpath(xpath_tname) # Team Names
-
-		# Check if Division layout has changed
-		divCheck = 10
-		divAct = doc.xpath(xpath_division).size
-		if divAct != divCheck
-			# puts "Warning: Found %i out of %i divisions via xpath" % [divAct, divCheck]
-		end
+		team_names = doc.xpath("//h5/a/text()")   # Team Names
 
 		@teamList = []
 		h = 0 # Head of teamNames range
@@ -63,35 +51,11 @@ class NbaTeamList
 	# 	#result[n] = [TeamID, TeamName, TeamDiv, TeamConf]
 	# 	result[0] = ["BOS", "Boston Celtics", "Atlatic", "Eastern"]
 	def processTeams(division, team_names, west_conf, tl)
-		# Derive Team Abbrevation
 		team_names.each do |tname|
-			t = tname.text # Extract text
-			# Identify Team Abbreviation
-			name_words = t.split
-			abbr = ""
-			if name_words.size > 2
-				name_words.each do |x|
-					abbr << x[0]
-				end
-				abbr.upcase
-			else
-				abbr = name_words[0][0..2].upcase
-			end
-
-			# Adjust Outlier Abbreviations
-			case abbr
-			when 'OCT'
-				abbr = 'OKC'
-			when 'PTB'
-				abbr = 'POR'
-			when 'BRO'
-				abbr = 'BKN'
-			end
-
-			# Stage Team Data
-			tmp = []
-			tmp << abbr
-			tmp << t.strip
+			tmp  = [] 							# Stage Team Data
+			full = tname.text.strip	# Full Team Name
+			tmp << getTid(full)			# Derive Team Abbreviation
+			tmp << full.strip
 			tmp << division
 
 			# Derive Conference from Division
@@ -101,13 +65,8 @@ class NbaTeamList
 				puts "Error: Unable to process full data for #{tname}"
 			end
 
-			# Save Team Data to global @teamList[]
-			tl << tmp
-			# There may be additional listings which are not for NBA teams.
-			# Stop processing data when TeamID == Utah Jazz (UTA).
-			if abbr == 'UTA'
-				break
-			end
+			tl << tmp # Save Team Data to global @teamList[]
 		end
 	end
+
 end
