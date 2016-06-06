@@ -34,22 +34,11 @@ module NbaUrls
 	# 	NbaUrls.formatTeamUrl('uta', NbaUrls.teamRosterUrl) #=> "http://espn.go.com/nba/team/roster/_/name/utah/"
 	def formatTeamUrl(team_id, url)
 		team_id = team_id.downcase
-		case team_id
-		when 'uta'
-			team_id = 'utah'
-		when 'nop'
-			team_id = 'no'
-		when 'sas'
-			team_id = 'sa'
-		when 'was'
-			team_id = 'wsh'
-		when 'pho'
-			team_id = 'phx'
-		when 'gsw'
-			team_id = 'gs'
-		when 'nyk'
-			team_id = 'ny'
-		end
+		special = {
+			'was' => 'wsh',	'nop' => 'no', 'sas' => 'sa', 'uta' => 'utah',
+			'pho' => 'phx', 'gsw' => 'gs', 'nyk' => 'ny'
+		}
+		team_id = special[team_id] if special.keys.include?(team_id)
 		return url % [team_id]
 	end
 
@@ -61,28 +50,15 @@ module NbaUrls
 	#
 	def getTid(team_name)
 		result = ''
-		name_words = team_name.split
-		if name_words.size > 2
-			name_words.each do |word|
-				result << word[0]
-			end
-			result.upcase!
-		else
-			result = name_words[0][0..2].upcase
-		end
+		words = team_name.split
+		words.size > 2 ? words.each { |word| result << word[0] } : result = words[0][0,3]
 		return checkSpecial(result)
 	end
 
 	# Adjust Outlier Abbreviations
 	def checkSpecial(abbr)
-		case abbr
-		when 'OCT'
-			return 'OKC'
-		when 'PTB'
-			return 'POR'
-		when 'BRO'
-			return 'BKN'
-		end
-		return abbr
+		abbr.upcase!
+		special = { 'OCT' => 'OKC', 'PTB' => 'POR', 'BRO' => 'BKN' }
+		special.keys.include?(abbr) ? special[abbr] : abbr
 	end
 end

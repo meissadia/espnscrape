@@ -71,7 +71,7 @@
 +   Added Module WAR to create dictionaries from espnscrape arrays  
   * require 'war'  
   * include WAR   
-+   TODO: Needs Testsuite
++ Needs Testsuite
 + NbaBoxScore (getHomeTeamPlayers, getAwayTeamPlayers)  
   * Corrected handling of names with apostrophes  
   * getLastGame()  
