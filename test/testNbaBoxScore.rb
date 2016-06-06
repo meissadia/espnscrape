@@ -36,7 +36,7 @@ class TestNbaBoxScore < Minitest::Test
 
   def test_file_data
     # # => Test Game: Future
-    # bs = NbaBoxScore.new('', 'test/boxscoreFuture.html')
+    # bs = NbaBoxScore.new('', 'test/data/boxscoreFuture.html')
     # assert_equal false, bs.nil?, "Unable to Initialize object"
     # assert_equal "2016-06-08 19:00:00", bs.getGameDate, "Game Date => Incorrect"
     #

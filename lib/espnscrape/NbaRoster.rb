@@ -15,7 +15,7 @@ class NbaRoster
 	# @param team_id [String] Team ID
 	# @example
 	# 	r = NbaRoster.new("UTA")
-	# 	r = NbaRoster.new('', 'test/rosterData.html')
+	# 	r = NbaRoster.new('', 'test/data/rosterData.html')
 	def initialize(team_id, file='')
 		if (!team_id.empty?)
 			url = formatTeamUrl(team_id, teamRosterUrl)  # Generate URL

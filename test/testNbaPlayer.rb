@@ -4,7 +4,7 @@ require_relative '../lib/espnscrape'
 class TestNbaPlayer < Minitest::Test
   include NbaUrls
   def test_file_data
-    player = NbaPlayer.new('', 'test/playerBennett.html')
+    player = NbaPlayer.new('', 'test/data/playerBennett.html')
     assert_equal "Anthony Bennett", player.name,     "Player Name => Error"
     assert_equal "PF",              player.position, "Player Position => Error"
     assert_equal 6,                 player.h_ft,     "Player H_FT => Error"

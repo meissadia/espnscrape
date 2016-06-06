@@ -12,7 +12,7 @@ class NbaSchedule
 	# @note
 	#  Season Types: 1-Preseason; 2-Regular Season; 3-Playoffs
 	# @example
-	# 	test     = NbaSchedule.new('', 'test/testData.html')
+	# 	test     = NbaSchedule.new('', 'test/data/testData.html')
 	# 	pre      = NbaSchedule.new('UTA', '', 1)
 	# 	playoffs = NbaSchedule.new('GSW', '', 3)
 	def initialize(tid, file='', seasontype='')

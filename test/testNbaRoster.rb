@@ -18,7 +18,7 @@ class TestNbaRoster < Minitest::Test
   end
 
   def test_file_data
-    roster = NbaRoster.new '', 'test/rosterData.html'
+    roster = NbaRoster.new '', 'test/data/rosterData.html'
     booker = ["UTA", "33", "Trevor Booker", "4270", "PF", "28", "6", "8", "228", "Clemson", "4775000"]
 
     assert_equal booker,         roster.players[0],    "Trevor Booker => Fail"
