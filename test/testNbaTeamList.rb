@@ -1,4 +1,4 @@
-require 'minitest/autorun'
+require_relative './test_helper'
 
 class TestNbaTeamList < Minitest::Test
   include NbaUrls

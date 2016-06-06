@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require_relative '../lib/espnscrape'
+require_relative './test_helper'
 
 class TestEspnScrape < Minitest::Test
 

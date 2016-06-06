@@ -1,5 +1,3 @@
-require 'minitest/autorun'
-require 'open-uri'
 
 class TestNbaUrls < Minitest::Test
 	include NbaUrls
