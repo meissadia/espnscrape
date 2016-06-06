@@ -16,31 +16,17 @@ class NbaSchedule
 	# 	pre      = NbaSchedule.new('UTA', '', 1)
 	# 	playoffs = NbaSchedule.new('GSW', '', 3)
 	def initialize(tid, file='', seasontype='')
-		if file.empty? # Load Live Data
-			unless (tid.empty?)
-				url = formatTeamUrl(tid, teamScheduleUrl(seasontype))
-				doc = Nokogiri::HTML(open(url))
-			end
-		else # Load File Data
-			doc = Nokogiri::HTML(open(file))
-		end
+		doc = getNokoDoc(tid, file, seasontype)
 		exit if doc.nil?
 
-		schedule = doc.xpath('//div/div/table/tr') #Schedule Rows
-		year1 = doc.xpath('//div[@id=\'my-teams-table\']/div/div/div/h1').text.split('-')[1].strip.to_i #Season Starting Year
-		season_indicator = doc.xpath("//tr[@class='stathead']").text.split[1].downcase # preseason/regular/postseason
-		if tid.empty?
-			tid = getTid(doc.title.split(/\d{4}/)[0].strip)
-		end
+		@game_list = []	# Processed Schedule Data
+		@next_game = 0 	# Cursor to start of Future Games
 
-		@game_list = []
-		@next_game = 0 # Cursor to start of Future Games
+		schedule, year, indicator, tid = collectNodeSets(doc, tid)
+		seasonValid = verifySeasonType(seasontype, indicator)
+		seasontype  = findSeasonType(indicator) if seasontype.empty?
 
-		seasonValid = verifySeasonType(seasontype, season_indicator)
-		seasontype  = findSeasonType(season_indicator) if seasontype.empty?
-
-		processSeason(schedule, tid, year1, seasontype) if seasonValid && !seasontype.nil?
-
+		processSeason(schedule, tid, year, seasontype) if seasonValid && !seasontype.nil?
 	end
 
 	# @return [[[String]]] Table of All Schedule data
@@ -96,16 +82,35 @@ class NbaSchedule
 
 	private
 
+	# Return Nokogiri XML Document
+	def getNokoDoc(tid, file, season_type)
+		if file.empty? # Load Live Data
+			unless (tid.empty?)
+				url = formatTeamUrl(tid, teamScheduleUrl(season_type))
+				return Nokogiri::HTML(open(url))
+			end
+		else # Load File Data
+			return Nokogiri::HTML(open(file))
+		end
+	end
+
+	# Extract NodeSets
+	def collectNodeSets(doc, tid)
+		schedule = doc.xpath('//div/div/table/tr') #Schedule Rows
+		year     = doc.xpath('//div[@id=\'my-teams-table\']/div/div/div/h1').text.split('-')[1].strip.to_i #Season Starting Year
+		season   = doc.xpath("//tr[@class='stathead']").text.split[1].downcase # preseason/regular/postseason
+		if tid.empty?
+			tid = getTid(doc.title.split(/\d{4}/)[0].strip)
+		end
+		return [schedule, year, season, tid]
+	end
+
 	# Ensure requested season type is what is being processed
 	def verifySeasonType(type, indicator)
 		# If season type is provided, verify
 		case type
-		when 1
-			return false if !indicator.include?("pre")
-		when 2
-			return false if !indicator.include?("regular")
-		when 3
-			return false if !indicator.include?("post")
+		when 1, 2, 3
+			return type.eql?(findSeasonType(indicator))
 		end
 		return true
 	end
@@ -121,64 +126,43 @@ class NbaSchedule
 
 	# Process Table of Schedule Data
 	def processSeason(schedule, tid, year1, seasontype)
-		game_date, game_time = '', ''
-		row_type  = ''		# (F)uture Game, (P)ast Game
 		game_id = 0       # 82-game counter
 		ws = ls	= 0			  # Playoff Win/Loss Counters
 
 		# Process Schedule lines
 		schedule.each do |row|
-			if ('a'..'z').include?(row.children[0].text[1]) # Non-Header Row
-				row_type = 'F' if row.children[2].text.include?(":")  # Special Case - Future Playoff games shown under 'Result' header
-
-				tmp = [] 							# Processed row data
-				tmp << tid						# TeamID
-				tmp << game_id += 1   # GameID
+			game_date, game_time = '', ''
+			if ('a'..'z').include?(row.text[1])          # => Non-Header Row
+				tmp = [tid, game_id += 1] 	 # TeamID, GameID
 
 				if row.children.size == 3                  # => Postponed Game
 					game_id -= 1
 					next
-				elsif row_type == 'F' 			               # => Future Game
+				elsif row.children[2].text.include?(":")   # => Future Game
 					game_date, game_time = futureGame(row, tmp)
 				else											                 # => Past Game
 					@next_game = game_id
-					game_time = '00:00:00' # Game Time (Not shown for past games)
-					tmp << game_time
-					tmp << false 					 # TV (NS)
+					game_time = '00:00:00' 		# Game Time (Not shown for past games)
+					tmp << game_time << false # Game Time, TV
 					game_date, ws, ls = pastGame(row, tmp, ws, ls, seasontype)
 				end
-			else # Header Row
-				next if row.children.size < 2
-				row_type = 'F' if row.children[2].text.include?("TIME")
-				row_type = 'P' if row.children[2].text.include?("RESULT")
 			end
-
-			if !tmp.nil?
-				tmp << formatGameDate(game_date, year1, game_time) # Game DateTime
-				tmp << seasontype 										 						 # Season Type
-				@game_list << tmp											 						 # Save processed row
-			end
+			saveProcessedScheduleRow(tmp, game_date, year1, game_time, seasontype)
 		end
 	end
 
 	# Process Past Game Row
 	def pastGame(row, result, ws, ls, seasonType)
-		row.children.each_with_index do |cell, cnt|
-			if cnt <= 3
-				txt = cell.text.chomp
-				if cnt == 0 				 									# Game Date
-					result << txt.split(',')[1].strip
-				elsif cnt == 1 			 									# Home Game? and Opponent ID
-					saveHomeOpponent(cell, result, txt)
-				elsif cnt == 2 			 									# Game Result
-					saveGameResult(cell, result, txt)
-				elsif cnt == 3 && seasonType != 3			# Team Record
-					wins, losses = txt.split('-')
-					result << wins << losses
-				elsif cnt == 3 && seasonType == 3			# Team Record Playoffs
-					result[7] ? ws += 1 : ls +=1
-					result << ws << ls
-				end
+		row.children[0,4].each_with_index do |cell, cnt|
+			txt = cell.text.chomp
+			if cnt == 0 				 									# Game Date
+				result << txt.split(',')[1].strip
+			elsif cnt == 1 			 									# Home Game? and Opponent ID
+				saveHomeOpponent(cell, result, txt)
+			elsif cnt == 2 			 									# Game Result
+				saveGameResult(cell, result, txt)
+			else																  # Team Record
+				saveTeamRecord(result, seasonType, ws, ls, txt)
 			end
 		end
 		# 		 Game Date, wins, losses
@@ -189,22 +173,16 @@ class NbaSchedule
 	def futureGame(row, result)
 		result << false 							#Win
 		result << 0							  		#boxscore_id
-		row.children.each_with_index do |cell, cnt|
-			if cnt < 4
-				txt = cell.text.strip
-				if cnt == 0 						  # Game Date
-					result << txt.split(',')[1].strip
-				elsif cnt == 1 				    # Home/Away, Opp tid
-					saveHomeOpponent(cell, result, txt)
-				elsif cnt == 2 				    # Game Time
-					result << txt + ' ET'
-				elsif cnt == 3 			    	# TV
-					if (['a','img'].include?(cell.children[0].node_name) || txt.size > 1)
-						result << true
-					else
-						result << false
-					end
-				end
+		row.children[0,4].each_with_index do |cell, cnt|
+			txt = cell.text.strip
+			if cnt == 0 						  # Game Date
+				result << txt.split(',')[1].strip
+			elsif cnt == 1 				    # Home/Away, Opp tid
+				saveHomeOpponent(cell, result, txt)
+			elsif cnt == 2 				    # Game Time
+				result << txt + ' ET'
+			elsif cnt == 3 			    	# TV
+				saveTV(cell, txt, result)
 			end
 		end
 		# 		 Game Date, Game Time
@@ -238,6 +216,35 @@ class NbaSchedule
 		boxID.nil? ? result << 0 : result << boxID.text.split('=')[1] # Boxscore ID
 	end
 
+	# Store Team Record
+	# Wins, Losses
+	def saveTeamRecord(result, season_type, ws, ls, text)
+		if season_type == 3								  # Team Record Playoffs
+			result[7] ? ws += 1 : ls +=1
+			result << ws << ls
+		else 															  # Team Record Pre/Regular
+			wins, losses = text.split('-')
+			result << wins << losses
+		end
+	end
+
+	# Store TV?
+	def saveTV(cell, txt, result)
+		if (['a','img'].include?(cell.children[0].node_name) || txt.size > 1)
+			result << true
+		else
+			result << false
+		end
+	end
+
+	# Store Processed Schedule Row
+	def saveProcessedScheduleRow(tmp, game_date, year1, game_time, season_type)
+		if !tmp.nil?
+			tmp << formatGameDate(game_date, year1, game_time) # Game DateTime
+			tmp << season_type 										 						 # Season Type
+			@game_list << tmp											 						 # Save processed row
+		end
+	end
 
 	#  Adjust and format dates
 	def formatGameDate(month_day, year, game_time='00:00:00')

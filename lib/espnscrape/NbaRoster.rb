@@ -42,27 +42,31 @@ class NbaRoster
 	def processPlayerTable(table, team_id)
 		result = []
 		table.each do |row|
-			tmp = [team_id]											# Start row with Team ID
+			tmp = [team_id]									# Start row with Team ID
 			row.children.each_with_index do |cell, cnt|
-				txt = cell.text.chomp.strip
-				case cnt
-				when 0, 2, 3, 5	 									# 0 Player No, 2 Position, 3 Age, 5 Weight
-					tmp << txt
-				when 1 														# Player Name
-					tmp << txt.gsub("'","\'")
-					tmp << cell.children[0].attribute("href").text[/id\/(\d+)/, 1] # Player ID
-				when 4													  # Player Height
-					tmp.concat(txt.split('-'))
-				when 6 														# College
-					tmp << txt.gsub("'","\'").strip
-				when 7 														# Salary
-					# Remove extraneous symbols
-					txt.delete!('$').delete!(',').strip!
-					tmp << (txt.length > 1 ? txt : 0)  # Store Positive Salary (Default: 0)
-				end
+				processCell(cell, tmp, cnt)
 			end
 			result << tmp
 		end
 		return result
+	end
+
+	# Extract and Normalize Player Data
+	def processCell(cell, tmp, cnt)
+		txt = cell.text.chomp.strip
+		case cnt
+		when 0, 2, 3, 5	 									# 0 Player No, 2 Position, 3 Age, 5 Weight
+			tmp << txt
+		when 1 														# Player Name
+			tmp << txt.tr("'","\'")
+			tmp << cell.children[0].attribute("href").text[/id\/(\d+)/, 1] # Player ID
+		when 4													  # Player Height
+			tmp.concat(txt.split('-'))
+		when 6 														# College
+			tmp << txt.tr("'","\'").strip
+		when 7 														# Salary
+			# Remove extraneous symbols & default to 0
+			tmp << txt.delete('$').delete(',').strip.to_i.to_s
+		end
 	end
 end
