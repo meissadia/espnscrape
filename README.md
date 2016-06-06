@@ -1,6 +1,7 @@
 ### EspnScrape
 [![Gem Version](https://badge.fury.io/rb/espnscrape.svg)](https://badge.fury.io/rb/espnscrape)
 [![Build Status](https://travis-ci.org/meissadia/espnscrape.svg?branch=master)](https://travis-ci.org/meissadia/espnscrape)
+[![Code Climate](https://codeclimate.com/repos/5753eff9ccc95e446e007a0e/badges/ac35863b8ade8c50f909/gpa.svg)](https://codeclimate.com/repos/5753eff9ccc95e446e007a0e/feed)
 
 ## Introduction
 The EspnScrape Ruby GEM is a data scraper for the redesigned 2016 version of ESPN.com. It provides a number of ways to simplify data collection and interaction such as :  
