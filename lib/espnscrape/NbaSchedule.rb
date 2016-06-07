@@ -42,7 +42,7 @@ class NbaSchedule
   # @example
   # 	nextGame #=> ["GSW", 19, false, 0, "Jun 5", true, "CLE", "8:00 PM ET", true, "2016-06-05 20:00:00", 3]
   def nextGame
-    @game_list[@next_game]
+    @game_list[@next_game] unless @game_list.nil?
   end
 
   # Returns Schedule info of last completed game
@@ -63,7 +63,7 @@ class NbaSchedule
   # @example
   #   nextTeamId #=> "OKC"
   def nextTeamId
-    nextGame[6]
+    nextGame[6] if nextGame
   end
 
   # @return [[String]] Table of Future Games ({EspnScrape::FS_SCHEDULE_FUTURE Description})

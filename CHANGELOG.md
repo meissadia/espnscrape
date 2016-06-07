@@ -1,8 +1,10 @@
 ### Change Log :: EspnScrape
 
 ## 0.3.0 - June 7, 2016
++ Now requires Ruby >= 1.9.3
 + API Changes for NbaSchedule
-+ Large scale code code refactoring
++ Corrected README examples
++ Large scale code refactoring
 + Tons of code style improvements
 
 ## 0.2.0 - June 4, 2016

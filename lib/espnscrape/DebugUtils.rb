@@ -4,26 +4,29 @@ module DebugUtils
   # @param args [[[object]]] Table Data
   # @param col_width [Integer] Column Width
   # @return [String] Table String
-  def asTable(args, col_width = 15, title = '', show_idx = false)
+  def asTable(args, col_width = 15, title = '', show_idx = true)
     result = "\n#{title}"
     idx_width = args.size.to_s.length
     args.each_with_index do |row, idx|
       result << "\n#{idx}." + ' ' * pad(idx_width, idx) + '  ' if show_idx
+      result << "\n" unless show_idx
       formatRow(row, col_width, result)
     end
-    result
+    result << "\n"
   end
 
   private
 
-  def pad(width, content)
-    (width - content.to_s.length) > 0 ? (width - content.to_s.length) : 0
-  end
-
+  # Format Row
   def formatRow(row, width, target)
     row.each do |td|
       target << td.to_s
       target << ' ' * pad(width, td) if pad(width, td) > 0
     end
+  end
+
+  # Calculate required padding
+  def pad(width, content)
+    (width - content.to_s.length) > 0 ? (width - content.to_s.length) : 0
   end
 end

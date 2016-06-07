@@ -56,7 +56,7 @@ stat_structs.first.pts    # Player Points
 
 #### Access a Roster
 ```ruby
-roster = EspnScrape.roster('UTA') # Returns multidimensional array of Roster info
+roster = EspnScrape.roster('UTA').players # Returns multidimensional array of Roster info
 
 # Roster as an array of objects
 symbols   = EspnScrape::FS_ROSTER
@@ -73,16 +73,16 @@ past     = schedule.pastGames         # multidimensional array of completed game
 future   = schedule.futureGames       # multidimensional array of upcoming games
 schedule.nextTeamId                   # String ID of next opponent
 
-preseason = EspnScrape.schedule('BOS', '', 1)  # Get Preseason schedule
-playoffs  = EspnScrape.schedule('CLE', '', 3)  # Get Playoff schedule
+preseason = EspnScrape.schedule('BOS', 1)  # Get Preseason schedule
+playoffs  = EspnScrape.schedule('CLE', 3)  # Get Playoff schedule
 
 # Past Schedule Games as Objects
 symbols = EspnScrape::FS_SCHEDULE_PAST
-r_structs = EspnScrape.to_structs(symbols, past) # Returns array of Hashes
-r_structs.first.gdate      # Game Date
-r_structs.first.t_abbr     # Team Abbreviation
-r_structs.first.team_score # Team Point Total
-r_structs.first.opp_score  # Opponent Point Total
+p_structs = EspnScrape.to_structs(symbols, past) # Returns array of Hashes
+p_structs.first.gdate      # Game Date
+p_structs.first.t_abbr     # Team Abbreviation
+p_structs.first.team_score # Team Point Total
+p_structs.first.opp_score  # Opponent Point Total
 ```
 
 #### Access a Player
