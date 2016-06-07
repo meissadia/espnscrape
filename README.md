@@ -1,4 +1,4 @@
-## EspnScrape
+## EspnScrape v0.3.0
 [![Gem Version](https://badge.fury.io/rb/espnscrape.svg)](https://badge.fury.io/rb/espnscrape)
 [![Code Climate](https://codeclimate.com/github/meissadia/espnscrape/badges/gpa.svg)](https://codeclimate.com/github/meissadia/espnscrape)
 [![Build Status](https://travis-ci.org/meissadia/espnscrape.svg?branch=master)](https://travis-ci.org/meissadia/espnscrape)
@@ -12,9 +12,9 @@ It provides a number of ways to simplify data collection and interaction such as
 * String arrays - Raw data for you to manipulate as you see fit.
 
 *This GEM is under going frequent, sometimes non-backwards compatible changes.
-Until it reaches a major (1.0.0) release, minor versions indicate possibly
-non-compatible changes. While trying to limit turnover, I also want to maximize
-usability and will continue to make adjustments as I encounter them.*
+Until it reaches a major (1.0.0) release, minor versions indicate potentially
+incompatible changes. Utility and usability are the goal, so API adjustments
+will creep in when helpful.*
 
 ### Restrictions
 *Currently only for NBA*
@@ -77,7 +77,7 @@ preseason = EspnScrape.schedule('BOS', 1)  # Get Preseason schedule
 playoffs  = EspnScrape.schedule('CLE', 3)  # Get Playoff schedule
 
 # Past Schedule Games as Objects
-symbols = EspnScrape::FS_SCHEDULE_PAST
+symbols   = EspnScrape::FS_SCHEDULE_PAST
 p_structs = EspnScrape.to_structs(symbols, past) # Returns array of Hashes
 p_structs.first.gdate      # Game Date
 p_structs.first.t_abbr     # Team Abbreviation
@@ -103,7 +103,7 @@ t_structs.first.t_abbr   #=> 'BOS'
 t_structs.first.division #=> 'Atlantic'
 ```
 ## Documentation
-Available on [RubyDoc](http://www.rubydoc.info/gems/espnscrape/) or locally:  
+Available on [RubyDoc](http://www.rubydoc.info/gems/espnscrape/0.3.0) or locally:  
 ```
 > gem install yard
 > yard doc
