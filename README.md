@@ -112,7 +112,7 @@ Available on [RubyDoc](http://www.rubydoc.info/gems/espnscrape/0.3.0) or locally
 
 ## Requirements
 #### Ruby version
-*Ruby >= 1.9.2*  
+*Ruby >= 1.9.3*  
 
 #### Dependencies
 *Nokogiri 1.6*  
