@@ -10,3 +10,5 @@ rvm:
   # Latest
   - 2.3.1
   - ruby-head
+env:
+  - CI_FLAG=true

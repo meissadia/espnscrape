@@ -19,31 +19,31 @@ require_relative 'espnscrape/DebugUtils'
 # EspnScrape main class
 class EspnScrape
   # Gem Version
-  VERSION = '0.2.0'
+  VERSION = '0.3.0'.freeze
 
   # @note Field Symbols for {NbaBoxScore}
   #   [Team ID, Game #, Player Name (short), ESPN Player ID, Position, Minutes, Field Goals Made, Field Goals Attempted, 3P Made, 3P Attempted, Free Throws Made, Free Throws Attempted, Offensive Rebounds, Defensive Rebounds, Total Rebounds, Assists, Steals, Blocks, Turnovers, Personal Fouls, Plus/Minus, Points, Starter?]
-  FS_BOXSCORE = [:t_abbr,:game_num,:p_eid,:p_name,:pos,:min,:fgm,:fga,:tpm,:tpa,:ftm,:fta,:oreb,:dreb,:reb,:ast,:stl,:blk,:tos,:pf,:plus,:pts,:starter]
+  FS_BOXSCORE = [:t_abbr, :game_num, :p_eid, :p_name, :pos, :min, :fgm, :fga, :tpm, :tpa, :ftm, :fta, :oreb, :dreb, :reb, :ast, :stl, :blk, :tos, :pf, :plus, :pts, :starter].freeze
 
   # @note Field Symbols for {NbaBoxScore#homeTotals} and {NbaBoxScore#awayTotals}
   #   [Team ID, Field Goals Made, Field Goals Attempted, 3P Made, 3P Attempted, Free Throws Made, Free Throws Attempted, Offensive Rebounds, Defensive Rebounds, Total Rebounds, Assists, Steals, Blocks, Turnovers, Personal Fouls, Plus/Minus, Points, Starter?]
-  FS_BOXSCORE_TOTALS = [:t_abbr,:fgm,:fga,:tpm,:tpa,:ftm,:fta,:oreb,:dreb,:reb,:ast,:stl,:blk,:tos,:pf,:pts]
+  FS_BOXSCORE_TOTALS = [:t_abbr, :fgm, :fga, :tpm, :tpa, :ftm, :fta, :oreb, :dreb, :reb, :ast, :stl, :blk, :tos, :pf, :pts].freeze
 
   # @note Field Symbols for {NbaRoster}
   #  [Team ID, Jersey #, Player Name, ESPN Player ID, Position, Age, Height ft, Height in, Weight, College, Salary]
-  FS_ROSTER = [:t_abbr,:p_num,:p_name,:p_eid,:pos,:age,:h_ft,:h_in,:weight,:college,:salary]
+  FS_ROSTER = [:t_abbr, :p_num, :p_name, :p_eid, :pos, :age, :h_ft, :h_in, :weight, :college, :salary].freeze
 
-  # @note Field Symbols for {NbaSchedule#getPastGames}
+  # @note Field Symbols for {NbaSchedule#pastGames}
   #   [Team ID, Game #, Game Time, Televised?, Game Date, Home Game?, Opponent ID, Win?, Team Score, Opp Score, Boxscore ID, Wins, Losses, Game DateTime, Season Type]
-  FS_SCHEDULE_PAST = [:t_abbr,:game_num,:gtime,:tv,:gdate,:home,:opp_abbr,:win,:team_score,:opp_score,:boxscore_id,:wins,:losses, :g_datetime, :season_type]
+  FS_SCHEDULE_PAST = [:t_abbr, :game_num, :gtime, :tv, :gdate, :home, :opp_abbr, :win, :team_score, :opp_score, :boxscore_id, :wins, :losses, :g_datetime, :season_type].freeze
 
-  # @note Field Symbols for {NbaSchedule#getFutureGames}
+  # @note Field Symbols for {NbaSchedule#futureGames}
   #   [Team ID, Game #, Win?, Boxscore ID, Game Date, Home Game?, Opponent ID, Game Time, Televised?, Game DateTime, Season Type]
-  FS_SCHEDULE_FUTURE = [:t_abbr,:game_num,:win,:boxscore_id,:gdate,:home,:opp_abbr,:gtime, :tv, :g_datetime, :season_type]
+  FS_SCHEDULE_FUTURE = [:t_abbr, :game_num, :win, :boxscore_id, :gdate, :home, :opp_abbr, :gtime, :tv, :g_datetime, :season_type].freeze
 
   # @note Field Symbols for {NbaTeamList#teamList}
   #  [Team ID, Team Name, Division, Conference]
-  FS_TEAM = [:t_abbr,:t_name,:division,:conference]
+  FS_TEAM = [:t_abbr, :t_name, :division, :conference].freeze
 
   # Returns an {NbaBoxScore} object
   # @param game_id [Integer] Boxscore ID
@@ -51,7 +51,7 @@ class EspnScrape
   # @example
   #   EspnScrape.boxscore(493848273)
   def self.boxscore(game_id)
-    return NbaBoxScore.new game_id
+    NbaBoxScore.new game_id
   end
 
   # Returns an {NbaRoster} object
@@ -60,7 +60,7 @@ class EspnScrape
   # @example
   #   EspnScrape.roster('UTA')
   def self.roster(team_id)
-    return NbaRoster.new team_id
+    NbaRoster.new team_id
   end
 
   # Return {NbaTeamList}
@@ -68,7 +68,7 @@ class EspnScrape
   # @example
   #  EspnScrape.teamList
   def self.teamList
-    return NbaTeamList.new
+    NbaTeamList.new
   end
 
   # Return an {NbaSchedule} object
@@ -80,8 +80,8 @@ class EspnScrape
   #   EspnScrape.schedule('BOS', 1) # Preseason Schedule
   #   EspnScrape.schedule('MIA', 2) # Regular Season Schedule
   #   EspnScrape.schedule('TOR', 3) # Playoff Schedule
-  def self.schedule(team_id, s_type='')
-    return NbaSchedule.new team_id, '', s_type
+  def self.schedule(team_id, s_type = '')
+    NbaSchedule.new team_id, '', s_type
   end
 
   # Return new {NbaPlayer} object
@@ -90,7 +90,7 @@ class EspnScrape
   # @example
   #   EspnScrape.player(2991473)
   def self.player(espn_id)
-    return NbaPlayer.new espn_id
+    NbaPlayer.new espn_id
   end
 
   # Create Hash from array
@@ -103,13 +103,13 @@ class EspnScrape
   #   hash     = EspnScrape.to_hash(symbols, team_row)
   #   => {:t_abbr=>"BOS", :t_name=>"Boston Celtics", :division=>"Atlantic", :conference=>"Eastern"}
   def self.to_hash(field_names, source)
-    fl = {}   # Resulting Field List
+    fl = {} # Resulting Field List
 
     # Create key(from source):value(from field names) pairs
-    field_names.each_with_index do |f,idx|
+    field_names.each_with_index do |f, idx|
       fl[f] = source[idx]
     end
-    return fl
+    fl
   end
 
   # Create Hash Array
@@ -127,7 +127,7 @@ class EspnScrape
     source.each do |s|    # Process each row of Source table
       fl_a << to_hash(field_names, s)
     end
-    return fl_a
+    fl_a
   end
 
   # Create Struct Array
@@ -146,7 +146,6 @@ class EspnScrape
       hash = to_hash(field_names, s)
       fl_a << Struct.new(*hash.keys).new(*hash.values)
     end
-    return fl_a
+    fl_a
   end
-
 end

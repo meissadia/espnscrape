@@ -1,5 +1,10 @@
 ### Change Log :: EspnScrape
 
+## 0.3.0 - June 7, 2016
++ API Changes for NbaSchedule
++ Large scale code code refactoring
++ Tons of code style improvements
+
 ## 0.2.0 - June 4, 2016
 ####&nbsp;&nbsp;&nbsp;New
 + API Changes
@@ -74,7 +79,7 @@
 + Needs Testsuite
 + NbaBoxScore (getHomeTeamPlayers, getAwayTeamPlayers)  
   * Corrected handling of names with apostrophes  
-  * getLastGame()  
+  * lastGame()  
 + NbaSchedule  
   * Combined Game Date/Game Time -> YYYY-MM-DD HH:MM:00    
   * field: game_datetime  

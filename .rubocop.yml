@@ -1,0 +1,34 @@
+inherit_from: .rubocop_todo.yml
+
+Style/FileName:
+  Enabled: false
+
+Style/MethodName:
+  Enabled: true
+  EnforcedStyle: camelCase
+  Exclude:
+    - test/*
+    - lib/espnscrape.rb
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/VariableName:
+  Exclude:
+    - lib/espnscrape/NbaBoxScore.rb
+    - lib/espnscrape/NbaTeamList.rb
+
+Style/FormatString:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false

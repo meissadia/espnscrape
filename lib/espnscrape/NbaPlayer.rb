@@ -17,9 +17,9 @@ class NbaPlayer
   # @return [Integer] Height (in)
   attr_accessor :h_in
 
-  def initialize(espn_player_id, file='')
+  def initialize(espn_player_id, file = '')
     espn_player_id = espn_player_id.to_s
-    if (!espn_player_id.empty?)
+    if !espn_player_id.empty?
       url = playerUrl + espn_player_id
       doc = Nokogiri::HTML(open(url))
     else
@@ -31,30 +31,37 @@ class NbaPlayer
   end
 
   private
+
   # Extract basic bio info info class attributes
   def readInfo(d)
     @name = d.xpath("//div[@class='mod-content']/*/h1 | //div[@class='mod-content']/h1")[0].text.strip
-    @position = d.xpath("//ul[@class='general-info']/li")[0].text.gsub(/#\d*\s*/,'')
-    @college = d.xpath('//span[text() = "College"]/parent::li').text.gsub('College','')
+    @position = d.xpath("//ul[@class='general-info']/li")[0].text.gsub(/#\d*\s*/, '')
+    @college = d.xpath('//span[text() = "College"]/parent::li').text.gsub('College', '')
 
-    # Age
-    age_text = d.xpath('//span[text() = "Born"]/parent::li').text
-    /:\s(?<age_num>\d\d)/ =~ age_text
+    height, weight = gatherHeightWeight(d)
+
+    @weight = processWeight(weight)
+    processHeight(height)
+    processAge(d)
+  end
+
+  def processAge(d)
+    /:\s(?<age_num>\d\d)/ =~ d.xpath('//span[text() = "Born"]/parent::li').text
     @age = age_num.to_i
+  end
 
-    # Height/Weight
+  def gatherHeightWeight(d)
     h_w = d.xpath("//ul[@class='general-info']/li")[1]
-    if !h_w.nil?
-      height, weight = d.xpath("//ul[@class='general-info']/li")[1].text.split(',')
-    end
+    h_w.text.split(',') unless h_w.nil?
+  end
 
-    if(!weight.nil? && !weight.empty?)
-      @weight = weight.strip.split(' ')[0].to_i
-    else
-      @weight = 0
-    end
+  def processWeight(weight)
+    return 0 if weight.nil? || weight.empty?
+    weight.strip.split(' ')[0].to_i
+  end
 
-    if(!height.nil? && !height.empty?)
+  def processHeight(height)
+    if !height.nil? && !height.empty?
       @h_ft, @h_in = height.strip.split('\'')
       @h_in = @h_in.delete('"').strip.to_i
       @h_ft = @h_ft.to_i
@@ -63,5 +70,4 @@ class NbaPlayer
       @h_in = 0
     end
   end
-
 end

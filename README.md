@@ -1,19 +1,25 @@
-### EspnScrape
+## EspnScrape
 [![Gem Version](https://badge.fury.io/rb/espnscrape.svg)](https://badge.fury.io/rb/espnscrape)
 [![Code Climate](https://codeclimate.com/github/meissadia/espnscrape/badges/gpa.svg)](https://codeclimate.com/github/meissadia/espnscrape)
 [![Build Status](https://travis-ci.org/meissadia/espnscrape.svg?branch=master)](https://travis-ci.org/meissadia/espnscrape)
 [![Test Coverage](https://codeclimate.com/github/meissadia/espnscrape/badges/coverage.svg)](https://codeclimate.com/github/meissadia/espnscrape/coverage)
 
 ## Introduction
-The EspnScrape Ruby GEM is a data scraper for the redesigned 2016 version of ESPN.com. It provides a number of ways to simplify data collection and interaction such as :  
+The EspnScrape Ruby GEM is a data scraper for the redesigned 2016 version of ESPN.com.
+It provides a number of ways to simplify data collection and interaction such as :  
 * Structs - Intuitively access data via dot notation.  
 * Hashes - Can be passed directly to ActiveRecord CRUD methods for easy database interaction.  
 * String arrays - Raw data for you to manipulate as you see fit.
 
+*This GEM is under going frequent, sometimes non-backwards compatible changes.
+Until it reaches a major (1.0.0) release, minor versions indicate possibly
+non-compatible changes. While trying to limit turnover, I also want to maximize
+usability and will continue to make adjustments as I encounter them.*
+
 ### Restrictions
 *Currently only for NBA*
 
-### Note
+### Notes
 *EspnScrape is not associated with ESPN or the NBA.*
 
 ## Quick Start
@@ -37,7 +43,7 @@ bs = EspnScrape.boxscore(400828991)
 stats = bs.homePlayers # Returns multidimensional array of Home Player stats
 
 # Convert String array to Hash array
-symbols = EspnScrape::FS_BOXSCORE
+symbols     = EspnScrape::FS_BOXSCORE
 stat_hashes = EspnScrape.to_hashes(symbols, stats) # Returns array of Hashes
 stat_hashes.first[:p_name] # Player Name
 stat_hashes.first[:pts]    # Player Points
@@ -53,7 +59,7 @@ stat_structs.first.pts    # Player Points
 roster = EspnScrape.roster('UTA') # Returns multidimensional array of Roster info
 
 # Roster as an array of objects
-symbols = EspnScrape::FS_ROSTER
+symbols   = EspnScrape::FS_ROSTER
 r_structs = EspnScrape.to_structs(symbols, roster) # Returns array of Hashes
 r_structs.first.p_name # Player Name
 r_structs.first.pos    # Player Position
@@ -63,11 +69,11 @@ r_structs.first.salary # Player Salary
 #### Access a Schedule
 ```ruby
 schedule = EspnScrape.schedule('UTA') # Gets schedule for latest available season type (Pre/Regular/Post)
-past = schedule.getPastGames     # multidimensional array of completed games
-future = schedule.getFutureGames # multidimensional array of upcoming games
-schedule.getNextTeamId           # String ID of next opponent
+past     = schedule.pastGames         # multidimensional array of completed games
+future   = schedule.futureGames       # multidimensional array of upcoming games
+schedule.nextTeamId                   # String ID of next opponent
 
-preseason = EspnScrape.schedule('BOS', '', 1) # Get Preseason schedule
+preseason = EspnScrape.schedule('BOS', '', 1)  # Get Preseason schedule
 playoffs  = EspnScrape.schedule('CLE', '', 3)  # Get Playoff schedule
 
 # Past Schedule Games as Objects
@@ -90,7 +96,7 @@ player.weight #=> "245"
 ```ruby
 team_list = EspnScrape.teamList.teamList # multidimensional array of Team info
 
-symbols = EspnScrape::FS_TEAM
+symbols   = EspnScrape::FS_TEAM
 t_structs = EspnScrape.to_structs(symbols, team_list) # Hash array
 t_structs.first.t_name   #=> 'Boston Celtics'
 t_structs.first.t_abbr   #=> 'BOS'
