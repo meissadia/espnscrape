@@ -47,5 +47,8 @@ class TestNbaTeamList < Minitest::Test
     ]
 
     assert_equal team_list, tl.teamList, "NbaTeamList => Content Fail"
+
+    tl = NbaTeamList.new('test/data/teamList.html')
+    assert_equal team_list, tl.teamList, "NbaTeamList => File Content Fail"
   end
 end

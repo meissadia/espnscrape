@@ -16,7 +16,7 @@ class NbaSchedule
 	# 	pre      = NbaSchedule.new('UTA', '', 1)
 	# 	playoffs = NbaSchedule.new('GSW', '', 3)
 	def initialize(tid, file='', seasontype='')
-		doc = getNokoDoc(tid, file, seasontype)
+		doc, seasontype = getNokoDoc(tid, file, seasontype)
 		exit if doc.nil?
 
 		@game_list = []	# Processed Schedule Data
@@ -24,9 +24,9 @@ class NbaSchedule
 
 		schedule, year, indicator, tid = collectNodeSets(doc, tid)
 		seasonValid = verifySeasonType(seasontype, indicator)
-		seasontype  = findSeasonType(indicator) if seasontype.empty?
+		seasontype  = findSeasonType(indicator) if seasontype.eql?(0)
 
-		processSeason(schedule, tid, year, seasontype) if seasonValid && !seasontype.nil?
+		processSeason(schedule, tid, year, seasontype) if seasonValid && !seasontype.eql?(0)
 	end
 
 	# @return [[[String]]] Table of All Schedule data
@@ -87,10 +87,10 @@ class NbaSchedule
 		if file.empty? # Load Live Data
 			unless (tid.empty?)
 				url = formatTeamUrl(tid, teamScheduleUrl(season_type))
-				return Nokogiri::HTML(open(url))
+				return Nokogiri::HTML(open(url)), season_type
 			end
 		else # Load File Data
-			return Nokogiri::HTML(open(file))
+			return Nokogiri::HTML(open(file)), season_type
 		end
 	end
 
@@ -106,11 +106,11 @@ class NbaSchedule
 	end
 
 	# Ensure requested season type is what is being processed
-	def verifySeasonType(type, indicator)
+	def verifySeasonType(s_type, indicator)
 		# If season type is provided, verify
-		case type
+		case s_type
 		when 1, 2, 3
-			return type.eql?(findSeasonType(indicator))
+			return s_type.eql?(findSeasonType(indicator))
 		end
 		return true
 	end
@@ -126,6 +126,7 @@ class NbaSchedule
 
 	# Process Table of Schedule Data
 	def processSeason(schedule, tid, year1, seasontype)
+		seasontype = seasontype.to_i
 		game_id = 0       # 82-game counter
 		ws = ls	= 0			  # Playoff Win/Loss Counters
 

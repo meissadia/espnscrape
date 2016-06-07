@@ -7,7 +7,7 @@ class TestNbaSchedule < Minitest::Test
   # Test Regular Season
   def test_file_regular
     numGames = 82
-    schedule = NbaSchedule.new('', 'test/data/scheduleData.html') # Data 11/21/15
+    schedule = NbaSchedule.new('', 'test/data/scheduleData.html', 2) # Data 11/21/15
 
     # Test getAllGames
     assert_equal numGames, schedule.getAllGames.size, "NbaSchedule: Wrong Season Length"
@@ -31,6 +31,8 @@ class TestNbaSchedule < Minitest::Test
     expected = 12
     assert_equal expected, schedule.getPastGames.size
 
+    asTable(schedule.getPastGames, 15, 'UTA Past', true)
+
     # Test getNextTeam
     expected = 'OKC'
     assert_equal expected, schedule.getNextTeamId
@@ -38,7 +40,7 @@ class TestNbaSchedule < Minitest::Test
 
   # Test Preseason
   def test_file_preseason
-    schedule = NbaSchedule.new('GSW', 'test/data/schedulePreseasonData.html')
+    schedule = NbaSchedule.new('GSW', 'test/data/schedulePreseasonData.html', 1)
     assert_equal 7, schedule.getAllGames.size
     assert_equal 7, schedule.getPastGames.size
     assert_equal 0, schedule.getFutureGames.size
@@ -52,7 +54,7 @@ class TestNbaSchedule < Minitest::Test
 
   # Test Playoffs
   def test_file_playoff
-    schedule = NbaSchedule.new('GSW', 'test/data/schedulePlayoffData.html')
+    schedule = NbaSchedule.new('GSW', 'test/data/schedulePlayoffData.html', 3)
     assert_equal 'CLE', schedule.getNextTeamId
     assert_equal 7,     schedule.getFutureGames.size
     assert_equal 24,    schedule.getAllGames.size

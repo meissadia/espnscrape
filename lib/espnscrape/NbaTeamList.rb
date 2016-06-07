@@ -33,10 +33,6 @@ class NbaTeamList
 			processTeams(div, team_names[h,5], west_conf, @teamList) # Store Team Data
 			h += 5
 		end
-		# Validate teamList
-		if !@teamList.nil? && @teamList.size != 30
-			puts "NbaTeamList: %i teams collected!" % [@teamList.size]
-		end
 	end
 
 	private
@@ -60,11 +56,6 @@ class NbaTeamList
 
 			# Derive Conference from Division
 			tmp << (west_conf.include?(division) ? 'Western' : 'Eastern')
-
-			if tmp.nil? || tmp.size != 4
-				puts "Error: Unable to process full data for #{tname}"
-			end
-
 			tl << tmp # Save Team Data to global @teamList[]
 		end
 	end

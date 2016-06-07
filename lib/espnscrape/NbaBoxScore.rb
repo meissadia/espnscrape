@@ -52,12 +52,6 @@ class NbaBoxScore
 		end
 	end
 
-	# Print a totals row
-	# @param teamTotals [[Integer]] Team Totals
-	def printTotals(teamTotals, colWidth=5)
-		printTable([teamTotals], colWidth, 'Team Totals')
-	end
-
 	private
 
 	# Reads the game date from a Nokogiri::Doc
