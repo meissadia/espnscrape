@@ -31,15 +31,4 @@ class TestNbaBoxScore < Minitest::Test
     assert_equal 'Milan Olimpia', bs.homeName
     assert_equal '2015-10-06 00:00:00', bs.gameDate, 'Game Date -> Incorrect'
   end
-
-  def test_file_data
-    # # => Test Game: Future
-    # bs = NbaBoxScore.new('', 'test/data/boxscoreFuture.html')
-    # assert_equal false, bs.nil?, "Unable to Initialize object"
-    # assert_equal "2016-06-08 19:00:00", bs.getGameDate, "Game Date => Incorrect"
-    #
-    # # Validate Team Names
-    # t = ["Cleveland Cavaliers", "Golden State Warriors"]
-    # assert_equal t, [bs.getawayName, bs.gethomeName].sort, "Team Names => Incorrect"
-  end
 end

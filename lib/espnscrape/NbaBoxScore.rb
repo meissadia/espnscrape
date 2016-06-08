@@ -62,21 +62,9 @@ class NbaBoxScore
   # 	Times will be Local to the system Timezone
   #
   def readGameDate(d)
-    # Should be YYYY-MM-DD HH:MM:00
-    time = d.xpath('//span[contains(@class,"game-time")]')[0].text.strip
     date = d.title.split('-')[2].delete(',')
-
-    # Future game time is populated via AJAX, so may not be available at the
-    # time the HTML is processed
-    if time.empty?
-      utc_datetime = d.xpath('//span[contains(@class,"game-time")]/parent::span').first.attribute('data-date').text
-      utc_datetime = DateTime.parse(utc_datetime).new_offset(DateTime.now.offset)
-      return utc_datetime.strftime('%Y-%m-%d %H:%M:%S')
-    end
-
-    # Past games have no displayed time
-    time = '00:00:00' if time == 'Final'
-
+    time = d.xpath('//span[contains(@class,"game-time")]')[0].text.strip rescue ''
+    time = '00:00:00' if time == 'Final' || time.empty?
     DateTime.parse(date + ' ' + time).strftime('%Y-%m-%d %H:%M:%S')
   end
 
@@ -155,10 +143,6 @@ class NbaBoxScore
   def readTeamStats(d, id)
     # Extract player tables
     p_tables = d.xpath('//div[@class="sub-module"]/*/table/tbody')
-    if p_tables.nil? || p_tables.empty?
-      puts 'No Game Data Available'
-      return [], []
-    end
 
     if id == 'away'
       p_tab = p_tables[0, 2]

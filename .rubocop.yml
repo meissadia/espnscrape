@@ -32,3 +32,10 @@ Metrics/LineLength:
 
 Metrics/MethodLength:
   Enabled: false
+
+Style/RescueModifier:
+  Enabled: false
+
+Lint/UselessAssignment:
+  Exclude:
+    - 'test/validateReadme.rb'
