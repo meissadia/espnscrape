@@ -5,7 +5,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'time'
 
-#To Hash | Struct conversions
+# To Hash | Struct conversions
 require_relative 'espnscrape/ArrayConversions'
 
 # espnscrape

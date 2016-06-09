@@ -3,7 +3,7 @@
 ####&nbsp;&nbsp;&nbsp;New
 + Simplified conversion to Hashes and Structs! See [README] for details.
 + Instance versions of data access methods. Allows shorter calls i.e. es.boxscore instead of EspnScrape.boxscore
-+ Cleaned out uninformative data fields ( see [! Removed !](#removed) )
++ Cleaned out uninformative data fields ( see [! Removed !](#-removed-) )
 
 ####&nbsp;&nbsp;&nbsp;Changed
 + Everything is now Strings (Mostly affects NbaPlayer, NbaSchedule)
