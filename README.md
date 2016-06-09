@@ -1,4 +1,5 @@
-## EspnScrape v0.3.0
+
+## EspnScrape v0.4.0
 [![Gem Version](https://badge.fury.io/rb/espnscrape.svg)](https://badge.fury.io/rb/espnscrape)
 [![Code Climate](https://codeclimate.com/github/meissadia/espnscrape/badges/gpa.svg)](https://codeclimate.com/github/meissadia/espnscrape)
 [![Build Status](https://travis-ci.org/meissadia/espnscrape.svg?branch=master)](https://travis-ci.org/meissadia/espnscrape)
@@ -11,101 +12,135 @@ It provides a number of ways to simplify data collection and interaction such as
 * Hashes - Can be passed directly to ActiveRecord CRUD methods for easy database interaction.  
 * String arrays - Raw data for you to manipulate as you see fit.
 
-*This GEM is under going frequent, sometimes non-backwards compatible changes.
-Until it reaches a major (1.0.0) release, minor versions indicate potentially
-incompatible changes. Utility and usability are the goal, so API adjustments
-will creep in when helpful.*
+```
+This GEM is subject to frequent, sometimes non-backwards compatible changes.
+Until a major (1.0.0) release, minor versions (0.4.0) indicate potentially incompatible changes.
+Utility and usability are the goal, so I hope the API evolution helps more than hurts.
+```
 
-### Restrictions
-*Currently only for NBA*
-
-### Notes
-*EspnScrape is not associated with ESPN or the NBA.*
+Check the [CHANGELOG] for more info || **`Currently only for NBA`** || *EspnScrape is not associated with ESPN or the NBA.*
 
 ## Quick Start
 ### Installation
 ##### Rails
 In your application's Gemfile, include :  
-`gem 'espnscrape'`  
+```
+gem 'espnscrape'
+```
 
-Then, in your project dir, execute :  
-`> bundle install`
+In your project dir, execute :  
+```
+> bundle install
+```
 
 ##### Manual
-`> gem install espnscrape`
+```
+> gem install espnscrape
+```
 
 ### Examples
     require 'espnscrape'
+    es = EspnScrape.new
 
 #### Access a Boxscore
 ```ruby
-bs = EspnScrape.boxscore(400828991)
-stats = bs.homePlayers # Returns multidimensional array of Home Player stats
+bs    = es.boxscore(400828991)
+stats = bs.homePlayers        # Returns multidimensional array of Home Player stats
+stats.first[2]                # First Player Name   # => D. Favors   
+stats[0][20]                  # First Player Points # => 14
 
-# Convert String array to Hash array
-symbols     = EspnScrape::FS_BOXSCORE
-stat_hashes = EspnScrape.to_hashes(symbols, stats) # Returns array of Hashes
-stat_hashes.first[:p_name] # Player Name
-stat_hashes.first[:pts]    # Player Points
+# Same data using Hashes
+s_hashes = stats.to_hashes    # Returns array of Hashes
+s_hashes.first[:p_name]       # Player Name
+s_hashes.first[:pts]          # Player Points
 
-# Convert String array to Struct array
-stat_structs = EspnScrape.to_structs(symbols, stats) # Returns array of Structs
-stat_structs.first.p_name # Player Name
-stat_structs.first.pts    # Player Points
+# Same data using Structs
+s_structs = stats.to_structs  # Returns array of Structs
+s_structs.first.p_name        # Player Name
+s_structs.first.pts           # Player Points
 ```
 
 #### Access a Roster
 ```ruby
-roster = EspnScrape.roster('UTA').players # Returns multidimensional array of Roster info
+roster  = es.roster('UTA')        
+players = roster.players         # Returns multidimensional array of Roster info
+coach   = roster.coach           # Coach Name # => 'Quinn Snyder'
 
 # Roster as an array of objects
-symbols   = EspnScrape::FS_ROSTER
-r_structs = EspnScrape.to_structs(symbols, roster) # Returns array of Hashes
-r_structs.first.p_name # Player Name
-r_structs.first.pos    # Player Position
-r_structs.first.salary # Player Salary
+r_structs = players.to_structs   # Returns array of Structs
+
+r_structs[2].p_name              # Player Name      # => 'Alec Burks'
+r_structs[2].pos                 # Player Position  # => 'SG'
+r_structs[2].salary              # Player Salary    # => '9463484'
 ```
 
 #### Access a Schedule
 ```ruby
-schedule = EspnScrape.schedule('UTA') # Gets schedule for latest available season type (Pre/Regular/Post)
-past     = schedule.pastGames         # multidimensional array of completed games
-future   = schedule.futureGames       # multidimensional array of upcoming games
-schedule.nextTeamId                   # String ID of next opponent
-
-preseason = EspnScrape.schedule('BOS', 1)  # Get Preseason schedule
-playoffs  = EspnScrape.schedule('CLE', 3)  # Get Playoff schedule
+schedule = es.schedule('UTA')       # Gets schedule for latest available season type (Pre/Regular/Post)
+past     = schedule.pastGames       # Completed Games : multidimensional array
+future   = schedule.futureGames     # Upcoming Games  : multidimensional array
+schedule.nextTeamId                 # String ID of next opponent # => 'OKC'
 
 # Past Schedule Games as Objects
-symbols   = EspnScrape::FS_SCHEDULE_PAST
-p_structs = EspnScrape.to_structs(symbols, past) # Returns array of Hashes
-p_structs.first.gdate      # Game Date
-p_structs.first.t_abbr     # Team Abbreviation
-p_structs.first.team_score # Team Point Total
-p_structs.first.opp_score  # Opponent Point Total
+p_structs = past.to_structs         # Returns array of Hashes
+
+p_structs.first.gdate               # Game Date
+p_structs.first.t_abbr              # Team Abbreviation
+p_structs.first.team_score          # Team Point Total
+p_structs.first.opp_score           # Opponent Point Total
+
+# Select a specific Season Type
+preseason = es.schedule('BOS', 1)   # Get Preseason schedule
+playoffs  = es.schedule('OKC', 3)   # Get Playoff schedule
+
 ```
 
 #### Access a Player
 ```ruby
-player = EspnScrape.player(2991473) # Returns an NbaPlayer object
-player.name   #=> "Anthony Bennett"
-player.weight #=> "245"
+player = es.player(2991473) # Returns an NbaPlayer object
+player.name                 #=> "Anthony Bennett"
+player.weight               #=> "245"
 ```
 
 #### Access the NBA Team List
 ```ruby
-team_list = EspnScrape.teamList.teamList # multidimensional array of Team info
+team_list = es.teamList          # multidimensional array of Team info
+team_list.last                   # => ['UTA', 'Utah Jazz', 'Northwest', 'Western']
 
-symbols   = EspnScrape::FS_TEAM
-t_structs = EspnScrape.to_structs(symbols, team_list) # Hash array
-t_structs.first.t_name   #=> 'Boston Celtics'
-t_structs.first.t_abbr   #=> 'BOS'
-t_structs.first.division #=> 'Atlantic'
+t_structs = team_list.to_structs # Struct array
+t_structs.first.t_name           #=> 'Boston Celtics'
+t_structs.first.t_abbr           #=> 'BOS'
+t_structs.first.division         #=> 'Atlantic'
+```
+
+#### Customize field names in Hash or Struct conversion
+The [Array#to_hashes] and [Array#to_structs] methods can be passed an array of Symbols
+to use in place of the default field names.
+```ruby
+t = EspnScrape.teamList
+t_s = t.to_structs %w(short long div conf).map{ |x| x.to_sym }
+puts t_s.first.short
+```
+
+Defaults are defined in the [SymbolDefaults] module.
+You can overwrite them or use them as templates, replacing symbols with
+the Array#change_sym! method defined as part of this gem.
+
+```ruby
+# Overwrite
+TEAM_L.replace [:short, :long, :div, :conf]
+t = EspnScrape.teamList.to_structs
+t.first.short # => 'BOS'
+
+# Use As Template
+my_names = ROSTER.dup.change_sym!(:p_name, :full_name).change_sym!(:salary, :crazy_money)
+players  = EspnScrape.roster('CLE').players.to_structs
+players[3].full_name    # => 'LeBron James'
+players[3].crazy_money  # => '22970500'
 ```
 ## Documentation
-Available on [RubyDoc](http://www.rubydoc.info/gems/espnscrape/0.3.0) or locally:  
+Available on [RubyDoc.info] or locally:  
 ```
-> gem install yard
 > yard doc
 > yard server
 ```
@@ -121,3 +156,9 @@ Available on [RubyDoc](http://www.rubydoc.info/gems/espnscrape/0.3.0) or locally
 
 ## Testing
     > rake
+
+[SymbolDefaults]: http://www.rubydoc.info/gems/espnscrape/0.4.0/SymbolDefaults
+[RubyDoc.info]: http://www.rubydoc.info/gems/espnscrape/0.4.0
+[CHANGELOG]: ./CHANGELOG.md
+[Array#to_hashes]: http://www.rubydoc.info/gems/espnscrape/0.4.0/Array#to_hashes-instance_method
+[Array#to_structs]: http://www.rubydoc.info/gems/espnscrape/0.4.0/Array#to_structs-instance_method

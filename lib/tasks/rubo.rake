@@ -17,5 +17,5 @@ namespace :rubo do
 end
 
 def htmlReport
-  `rubocop -f html --out rubocop/report.html`
+  `rubocop -f html -D --out rubocop/report.html`
 end

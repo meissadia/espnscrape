@@ -1,4 +1,26 @@
 ### Change Log :: EspnScrape
+## 0.4.0 - June 8, 2016
+####&nbsp;&nbsp;&nbsp;New
++ Simplified conversion to Hashes and Structs! See [README] for details.
++ Instance versions of data access methods. Allows shorter calls i.e. es.boxscore instead of EspnScrape.boxscore
++ Cleaned out uninformative data fields ( see [! Removed !](#removed) )
+
+####&nbsp;&nbsp;&nbsp;Changed
++ Everything is now Strings (Mostly affects NbaPlayer, NbaSchedule)
++ EspnScrape.teamList now simply returns an array of team data (no need for additional .teamList)
+- NbaBoxScore: :starter field is now 'true'/'false' instead of 'X'/''
+
+####&nbsp;&nbsp;&nbsp;! Removed !
+- EspnScrape class methods **.to_hash**, **.to_hashes**, **.to_structs**. See [README] for replacements.
+- EspnScrape class constants **FS_BOXSCORE**, **FS_BOXSCORE_TOTALS**, **FS_ROSTER**, **FS_TEAM**, **FS_SCHEDULE_PAST**, **FS_SCHEDULE_FUTURE**. See [SymbolDefaults] for replacements.
++ Deleted **:game_num** &nbsp;&nbsp;&nbsp;&nbsp;field from&nbsp;NbaBoxScore data.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reason: always '0'.
++ Deleted **:win**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field from NbaSchedule#futureGames.&nbsp;&nbsp;&nbsp;&nbsp;Reason: always 'false'.
++ Deleted **:boxscore_id**&nbsp;&nbsp;&nbsp;field from NbaSchedule#futureGames.&nbsp;&nbsp;&nbsp;&nbsp;Reason: always '0'.
++ Deleted **:game_time**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field from&nbsp;NbaSchedule#pastGames.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reason: always '00:00:00'.
++ Deleted **:tv**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field from&nbsp;NbaSchedule#pastGames.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reason: always 'false'.
+
+[README]:./README.md
+[SymbolDefaults]: http://www.rubydoc.info/gems/espnscrape/0.4.0/SymbolDefaults
 
 ## 0.3.0 - June 7, 2016
 + Now requires Ruby >= 1.9.3

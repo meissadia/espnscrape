@@ -2,7 +2,7 @@ require_relative './test_helper'
 
 class TestNbaRoster < Minitest::Test
   include NbaUrls
-  include DebugUtils
+  include PrintUtils
 
   def test_live_data
     team_id = 'UTA'

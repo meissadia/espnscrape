@@ -1,35 +1,70 @@
 require_relative './test_helper'
 
 class TestEspnScrape < Minitest::Test
-  def test_get_boxscore
-    bs = EspnScrape.boxscore(400828035)
-    assert_equal 'Utah Jazz', bs.awayName, 'Boxscore Error'
-  end
+  def test_integration
+    es = EspnScrape.new
 
-  def test_get_roster
-    r = EspnScrape.roster('UTA')
-    assert_equal false, r.nil?, 'Roster Error'
-  end
+    bs    = es.boxscore(400828991)
+    stats = bs.homePlayers # Returns multidimensional array of Home Player stats
 
-  def test_get_team_list
-    tl = EspnScrape.teamList
-    assert_equal 30, tl.teamList.size, 'Team List Error'
-  end
+    # Convert String array to Hash array
+    stat_hashes = stats.to_hashes # Returns array of Hashes
+    assert_equal 'D. Favors', stat_hashes.first[:p_name], 'Boxscore.Name'
+    assert_equal '14',        stat_hashes.first[:pts],    'Boxscore.Points'
 
-  def test_get_schedule
-    s = EspnScrape.schedule('UTA')
-    assert_equal true, s.allGames.count > 0, 'Schedule Error'
-  end
+    # Convert String array to Struct array
+    symbols      = BOX_P
+    stat_structs = stats.to_structs(symbols) # Returns array of Structs
+    assert_equal 'D. Favors', stat_structs.first[:p_name], 'Boxscore.Name'
+    assert_equal '14',        stat_structs.first[:pts],    'Boxscore.Points'
 
-  def test_hashes
-    tl = EspnScrape.teamList.teamList
-    fl_a = EspnScrape.to_hashes(EspnScrape::FS_TEAM, tl)
-    assert_equal 'BOS', fl_a[0][:t_abbr], 'to_hashes fail'
-  end
+    #### Access a Roster
+    roster = es.roster('UTA').players # Returns multidimensional array of Roster info
 
-  def test_structs
-    tl = EspnScrape.teamList.teamList
-    fl_a = EspnScrape.to_structs(EspnScrape::FS_TEAM, tl)
-    assert_equal 'BOS', fl_a[0].t_abbr, 'to_structs fail'
+    # Roster as an array of objects
+    r_structs = roster.to_structs # Returns array of Hashes
+    assert_equal 'Trevor Booker', r_structs.first.p_name, 'Roster.name'
+    assert_equal 'PF',            r_structs.first.pos,    'Roster.position'
+    assert_equal '4775000',       r_structs.first.salary, 'Roster.salary'
+
+    #### Access a Schedule
+    schedule = es.schedule('UTA')         # Gets schedule for latest available season type (Pre/Regular/Post)
+    past     = schedule.pastGames         # multidimensional array of completed games
+    schedule.futureGames                  # multidimensional array of upcoming games
+
+    assert_equal nil, schedule.nextTeamId, 'Schedule.Next Team'
+
+    es.schedule('BOS', 1)                 # Get Preseason schedule
+    es.schedule('CLE', 3)                 # Get Playoff schedule
+
+    # Past Schedule Games as Objects
+    p_structs = past.to_structs # Returns array of Hashes
+    assert_equal 'Oct 28', p_structs.first.gdate,      'schedule.Game Date'
+    assert_equal 'UTA',    p_structs.first.t_abbr,     'schedule.Team Abbreviation'
+    assert_equal '87',     p_structs.first.team_score, 'schedule.Team Point Total'
+    assert_equal '92',     p_structs.first.opp_score,  'schedule.Opponent Point Total'
+
+    #### Access a Player
+    player = es.player(2991473) # Returns an NbaPlayer object
+    assert_equal 'Anthony Bennett', player.name,    'Player.name'
+    assert_equal '245',             player.weight,  'Player.weight'
+
+    #### Access the NBA Team List
+    team_list = es.teamList # multidimensional array of Team info
+
+    t_structs = team_list.to_structs # Hash array
+    assert_equal 'Boston Celtics', t_structs.first.t_name,    'Team.name'
+    assert_equal 'BOS',            t_structs.first.t_abbr,    'Team.abbr'
+    assert_equal 'Atlantic',       t_structs.first.division,  'Team.div'
+
+    #### Customize field names
+    ROSTER.change_sym!(:p_name, :full_name).change_sym!(:salary, :crazy_money)
+    players = EspnScrape.roster('CLE').players.to_structs
+    assert_equal 'LeBron James', players[3].full_name,   ':full_name => LeBron James'
+    assert_equal '22970500',     players[3].crazy_money, ':crazy_money => 22970500'
+
+    TEAM_L.replace [:short, :long, :div, :conf]
+    t = EspnScrape.teamList.to_structs
+    assert_equal 'BOS', t.first.short, '# => BOS'
   end
 end

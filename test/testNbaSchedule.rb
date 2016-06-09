@@ -2,7 +2,7 @@ require_relative './test_helper'
 
 class TestNbaSchedule < Minitest::Test
   include NbaUrls
-  include DebugUtils
+  include PrintUtils
 
   # Test Regular Season
   def test_file_regular
@@ -15,11 +15,11 @@ class TestNbaSchedule < Minitest::Test
     expected = 12
     assert_equal expected, schedule.nextGameId
 
-    expected = ['UTA', 13, false, 0, 'Nov 23', true, 'OKC', '9:00 PM ET', false, '2015-11-23 21:00:00', 2]
+    expected = ['UTA', '13', 'Nov 23', 'true', 'OKC', '9:00 PM ET', 'false', '2015-11-23 21:00:00', '2']
     assert_equal expected, schedule.nextGame
 
     # Test lastGame
-    expected = ['UTA', 12, '00:00:00', false, 'Nov 20', false, 'DAL', false, '93', '102', '400828071', '6', '6', '2015-11-20 00:00:00', 2]
+    expected = ['UTA', '12', 'Nov 20', 'false', 'DAL', 'false', '93', '102', '400828071', '6', '6', '2015-11-20 00:00:00', '2']
     assert_equal expected, schedule.lastGame
 
     # Test futureGames
@@ -57,6 +57,6 @@ class TestNbaSchedule < Minitest::Test
     assert_equal 'CLE', schedule.nextTeamId
     assert_equal 7,     schedule.futureGames.size
     assert_equal 24,    schedule.allGames.size
-    assert_equal 3,     schedule.nextGame.last
+    assert_equal '3',   schedule.nextGame.last
   end
 end

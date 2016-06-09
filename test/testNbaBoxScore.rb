@@ -15,12 +15,12 @@ class TestNbaBoxScore < Minitest::Test
     assert_equal t, [bs.awayName, bs.homeName].sort, 'Team Names => Incorrect'
 
     # Validate Away Team Stats
-    assert_equal ['UTA', '0', '4257', 'D. Favors', 'PF', '32', '11', '20', '0', '1', '1', '1', '4', '5', '9', '3', '0', '2', '4', '2', '+1', '23', 'X'], bs.awayPlayers[0], 'Away Stats => Mismatch'
+    assert_equal ['UTA', '4257', 'D. Favors', 'PF', '32', '11', '20', '0', '1', '1', '1', '4', '5', '9', '3', '0', '2', '4', '2', '+1', '23', 'true'], bs.awayPlayers[0], 'Away Stats => Mismatch'
     # Team Totals
     assert_equal 16, bs.awayTotals.size, "Away Totals => Wrong # columns\n#{bs.awayTotals.inspect}"
 
     # Validate Home Team Stats
-    assert_equal ['ATL', '0', '3015', 'P. Millsap', 'PF', '37', '10', '18', '1', '4', '7', '8', '1', '5', '6', '2', '1', '2', '3', '2', '+6', '28', 'X'], bs.homePlayers[0], 'Home Stats => Mismatch'
+    assert_equal ['ATL', '3015', 'P. Millsap', 'PF', '37', '10', '18', '1', '4', '7', '8', '1', '5', '6', '2', '1', '2', '3', '2', '+6', '28', 'true'], bs.homePlayers[0], 'Home Stats => Mismatch'
     # Team Totals
     assert_equal 16, bs.homeTotals.size, 'Home Totals => Wrong # columns'
   end

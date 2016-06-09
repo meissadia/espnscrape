@@ -1,7 +1,7 @@
 # Access NBA team schedule data
 class NbaSchedule
   include NbaUrls
-  include DebugUtils
+  include PrintUtils
 
   attr_reader :game_list, :next_game
 
@@ -30,26 +30,28 @@ class NbaSchedule
   end
 
   # @return [[[String]]] Table of All Schedule data
-  # @see EspnScrape::FS_SCHEDULE_FUTURE
-  # @see EspnScrape::FS_SCHEDULE_PAST
+  # @see GAME_F
+  # @see GAME_P
   def allGames
     @game_list
   end
 
   # Returns Schedule info of next game
-  # @return [[String]] Future Schedule Row ({EspnScrape::FS_SCHEDULE_FUTURE Description})
+  # @return [[String]] Future Schedule Row
   # @note (see #futureGames)
   # @example
-  # 	nextGame #=> ["GSW", 19, false, 0, "Jun 5", true, "CLE", "8:00 PM ET", true, "2016-06-05 20:00:00", 3]
+  # 	nextGame #=> ['UTA', '13', 'Nov 23', 'true', 'OKC', '9:00 PM ET', 'false', '2015-11-23 21:00:00', '2']
+  # @see GAME_F
   def nextGame
     @game_list[@next_game] unless @game_list.nil?
   end
 
   # Returns Schedule info of last completed game
-  # @return [[String]] Past Schedule Row ({EspnScrape::FS_SCHEDULE_PAST Description})
+  # @return [[String]] Past Schedule Row
   # @note (see #pastGames)
   # @example
-  # 	lastGame #=> ["UTA", 82, "00:00:00", false, "Apr 13", false, "LAL", false, "96", "101", "400829115", "40", "42", "2016-04-13 00:00:00", 2]
+  # 	lastGame #=> ['UTA', '12', '00:00:00', 'false', 'Nov 20', 'false', 'DAL', 'false', '93', '102', '400828071', '6', '6', '2015-11-20 00:00:00', '2']
+  # @see SymbolDefaults::GAME_P
   def lastGame
     @game_list[@next_game - 1]
   end
@@ -63,18 +65,20 @@ class NbaSchedule
   # @example
   #   nextTeamId #=> "OKC"
   def nextTeamId
-    nextGame[6] if nextGame
+    nextGame[4] if nextGame
   end
 
-  # @return [[String]] Table of Future Games ({EspnScrape::FS_SCHEDULE_FUTURE Description})
-  # @note (see EspnScrape::FS_SCHEDULE_FUTURE)
+  # @return [[String]] Table of Future Games
+  # @note (see SymbolDefaults::GAME_F)
+  # @see SymbolDefaults::GAME_F
   def futureGames
     @game_list[@next_game, game_list.size]
   end
 
   # Return Schedule info of Past Games
-  # @return [[String]] Table of Past Games ({EspnScrape::FS_SCHEDULE_PAST Description})
-  # @note (see EspnScrape::FS_SCHEDULE_PAST)
+  # @return [[String]] Table of Past Games
+  # @note (see SymbolDefaults::GAME_P)
+  # @see SymbolDefaults::GAME_P
   def pastGames
     @game_list[0, @next_game]
   end
@@ -128,7 +132,7 @@ class NbaSchedule
       game_date = ''
       game_time = ''
       if ('a'..'z').cover?(row.text[1]) # => Non-Header Row
-        tmp = [tid, game_id += 1] # TeamID, GameID
+        tmp = [tid, (game_id += 1).to_s] # TeamID, GameID
 
         if row.children.size == 3                  # => Postponed Game
           game_id -= 1
@@ -138,7 +142,7 @@ class NbaSchedule
         else # => Past Game
           @next_game = game_id
           game_time = '00:00:00'	# Game Time (Not shown for past games)
-          tmp << game_time << false # Game Time, TV
+          # tmp << game_time << 'false' # Game Time, TV
           game_date, ws, ls = pastGame(row, tmp, ws, ls, seasontype)
         end
       end
@@ -160,14 +164,12 @@ class NbaSchedule
         saveTeamRecord(result, season_type, ws, ls, txt)
       end
     end
-    # 		 Game Date, wins, losses
-    [result[4], ws, ls]
+    # Game Date, wins, losses
+    [result[2], ws, ls]
   end
 
   # Process Future Game Row
   def futureGame(row, result)
-    result << false	# Win
-    result << 0	# boxscore_id
     row.children[0, 4].each_with_index do |cell, cnt|
       txt = cell.text.strip
       if cnt == 0 # Game Date
@@ -180,13 +182,13 @@ class NbaSchedule
         saveTV(cell, txt, result)
       end
     end
-    # 		 Game Date, Game Time
-    [result[4], result[7]]
+    # Game Date, Game Time
+    [result[2], result[5]]
   end
 
   # Store Home? and Opponent ID
   def saveHomeOpponent(cell, result, txt)
-    result << !txt[0, 1].include?('@')	# Home Game?
+    result << (!txt[0, 1].include?('@')).to_s	# Home Game?
     x0 = cell.children.children.children[1].attributes['href']
     result <<
       if x0.nil? # Non-NBA Team
@@ -207,8 +209,8 @@ class NbaSchedule
       opp_score, team_score = final_score.split('-')
     end
     box_id = cell.children.children.children[1].attributes['href']
-    result << win << team_score << opp_score # Win?, Team Score, Opponent Score
-    result << (box_id.nil? ? 0 : box_id.text.split('=')[1]) # Boxscore ID
+    result << win.to_s << team_score.to_s << opp_score.to_s   # Win?, Team Score, Opponent Score
+    result << (box_id.nil? ? '0' : box_id.text.split('=')[1]) # Boxscore ID
   end
 
   # Store Team Record
@@ -216,7 +218,7 @@ class NbaSchedule
   def saveTeamRecord(result, season_type, ws, ls, text)
     if season_type == 3 # Team Record Playoffs
       result[7] ? ws += 1 : ls += 1
-      result << ws << ls
+      result << ws.to_s << ls.to_s
     else # Team Record Pre/Regular
       wins, losses = text.split('-')
       result << wins << losses
@@ -226,14 +228,14 @@ class NbaSchedule
   # Store TV?
   def saveTV(cell, txt, result)
     # Network image, link or name?
-    result << %w(a img).include?(cell.children[0].node_name) || txt.size > 1
+    result << (%w(a img).include?(cell.children[0].node_name) || txt.size > 1).to_s
   end
 
   # Store Processed Schedule Row
   def saveProcessedScheduleRow(tmp, game_date, year1, game_time, season_type)
     return if tmp.nil?
     tmp << formatGameDate(game_date, year1, game_time) # Game DateTime
-    tmp << season_type # Season Type
+    tmp << season_type.to_s # Season Type
     @game_list << tmp # Save processed row
   end
 

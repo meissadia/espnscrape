@@ -1,14 +1,14 @@
 # Access NBA roster data
 class NbaRoster
   include NbaUrls
-  include DebugUtils
+  include PrintUtils
 
   # @return [String] Coach Name
   attr_reader :coach
 
   # Returns Team Roster
-  # @return [[[String]]] Player List Table ({EspnScrape::FS_ROSTER Row Description})
-  # @see EspnScrape::FS_ROSTER
+  # @return [[[String]]] Player List Table ({ROSTER Row Description})
+  # @see ROSTER
   attr_reader :players
 
   # Scrape Roster Data

@@ -1,10 +1,9 @@
 require 'date'
-require_relative './DebugUtils.rb'
+require_relative './PrintUtils.rb'
 
 # Access NBA boxscore data
 class NbaBoxScore
   include NbaUrls
-  include DebugUtils
 
   # @return [String] Game Date
   attr_accessor :gameDate
@@ -12,23 +11,27 @@ class NbaBoxScore
   # @return [String] Away Team Name
   attr_accessor :awayName
 
-  # @return [[[Integer]]] Away Team Stats Array
-  # @see EspnScrape::FS_BOXSCORE
+  # @return [[[String]]] Away Team Stats Array
+  # @note (see SymbolDefaults::BOX_P)
+  # @see BOX_P
   attr_accessor :awayPlayers
 
-  # @return [[Integer]] Away Team Combined Stats
-  # @see EspnScrape::FS_BOXSCORE_TOTALS
+  # @return [[String]] Away Team Combined Stats
+  # @note (see SymbolDefaults::BOX_T)
+  # @see BOX_T
   attr_accessor :awayTotals
 
   # @return [String] Home Team Name
   attr_accessor :homeName
 
-  # @return [[[Integer]]] Home Team Stats Array
-  # @see EspnScrape::FS_BOXSCORE
+  # @return [[[String]]] Home Team Stats Array
+  # @note (see #awayPlayers)
+  # @see BOX_P
   attr_accessor :homePlayers
 
-  # @return [[Integer]] Home Team Combined Stats
-  # @see EspnScrape::FS_BOXSCORE_TOTALS
+  # @return [[String]] Home Team Combined Stats
+  # @note (see #awayTotals)
+  # @see BOX_T
   attr_accessor :homeTotals
 
   # Scrape Box Score Data
@@ -82,13 +85,13 @@ class NbaBoxScore
   end
 
   # Extract Player Stats
-  # @param row [[Nokogiri::XML::NodeSet]] Cumulative Team Stats
+  # @param rows [[Nokogiri::XML::NodeSet]] Cumulative Team Stats
   # @param tid [String] Team ID
   # @return [[String]]  Processed Team Stats
   def processPlayerRows(rows, tid)
     result = [] # Extracted Player Data
     rows.each_with_index do |row, index|
-      curr_row = [tid, '0']	# Team ID, Game ID
+      curr_row = [tid]	# Team ID
 
       row.children.each do |cell|	# Process Columns
         c_val = cell.text.strip
@@ -105,8 +108,8 @@ class NbaBoxScore
         end
       end
 
-      curr_row << 'X' if index < 5 # Check if Starter
-      result << curr_row           # Save processed data
+      curr_row << (index < 5).to_s  # Check if Starter
+      result << curr_row            # Save processed data
     end
     result
   end

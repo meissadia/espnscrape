@@ -1,13 +1,13 @@
 # Access list of NBA teams
 class NbaTeamList
   include NbaUrls
-  include DebugUtils
+  include PrintUtils
 
   # @return [String] Table Title
   attr_accessor :header
 
   # @return [[[String]]] Table of NBA Teams
-  # @note (see EspnScrape::FS_TEAM)
+  # @note (see TEAM_L)
   attr_accessor :teamList
 
   # Scrape Team Data

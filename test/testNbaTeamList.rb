@@ -2,7 +2,7 @@ require_relative './test_helper'
 
 class TestNbaTeamList < Minitest::Test
   include NbaUrls
-  include DebugUtils
+  include PrintUtils
   # Validate Team List contents
   def setup
     @team_list = [

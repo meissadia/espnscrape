@@ -17,6 +17,7 @@ class NbaPlayer
   # @return [Integer] Height (in)
   attr_accessor :h_in
 
+  # Read Player Data
   def initialize(espn_player_id, file = '')
     espn_player_id = espn_player_id.to_s
     if !espn_player_id.empty?
@@ -47,7 +48,7 @@ class NbaPlayer
 
   def processAge(d)
     /:\s(?<age_num>\d\d)/ =~ d.xpath('//span[text() = "Born"]/parent::li').text
-    @age = age_num.to_i
+    @age = age_num.to_i.to_s
   end
 
   def gatherHeightWeight(d)
@@ -57,17 +58,15 @@ class NbaPlayer
 
   def processWeight(weight)
     return 0 if weight.nil? || weight.empty?
-    weight.strip.split(' ')[0].to_i
+    weight.strip.split(' ')[0]
   end
 
   def processHeight(height)
     if !height.nil? && !height.empty?
       @h_ft, @h_in = height.strip.split('\'')
-      @h_in = @h_in.delete('"').strip.to_i
-      @h_ft = @h_ft.to_i
+      @h_in = @h_in.delete('"').strip
     else
-      @h_ft = 0
-      @h_in = 0
+      @h_ft = @h_in = 0
     end
   end
 end
