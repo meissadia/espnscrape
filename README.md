@@ -189,7 +189,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
 
   ```
 
-    * #### Player Data  
+      * #### Player Data  
       ```ruby
       wade = bs.homePlayers[4] # <Struct> of data for Row 5
 
@@ -217,7 +217,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
       wade.first.starter    # <String> Starter?         # => 'true'
       ```
 
-    + #### Team Data  
+      + #### Team Data  
       ```ruby
       miami = bs.homeTotals   # <Struct> Access the team totals
       miami.team
