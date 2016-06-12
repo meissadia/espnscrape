@@ -186,7 +186,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
   bs.awayScore          # <Struct> Team Score
   bs.awayTotals         # <Struct> Access the cumulative team totals
   bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
-  ```
+  ```  
 
     + #### Player Data  
       ```ruby
@@ -214,7 +214,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
       wade.first.plusminus  # <String> Plus/Minus       # => '-8'
       wade.first.points     # <String> Points           # => '38'
       wade.first.starter    # <String> Starter?         # => 'true'
-      ```
+      ```  
 
     + #### Team Data  
       ```ruby
@@ -235,8 +235,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
       miami.turnovers
       miami.fouls
       miami.points
-
-      ```
+      ```  
 
   + ### Roster
   Roster#players is a <[Navigator]>.
@@ -285,7 +284,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
 
   past     = schedule.pastGames     # Completed Games : multidimensional array
   future   = schedule.futureGames   # Upcoming Games  : multidimensional array
-  ```
+  ```  
 
     + #### Past Schedule Games as Structs
     ```ruby
@@ -303,7 +302,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
     p_s.losses               # Team Loss Count
     p_s.datetime             # Game DateTime
     p_s.season_type          # Season Type
-    ```
+    ```  
 
     + #### Future Schedule Games as Structs
     ```ruby
@@ -319,14 +318,14 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
     f_s.opp_score            # Opponent Score
     f_s.datetime             # Game DateTime
     f_s.season_type          # Season Type
-    ```
+    ```  
 
     + #### Select a specific Season Type
     ```ruby
     preseason = es.schedule('BOS', 1)   # Get Preseason schedule
     regular   = es.schedule('NYK', 2)   # Get Regular schedule
     playoffs  = es.schedule('OKC', 3)   # Get Playoff schedule
-    ```
+    ```  
 
 ## Chaining it all together
 ```ruby
