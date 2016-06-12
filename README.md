@@ -189,7 +189,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
 
   ```
 
-      * #### Player Data  
+    + #### Player Data  
       ```ruby
       wade = bs.homePlayers[4] # <Struct> of data for Row 5
 
@@ -217,7 +217,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
       wade.first.starter    # <String> Starter?         # => 'true'
       ```
 
-      + #### Team Data  
+    + #### Team Data  
       ```ruby
       miami = bs.homeTotals   # <Struct> Access the team totals
       miami.team
@@ -289,7 +289,6 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
   ```
 
     + #### Past Schedule Games as Structs
-
     ```ruby
     p_s = past.to_structs    # Returns array of Structs
     p_s.team                 # Team ID
@@ -308,7 +307,6 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
     ```
 
     + #### Future Schedule Games as Structs
-
     ```ruby
     f_s = future.to_structs  # Returns array of Structs
     f_s.team                 # Team ID
@@ -325,7 +323,6 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
     ```
 
     + #### Select a specific Season Type
-    
     ```ruby
     preseason = es.schedule('BOS', 1)   # Get Preseason schedule
     regular   = es.schedule('NYK', 2)   # Get Regular schedule
