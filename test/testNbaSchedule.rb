@@ -6,7 +6,8 @@ class TestNbaSchedule < Minitest::Test
 
   # Test Regular Season
   def test_file_regular
-    schedule = NbaSchedule.new('', 'test/data/scheduleData.html', 2) # Data 11/21/15
+    schedule = NbaSchedule.new(file: 'test/data/scheduleData.html',
+                               season_type: 2) # Data 11/21/15
 
     # Test allGames
     assert_equal 82, schedule.allGames.size, 'NbaSchedule: Wrong Season Length'
@@ -30,7 +31,7 @@ class TestNbaSchedule < Minitest::Test
     expected = 12
     assert_equal expected, schedule.pastGames.size
 
-    asTable(schedule.pastGames, 15, 'UTA Past', true)
+    asTable(schedule.pastGames[], 15, 'UTA Past', true)
 
     # Test getNextTeam
     expected = 'OKC'
@@ -39,13 +40,16 @@ class TestNbaSchedule < Minitest::Test
 
   # Test Preseason
   def test_file_preseason
-    schedule = NbaSchedule.new('GSW', 'test/data/schedulePreseasonData.html', 1)
+    schedule = NbaSchedule.new(team_id: 'GSW',
+                               file: 'test/data/schedulePreseasonData.html',
+                               season_type: 1)
     assert_equal 7, schedule.allGames.size
     assert_equal 7, schedule.pastGames.size
     assert_equal 0, schedule.futureGames.size
 
     # Test Schedule with Non-NBA Teams
-    schedule = NbaSchedule.new('BOS', 'test/data/scheduleInternationalData.html')
+    schedule = NbaSchedule.new(team_id: 'BOS',
+                               file: 'test/data/scheduleInternationalData.html')
     assert_equal 7, schedule.allGames.size
     assert_equal 7, schedule.pastGames.size
     assert_equal 0, schedule.futureGames.size
@@ -53,10 +57,23 @@ class TestNbaSchedule < Minitest::Test
 
   # Test Playoffs
   def test_file_playoff
-    schedule = NbaSchedule.new('GSW', 'test/data/schedulePlayoffData.html', 3)
+    schedule = NbaSchedule.new(team_id: 'GSW',
+                               file: 'test/data/schedulePlayoffData.html',
+                               season_type: 3)
     assert_equal 'CLE', schedule.nextTeamId
     assert_equal 7,     schedule.futureGames.size
     assert_equal 24,    schedule.allGames.size
     assert_equal '3',   schedule.nextGame.last
+  end
+
+  def test_structs
+    schedule = NbaSchedule.new(file: 'test/data/scheduleData.html',
+                               season_type: 2,
+                               format: :to_structs) # Data 11/21/15
+
+    assert_equal '1',   schedule.allGames.next.game_num
+    assert_equal '2',   schedule.allGames.next.game_num
+    assert_equal '2',   schedule.allGames.next.wins
+    assert_equal 'OKC', schedule.nextGame.opponent
   end
 end

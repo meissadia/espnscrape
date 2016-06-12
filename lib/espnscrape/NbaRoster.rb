@@ -1,3 +1,4 @@
+require_relative './Navigator'
 # Access NBA roster data
 class NbaRoster
   include NbaUrls
@@ -16,22 +17,21 @@ class NbaRoster
   # @example
   # 	r = NbaRoster.new("UTA")
   # 	r = NbaRoster.new('', 'test/data/rosterData.html')
-  def initialize(team_id, file = '')
-    if !team_id.empty?
-      url = formatTeamUrl(team_id, teamRosterUrl) # Generate URL
+  def initialize(args = {})
+    if args[:team_id]
+      url = formatTeamUrl(args[:team_id], teamRosterUrl) # Generate URL
       doc = Nokogiri::HTML(open(url)) # Get DOM
-    elsif !file.empty?
-      doc = Nokogiri::HTML(open(file))
+    elsif args[:file]
+      doc = Nokogiri::HTML(open(args[:file]))
     end
     exit if doc.nil?
 
-    team_id = getTid(doc.title.split(/\d{4}/)[0].strip) if team_id.empty?
+    team_id ||= getTid(doc.title.split(/\d{4}/).first.strip)
+    list      = doc.xpath('//div/div/table/tr')
+    p_list    = list[2, list.length - 3] # Get Player Nodes
 
-    list = doc.xpath('//div/div/table/tr')
-    p_list = list[2, list.length - 3] # Get Player Nodes
-
-    @coach   = list[list.length - 1].children[0].text.split(':')[1].strip # Read Coach Name
-    @players = processPlayerTable(p_list, team_id)
+    @coach   = list[-1].children.first.text.split(':').last.strip # Read Coach Name
+    @players = Navigator.new processPlayerTable(p_list, team_id, args[:format])
   end
 
   private
@@ -40,7 +40,7 @@ class NbaRoster
   # @param table [[Nokogiri::XML::NodeSet]] Roster Table
   # @param team_id [String] Team ID
   # @return [[[String]]] Processed Roster Data
-  def processPlayerTable(table, team_id)
+  def processPlayerTable(table, team_id, new_form)
     result = []
     table.each do |row|
       tmp = [team_id]	# Start row with Team ID
@@ -49,6 +49,7 @@ class NbaRoster
       end
       result << tmp
     end
+    return result.send(new_form, S_ROSTER) unless new_form.nil?
     result
   end
 
@@ -60,7 +61,7 @@ class NbaRoster
       tmp << txt
     when 1	# Player Name
       tmp << txt.tr("'", "\'")
-      tmp << cell.children[0].attribute('href').text[%r{id/(\d+)}, 1] # Player ID
+      tmp << cell.children.first.attribute('href').text[%r{id/(\d+)}, 1] # Player ID
     when 4													  # Player Height
       tmp.concat(txt.split('-'))
     when 6 														# College

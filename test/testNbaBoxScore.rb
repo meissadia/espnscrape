@@ -6,7 +6,7 @@ class TestNbaBoxScore < Minitest::Test
 
   # => Test Game: Past
   def test_live_past
-    bs = NbaBoxScore.new(400828035)
+    bs = NbaBoxScore.new(game_id: 400828035)
     assert_equal false, bs.nil?, 'Unable to Initialize object'
     assert_equal '2015-11-15 00:00:00', bs.gameDate, 'Game Date => Incorrect'
 
@@ -27,8 +27,26 @@ class TestNbaBoxScore < Minitest::Test
 
   # =>  Boxscore with Non-NBA Team
   def test_live_non_nba_opponent
-    bs = NbaBoxScore.new 400832210
+    bs = NbaBoxScore.new(game_id: 400832210)
     assert_equal 'Milan Olimpia', bs.homeName
     assert_equal '2015-10-06 00:00:00', bs.gameDate, 'Game Date -> Incorrect'
+  end
+
+  def test_live_structs_navigator
+    bs = NbaBoxScore.new(game_id: 400828035, format: :to_structs)
+    assert_equal 'D. Favors',     bs.awayPlayers.first.name
+    assert_equal 'PF',            bs.awayPlayers.first.position
+    assert_equal 'G. Hayward',    bs.awayPlayers.next.name
+    assert_equal '40',            bs.awayTotals.rebounds
+    assert_equal '97',            bs.awayScore
+    assert_equal 'P. Millsap',    bs.homePlayers.first.name
+    assert_equal 'PF',            bs.homePlayers.first.position
+    assert_equal '17',            bs.homeTotals.fta
+    assert_equal 'K. Bazemore',   bs.homePlayers.next.name
+    assert_equal '96',            bs.homeScore
+
+    # Validate Team Names
+    t = ['Atlanta Hawks', 'Utah Jazz']
+    assert_equal t, [bs.awayName, bs.homeName].sort, 'Team Names => Incorrect'
   end
 end

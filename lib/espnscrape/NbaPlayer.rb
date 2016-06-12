@@ -31,6 +31,16 @@ class NbaPlayer
     readInfo(doc)
   end
 
+  # alias for h_ft
+  def height_ft
+    @h_ft
+  end
+
+  # alias for h_in
+  def height_in
+    @h_in
+  end
+
   private
 
   # Extract basic bio info info class attributes

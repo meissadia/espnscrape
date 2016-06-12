@@ -34,7 +34,7 @@ class Array
   # @return [[Symbol]]
   def checkKeys(keys, k_id)
     return keys unless keys.empty?
-    [BOX_P, BOX_T, GAME_F, GAME_P, ROSTER, TEAM_L].each do |default|
+    [S_BOX_P, S_BOX_T, S_GAME_F, S_GAME_P, S_ROSTER, S_TEAM].each do |default|
       return default if default.size.eql?(k_id)
     end
   end
@@ -44,5 +44,13 @@ class Array
   # @param new_sym [Symbol] Symbol to add
   def change_sym!(old_sym, new_sym)
     map! { |x| x.eql?(old_sym) ? new_sym : x }
+  end
+
+  # Get an NbaBoxscore
+  # @param [Symbol] Format
+  # @return [NbaBoxscore] Boxscore
+  def boxscore(f_mat = nil)
+    return nil unless size == S_GAME_P.size
+    EspnScrape.boxscore(self[8], f_mat)
   end
 end

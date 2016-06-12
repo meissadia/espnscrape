@@ -4,13 +4,13 @@ class TestNbaPlayer < Minitest::Test
   include NbaUrls
   def test_file_data
     player = NbaPlayer.new('', 'test/data/playerBennett.html')
-    assert_equal 'Anthony Bennett', player.name,     'Player Name => Error'
-    assert_equal 'PF',              player.position, 'Player Position => Error'
-    assert_equal '6',               player.h_ft,     'Player H_FT => Error'
-    assert_equal '8',               player.h_in,     'Player H_IN => Error'
-    assert_equal '245',             player.weight,   'Player Weight => Error'
-    assert_equal 'UNLV',            player.college,  'Player College => Error'
-    assert_equal '23',              player.age,      'Player Age => Error'
+    assert_equal 'Anthony Bennett', player.name,       'Player Name => Error'
+    assert_equal 'PF',              player.position,   'Player Position => Error'
+    assert_equal '6',               player.height_ft,  'Player H_FT => Error'
+    assert_equal '8',               player.height_in,  'Player H_IN => Error'
+    assert_equal '245',             player.weight,     'Player Weight => Error'
+    assert_equal 'UNLV',            player.college,    'Player College => Error'
+    assert_equal '23',              player.age,        'Player Age => Error'
   end
 
   def test_live_data

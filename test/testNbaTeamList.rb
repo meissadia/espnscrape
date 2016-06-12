@@ -43,20 +43,28 @@ class TestNbaTeamList < Minitest::Test
     tl = NbaTeamList.new
 
     # Test Team Count
-    assert_equal 30, tl.teamList.size, 'NbaTeamList => Wrong # Teams'
+    assert_equal 30, tl.teamList[].size, 'NbaTeamList => Wrong # Teams'
 
     # Validate Header value
     assert_equal 'NBA Teams', tl.header, 'NbaTeamList => Wrong :header'
 
-    tl.teamList.each_with_index do |actual, idx|
+    tl.teamList[].each_with_index do |actual, idx|
       assert_equal @team_list[idx], actual, 'NbaTeamList => Content Fail'
     end
   end
 
   def test_file_data
-    tl = NbaTeamList.new('test/data/teamList.html')
-    tl.teamList.each_with_index do |actual, idx|
+    tl = NbaTeamList.new(file: 'test/data/teamList.html')
+    tl.teamList[].each_with_index do |actual, idx|
       assert_equal @team_list[idx], actual, 'NbaTeamList => File Content Fail'
     end
+  end
+
+  def test_conversion
+    tl = NbaTeamList.new(format: :to_structs,
+                         file: 'test/data/teamList.html').teamList
+
+    assert_equal 'BOS',       tl.first.team
+    assert_equal 'Utah Jazz', tl.last.name
   end
 end

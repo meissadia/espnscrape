@@ -4,20 +4,14 @@ Style/FileName:
   Enabled: false
 
 Style/MethodName:
-  Enabled: true
-  EnforcedStyle: camelCase
-  Exclude:
-    - test/*
-    - lib/espnscrape.rb
-    - lib/espnscrape/ArrayConversions.rb
+  Enabled: false
+
 
 Style/NumericLiterals:
   Enabled: false
 
 Style/VariableName:
-  Exclude:
-    - lib/espnscrape/NbaBoxScore.rb
-    - lib/espnscrape/NbaTeamList.rb
+  Enabled: false
 
 Style/FormatString:
   Enabled: false
@@ -42,4 +36,7 @@ Lint/UselessAssignment:
     - test/validateReadme.rb
 
 Style/MutableConstant:
+  Enabled: false
+
+Style/ExtraSpacing:
   Enabled: false

@@ -12,8 +12,8 @@ class NbaTeamList
 
   # Scrape Team Data
   # @return [[String]] Resulting Team List
-  def initialize(file = '')
-    doc = file.empty? ? Nokogiri::HTML(open(teamListUrl)) : Nokogiri::HTML(open(file))
+  def initialize(args = {})
+    doc = args[:file] ? Nokogiri::HTML(open(args[:file])) : Nokogiri::HTML(open(teamListUrl))
     exit if doc.nil?
 
     # Collect
@@ -26,9 +26,12 @@ class NbaTeamList
     # Process Teams by Division
     divs = %w(Atlantic Pacific Central Southwest Southeast Northwest)
     divs.each do |div|
-      processTeams(div, team_names[h, 5], west_conf, @teamList) # Store Team Data
+      @teamList += processTeams(div, team_names[h, 5], west_conf) # Store Team Data
       h += 5
     end
+    # puts "Converting to #{args[:format]}"
+    @teamList = @teamList.send(args[:format], S_TEAM) if args[:format]
+    @teamList = Navigator.new(@teamList)
   end
 
   private
@@ -42,7 +45,8 @@ class NbaTeamList
   # 	processTeams("Atlantic", ["Boston Celtics"], [...], result)
   # 	#result[n] = [TeamID, TeamName, TeamDiv, TeamConf]
   # 	result[0] = ["BOS", "Boston Celtics", "Atlatic", "Eastern"]
-  def processTeams(division, team_names, west_conf, tl)
+  def processTeams(division, team_names, west_conf)
+    result = []
     team_names.each do |tname|
       tmp  = []	# Stage Team Data
       full = tname.text.strip	# Full Team Name
@@ -52,7 +56,8 @@ class NbaTeamList
 
       # Derive Conference from Division
       tmp << (west_conf.include?(division) ? 'Western' : 'Eastern')
-      tl << tmp # Save Team Data to global @teamList[]
+      result << tmp # Save Team Data to global @teamList[]
     end
+    result
   end
 end

@@ -1,3 +1,4 @@
+require_relative './Navigator'
 # Access NBA team schedule data
 class NbaSchedule
   include NbaUrls
@@ -15,45 +16,47 @@ class NbaSchedule
   # 	test     = NbaSchedule.new('', 'test/data/testData.html')
   # 	pre      = NbaSchedule.new('UTA', '', 1)
   # 	playoffs = NbaSchedule.new('GSW', '', 3)
-  def initialize(tid, file = '', seasontype = '')
-    doc, seasontype = getNokoDoc(tid, file, seasontype)
+  def initialize(args)
+    doc, seasontype = getNokoDoc(args)
     exit if doc.nil?
 
     @game_list = []	# Processed Schedule Data
     @next_game = 0 	# Cursor to start of Future Games
 
-    schedule, year, indicator, tid = collectNodeSets(doc, tid)
+    schedule, year, indicator, tid = collectNodeSets(doc)
     season_valid = verifySeasonType(seasontype, indicator)
-    seasontype = findSeasonType(indicator) if seasontype.eql?(0)
+    seasontype   = findSeasonType(indicator) if seasontype.to_i.eql?(0)
 
-    processSeason(schedule, tid, year, seasontype) if season_valid && !seasontype.eql?(0)
+    processSeason(schedule, tid, year, seasontype, args[:format]) if season_valid && !seasontype.eql?(0)
+    @allGames    = Navigator.new(@game_list)
+    @futureGames = Navigator.new(@game_list[@next_game, game_list.size])
+    @pastGames   = Navigator.new(@game_list[0, @next_game])
+    @game_list   = nil
   end
 
-  # @return [[[String]]] Table of All Schedule data
+  # @return [Navigator] Navigator All Schedule data
   # @see GAME_F
   # @see GAME_P
-  def allGames
-    @game_list
-  end
+  attr_reader :allGames
 
   # Returns Schedule info of next game
-  # @return [[String]] Future Schedule Row
+  # @return [[Object]] Future Schedule Row (Array/Hash/Struct)
   # @note (see #futureGames)
   # @example
   # 	nextGame #=> ['UTA', '13', 'Nov 23', 'true', 'OKC', '9:00 PM ET', 'false', '2015-11-23 21:00:00', '2']
   # @see GAME_F
   def nextGame
-    @game_list[@next_game] unless @game_list.nil?
+    allGames[][@next_game] unless allGames[].nil?
   end
 
   # Returns Schedule info of last completed game
-  # @return [[String]] Past Schedule Row
+  # @return [Object] Past Schedule Row (Array/Hash/Struct)
   # @note (see #pastGames)
   # @example
   # 	lastGame #=> ['UTA', '12', '00:00:00', 'false', 'Nov 20', 'false', 'DAL', 'false', '93', '102', '400828071', '6', '6', '2015-11-20 00:00:00', '2']
   # @see SymbolDefaults::GAME_P
   def lastGame
-    @game_list[@next_game - 1]
+    allGames[][@next_game - 1]
   end
 
   # @return [Integer] Game # of Next Game
@@ -68,37 +71,32 @@ class NbaSchedule
     nextGame[4] if nextGame
   end
 
-  # @return [[String]] Table of Future Games
+  # @return [Navigator] Navigator for Future Games
   # @note (see SymbolDefaults::GAME_F)
   # @see SymbolDefaults::GAME_F
-  def futureGames
-    @game_list[@next_game, game_list.size]
-  end
+  attr_reader :futureGames
 
   # Return Schedule info of Past Games
-  # @return [[String]] Table of Past Games
+  # @return [Navigator] Navigator for Past Games
   # @note (see SymbolDefaults::GAME_P)
   # @see SymbolDefaults::GAME_P
-  def pastGames
-    @game_list[0, @next_game]
-  end
+  attr_reader :pastGames
 
   private
 
   # Return Nokogiri XML Document
-  def getNokoDoc(tid, file, season_type)
-    return Nokogiri::HTML(open(file)), season_type unless file.empty? # Use File
-
-    url = formatTeamUrl(tid, teamScheduleUrl(season_type))
-    [Nokogiri::HTML(open(url)), season_type] # Use Live Data
+  def getNokoDoc(args)
+    return Nokogiri::HTML(open(args[:file])), args[:season_type] if args[:file] # Use File
+    url = formatTeamUrl(args[:team_id], teamScheduleUrl(args[:season_type]))
+    [Nokogiri::HTML(open(url)), args[:season_type]] # Use Live Data
   end
 
   # Extract NodeSets
-  def collectNodeSets(doc, tid)
+  def collectNodeSets(doc)
     schedule = doc.xpath('//div/div/table/tr') # Schedule Rows
     year     = doc.xpath('//div[@id=\'my-teams-table\']/div/div/div/h1').text.split('-')[1].strip.to_i # Season Starting Year
     season   = doc.xpath("//tr[@class='stathead']").text.split[1].downcase # preseason/regular/postseason
-    tid = getTid(doc.title.split(/\d{4}/)[0].strip) if tid.empty?
+    tid      = getTid(doc.title.split(/\d{4}/)[0].strip).upcase
     [schedule, year, season, tid]
   end
 
@@ -122,7 +120,7 @@ class NbaSchedule
   end
 
   # Process Table of Schedule Data
-  def processSeason(schedule, tid, year1, seasontype)
+  def processSeason(schedule, tid, year1, seasontype, new_form)
     seasontype = seasontype.to_i
     game_id = 0 # 82-game counter
     ws = ls	= 0 # Playoff Win/Loss Counters
@@ -139,14 +137,16 @@ class NbaSchedule
           next
         elsif row.children[2].text.include?(':')   # => Future Game
           game_date, game_time = futureGame(row, tmp)
+          game_in_past = false
         else # => Past Game
           @next_game = game_id
           game_time = '00:00:00'	# Game Time (Not shown for past games)
           # tmp << game_time << 'false' # Game Time, TV
           game_date, ws, ls = pastGame(row, tmp, ws, ls, seasontype)
+          game_in_past = true
         end
       end
-      saveProcessedScheduleRow(tmp, game_date, year1, game_time, seasontype)
+      saveProcessedScheduleRow(tmp, game_date, year1, game_time, seasontype, new_form, game_in_past)
     end
   end
 
@@ -232,11 +232,12 @@ class NbaSchedule
   end
 
   # Store Processed Schedule Row
-  def saveProcessedScheduleRow(tmp, game_date, year1, game_time, season_type)
+  def saveProcessedScheduleRow(tmp, game_date, year1, game_time, season_type, new_form, game_in_past)
     return if tmp.nil?
     tmp << formatGameDate(game_date, year1, game_time) # Game DateTime
-    tmp << season_type.to_s # Season Type
-    @game_list << tmp # Save processed row
+    tmp << season_type.to_s                            # Season Type
+    @game_list << tmp if new_form.nil?                 # Save processed Array
+    @game_list += tmp.send(new_form, game_in_past ? S_GAME_P : S_GAME_F) unless new_form.nil? # Conversion
   end
 
   #  Adjust and format dates

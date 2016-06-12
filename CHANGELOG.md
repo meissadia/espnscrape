@@ -1,4 +1,17 @@
 ### Change Log :: EspnScrape
+## 0.5.0 - June 11, 2016
+####&nbsp;&nbsp;&nbsp;New
++ Expanded dot-notation
++ Specify conversion format (Struct, Hash) at EspnScrape instantiation
++ Navigator methods for table data (next, curr, prev, etc.)
++ Roster or Schedule from Team ID i.e. 'WAS'.schedule or 'OKC'.roster(:to_structs)
++ Boxscore from row of Past Game data
++ Table of contents for [README]
+
+####&nbsp;&nbsp;&nbsp;Changed
++ More logical default field names (i.e. 'name' instead of 'p_name', 'team' instead of 't_abbr'. See [README] for more info )
++ Symbol Defaults renamed
+
 ## 0.4.0 - June 8, 2016
 ####&nbsp;&nbsp;&nbsp;New
 + Simplified conversion to Hashes and Structs! See [README] for details.
@@ -20,7 +33,7 @@
 + Deleted **:tv**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field from&nbsp;NbaSchedule#pastGames.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reason: always 'false'.
 
 [README]:./README.md
-[SymbolDefaults]: http://www.rubydoc.info/gems/espnscrape/0.4.0/SymbolDefaults
+[SymbolDefaults]: http://www.rubydoc.info/gems/espnscrape/0.5.0/SymbolDefaults
 
 ## 0.3.0 - June 7, 2016
 + Now requires Ruby >= 1.9.3

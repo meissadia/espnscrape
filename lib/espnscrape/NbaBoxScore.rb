@@ -6,54 +6,59 @@ class NbaBoxScore
   include NbaUrls
 
   # @return [String] Game Date
-  attr_accessor :gameDate
+  attr_reader :gameDate
 
   # @return [String] Away Team Name
-  attr_accessor :awayName
+  attr_reader :awayName
 
-  # @return [[[String]]] Away Team Stats Array
+  # @return [Navigator] Away Team Stats Array
   # @note (see SymbolDefaults::BOX_P)
   # @see BOX_P
-  attr_accessor :awayPlayers
+  attr_reader :awayPlayers
 
   # @return [[String]] Away Team Combined Stats
   # @note (see SymbolDefaults::BOX_T)
   # @see BOX_T
-  attr_accessor :awayTotals
+  attr_reader :awayTotals
 
   # @return [String] Home Team Name
-  attr_accessor :homeName
+  attr_reader :homeName
 
-  # @return [[[String]]] Home Team Stats Array
+  # @return [Navigator] Home Team Stats Array
   # @note (see #awayPlayers)
   # @see BOX_P
-  attr_accessor :homePlayers
+  attr_reader :homePlayers
 
   # @return [[String]] Home Team Combined Stats
   # @note (see #awayTotals)
   # @see BOX_T
-  attr_accessor :homeTotals
+  attr_reader :homeTotals
+
+  # Boxscore ID
+  attr_reader :id
+  attr_reader :awayScore
+  attr_reader :homeScore
 
   # Scrape Box Score Data
   # @param game_id [Integer] Boxscore ID
   # @example
   # 	bs = NbaBoxScore.new(400828035)
-  def initialize(game_id, file = '')
-    doc = getNokoDoc(game_id, file)
+  def initialize(args)
+    doc = getNokoDoc(args[:game_id], args[:file])
     exit if doc.nil?
-
+    @id = args[:game_id].to_s
     @gameDate = readGameDate(doc)
     @awayName, @homeName = readTeamNames(doc)
     return unless @gameDate.index('00:00:00') # Only past games have stats
-    @awayPlayers, @awayTotals = readTeamStats(doc, 'away')
-    @homePlayers, @homeTotals = readTeamStats(doc, 'home')
+    @awayPlayers, @awayTotals, @awayScore = readTeamStats(doc, 'away', args[:format])
+    @homePlayers, @homeTotals, @homeScore = readTeamStats(doc, 'home', args[:format])
   end
 
   private
 
   def getNokoDoc(game_id, file)
     return Nokogiri::HTML(open(file)) if game_id.nil? # Parse File
-    Nokogiri::HTML(open(boxScoreUrl + game_id.to_s)) # Parse URL
+    Nokogiri::HTML(open(boxScoreUrl + game_id.to_s))  # Parse URL
   end
 
   # Reads the game date from a Nokogiri::Doc
@@ -88,7 +93,7 @@ class NbaBoxScore
   # @param rows [[Nokogiri::XML::NodeSet]] Cumulative Team Stats
   # @param tid [String] Team ID
   # @return [[String]]  Processed Team Stats
-  def processPlayerRows(rows, tid)
+  def processPlayerRows(rows, tid, new_form)
     result = [] # Extracted Player Data
     rows.each_with_index do |row, index|
       curr_row = [tid]	# Team ID
@@ -111,6 +116,7 @@ class NbaBoxScore
       curr_row << (index < 5).to_s  # Check if Starter
       result << curr_row            # Save processed data
     end
+    return result.send(new_form, S_BOX_P) unless new_form.nil?
     result
   end
 
@@ -118,7 +124,7 @@ class NbaBoxScore
   # @param row [[Nokogiri::XML::NodeSet]] Cumulative Team Stats
   # @param tid [String]  Team ID
   # @return [[String]]   Processed Team Stats
-  def processTeamRow(row, tid)
+  def processTeamRow(row, tid, new_form)
     result = []
     row.children.each do |cell|
       c_val = cell.text.strip
@@ -133,7 +139,8 @@ class NbaBoxScore
         result << c_val
       end
     end
-    result
+    return [result.send(new_form, S_BOX_T).first, result.last] unless new_form.nil?
+    [result, result.last]
   end
 
   # Reads the team stats from a Nokogiri::Doc
@@ -143,7 +150,7 @@ class NbaBoxScore
   # @example
   # 	bs.readTeamStats(doc,'away')
   #
-  def readTeamStats(d, id)
+  def readTeamStats(d, id, new_form)
     # Extract player tables
     p_tables = d.xpath('//div[@class="sub-module"]/*/table/tbody')
 
@@ -158,9 +165,9 @@ class NbaBoxScore
     player_rows = p_tab.xpath('tr[not(@class)]') # Ignore TEAM rows
     team_row    = p_tab.xpath('tr[@class="highlight"]')[0] # Ignore Percentage row
 
-    player_stats = processPlayerRows(player_rows, tid)
-    team_totals  = processTeamRow(team_row, tid)
+    player_stats = processPlayerRows(player_rows, tid, new_form)
+    team_totals, team_score = processTeamRow(team_row, tid, new_form)
 
-    [player_stats, team_totals]
+    [Navigator.new(player_stats), team_totals, team_score]
   end
 end
