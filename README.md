@@ -54,7 +54,7 @@ Utility and usability are the goal, so I hope the API evolution helps more than 
 Check the [CHANGELOG] for more info || **`Currently only for NBA`** || *EspnScrape is not associated with ESPN or the NBA.*
 
 ## Installation
-+ ### Rails
+#### Rails
 In your application's Gemfile, include :  
 ```
 gem 'espnscrape'
@@ -65,7 +65,7 @@ In your project dir, execute :
 > bundle install
 ```
 
-+ ### Manual
+#### Manual
 ```
 > gem install espnscrape
 ```
@@ -78,10 +78,10 @@ If you intend to work with a single format, you can specify it at initialization
   es_h = EspnScrape.new({ :format => :to_hashes })   # Hash Arrays
   es_s = EspnScrape.new({ :format => :to_structs })  # Struct Arrays  
 
-### Working With Multiple Formats
+#### Working With Multiple Formats
 You can easily convert Arrays to Hashes or Structs  
 
-#### Default format
+##### Default format
 ```ruby
 es    = EspnScrape.new
 bs    = es.boxscore(400828991)   # Return an NbaBoxscore object
@@ -90,21 +90,21 @@ stats[4][2]                      # Player Name   # => 'R. Hood'
 stats[4][20]                     # Player Points # => '30'
 ```
 
-#### Same data using Hashes
+##### Same data using Hashes
 ```ruby
 s_hashes = stats.to_hashes       # Returns array of Hashes
 s_hashes[4][:name]               # Player Name   # => 'R. Hood'
 s_hashes[4][:points]             # Player Points # => '30'
 ```
 
-#### Same data using Structs
+##### Same data using Structs
 ```ruby
 s_structs = stats.to_structs     # Returns array of Structs
 s_structs[4].name                # Player Name   # => 'R. Hood'
 s_structs[4].points              # Player Points # => '30'
 ```
 
-### Customize Field Names in Hash or Struct Conversion
+#### Customize Field Names in Hash or Struct Conversion
 The [Array#to_hashes] and [Array#to_structs] methods can be passed an array of Symbols
 to use in place of the default field names.
 ```ruby
@@ -117,7 +117,7 @@ Defaults are defined in the [SymbolDefaults] module.
 You can overwrite them or use them as templates, replacing individual symbols using
 the [Array#change_sym!] method.
 
-#### Overwrite  
+##### Overwrite  
 
 ```ruby
 S_TEAM    # => [:team,  :name, :division, :conference]
@@ -128,7 +128,7 @@ t.first.short # => 'BOS'
 t.first.long  # => 'Boston Celtics'
 ```
 
-#### Use As Template
+##### Use As Template
 ```ruby
 my_names = S_ROSTER.dup.change_sym!(:p_name, :full_name).change_sym!(:salary, :crazy_money)
 players  = EspnScrape.roster('CLE').players.to_structs
@@ -187,7 +187,7 @@ bs.awayTotals         # <Struct> Access the cumulative team totals
 bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
 ```  
 
-#### Player Data  
+##### Player Data  
   ```ruby
   wade = bs.homePlayers[4] # <Struct> of data for Row 5
 
@@ -215,7 +215,7 @@ bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
   wade.first.starter    # <String> Starter?         # => 'true'
   ```  
 
-#### Team Data  
+##### Team Data  
   ```ruby
   miami = bs.homeTotals   # <Struct> Access the team totals
   miami.team
@@ -285,7 +285,7 @@ past     = schedule.pastGames     # Completed Games : multidimensional array
 future   = schedule.futureGames   # Upcoming Games  : multidimensional array
 ```  
 
-#### Past Schedule Games as Structs
+##### Past Schedule Games as Structs
 ```ruby
 p_s = past.to_structs    # Returns array of Structs
 p_s.team                 # Team ID
@@ -303,7 +303,7 @@ p_s.datetime             # Game DateTime
 p_s.season_type          # Season Type
 ```  
 
-#### Future Schedule Games as Structs
+##### Future Schedule Games as Structs
 ```ruby
 f_s = future.to_structs  # Returns array of Structs
 f_s.team                 # Team ID
@@ -319,7 +319,7 @@ f_s.datetime             # Game DateTime
 f_s.season_type          # Season Type
 ```  
 
-#### Select a specific Season Type
+##### Select a specific Season Type
 ```ruby
 preseason = es.schedule('BOS', 1)   # Get Preseason schedule
 regular   = es.schedule('NYK', 2)   # Get Regular schedule
