@@ -60,7 +60,7 @@ In your application's Gemfile, include :
 gem 'espnscrape'
 ```
 
-  In your project dir, execute :  
+In your project dir, execute :  
 ```
 > bundle install
 ```
@@ -73,16 +73,15 @@ gem 'espnscrape'
 ## Arrays, Hashes or Structs
 If you intend to work with a single format, you can specify it at initialization. When working with multiple formats you should start with the default, String Arrays [[String]], and convert as necessary using [Array#to_structs] or [Array#to_hashes].
 
-    require 'espnscrape'
-    es   = EspnScrape.new                              # String Arrays
-    es_h = EspnScrape.new({ :format => :to_hashes })   # Hash Arrays
-    es_s = EspnScrape.new({ :format => :to_structs })  # Struct Arrays
-
+  require 'espnscrape'
+  es   = EspnScrape.new                              # String Arrays
+  es_h = EspnScrape.new({ :format => :to_hashes })   # Hash Arrays
+  es_s = EspnScrape.new({ :format => :to_structs })  # Struct Arrays  
 
 ### Working With Multiple Formats
 You can easily convert Arrays to Hashes or Structs  
 
-+ #### Default format
+#### Default format
 ```ruby
 es    = EspnScrape.new
 bs    = es.boxscore(400828991)   # Return an NbaBoxscore object
@@ -91,14 +90,14 @@ stats[4][2]                      # Player Name   # => 'R. Hood'
 stats[4][20]                     # Player Points # => '30'
 ```
 
-+ #### Same data using Hashes
+#### Same data using Hashes
 ```ruby
 s_hashes = stats.to_hashes       # Returns array of Hashes
 s_hashes[4][:name]               # Player Name   # => 'R. Hood'
 s_hashes[4][:points]             # Player Points # => '30'
 ```
 
-+ #### Same data using Structs
+#### Same data using Structs
 ```ruby
 s_structs = stats.to_structs     # Returns array of Structs
 s_structs[4].name                # Player Name   # => 'R. Hood'
@@ -118,7 +117,7 @@ Defaults are defined in the [SymbolDefaults] module.
 You can overwrite them or use them as templates, replacing individual symbols using
 the [Array#change_sym!] method.
 
-+ #### Overwrite  
+#### Overwrite  
 
 ```ruby
 S_TEAM    # => [:team,  :name, :division, :conference]
@@ -129,7 +128,7 @@ t.first.short # => 'BOS'
 t.first.long  # => 'Boston Celtics'
 ```
 
-+ #### Use As Template
+#### Use As Template
 ```ruby
 my_names = S_ROSTER.dup.change_sym!(:p_name, :full_name).change_sym!(:salary, :crazy_money)
 players  = EspnScrape.roster('CLE').players.to_structs
@@ -141,7 +140,7 @@ players[3].crazy_money  # => '22970500'
 ## Working with Navigators
 Table data is wrapped in a [Navigator] class which provides helper methods for moving through the table. The type of object the Navigator returns matches the format provided at EspnScrape instantiation.  Data converted using [#to_structs] or [#to_hashes] is not wrapped in a Navigator.
 
-+ ### Navigator Methods
+### Navigator Methods
 ```ruby
 # <Navigator> A Navigator for Home Player Stats Table
 navigator = EspnScrape.boxscore(400878158).homePlayers
@@ -158,7 +157,7 @@ navigator.prev   # <Object> Access the previous data row (nil if there is no mor
 
 ## Data Access
 
-+ ### NBA Team List
+### NBA Team List
 ```ruby
 es        = EspnScrape.new
 team_list = es.teamList      # multidimensional array of Team info
@@ -169,7 +168,7 @@ team_list.last[2]            # => 'Northwest'
 team_list.last[3]            # => 'Western'
 ```
 
-+ ### Boxscore
+### Boxscore
 ```ruby
 es    = EspnScrape.new({ :format => :to_structs })
 bs    = es.boxscore(400875892)   # Return an NbaBoxscore object
@@ -188,56 +187,56 @@ bs.awayTotals         # <Struct> Access the cumulative team totals
 bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
 ```  
 
-+ #### Player Data  
-```ruby
-wade = bs.homePlayers[4] # <Struct> of data for Row 5
+#### Player Data  
+  ```ruby
+  wade = bs.homePlayers[4] # <Struct> of data for Row 5
 
-wade.first.team       # <String> Team ID          # => 'MIA'
-wade.first.id         # <String> Player ID        # => '1987'
-wade.first.name       # <String> Short Name       # => 'D. Wade'
-wade.first.position   # <String> Position         # => 'SG'
-wade.first.minutes    # <String> Minutes          # => '36'
-wade.first.fgm        # <String> Shots Made       # => '13'
-wade.first.fga        # <String> Shots Attempted  # => '25'
-wade.first.tpm        # <String> 3P Made          # => '4'
-wade.first.tpa        # <String> 3P Attempted     # => '6'
-wade.first.ftm        # <String> Freethrows Made  # => '8'
-wade.first.fta        # <String> Freethrows Att.  # => '8'
-wade.first.oreb       # <String> Offensive Reb.   # => '1'
-wade.first.dreb       # <String> Defensive Reb.   # => '7'
-wade.first.rebounds   # <String> Total Rebounds   # => '8'
-wade.first.assists    # <String> Assists          # => '4'
-wade.first.steals     # <String> Steals           # => '0'
-wade.first.blocks     # <String> Blocks           # => '0'
-wade.first.tos        # <String> Turnovers        # => '4'
-wade.first.fouls      # <String> Personal Fouls   # => '1'
-wade.first.plusminus  # <String> Plus/Minus       # => '-8'
-wade.first.points     # <String> Points           # => '38'
-wade.first.starter    # <String> Starter?         # => 'true'
-```  
+  wade.first.team       # <String> Team ID          # => 'MIA'
+  wade.first.id         # <String> Player ID        # => '1987'
+  wade.first.name       # <String> Short Name       # => 'D. Wade'
+  wade.first.position   # <String> Position         # => 'SG'
+  wade.first.minutes    # <String> Minutes          # => '36'
+  wade.first.fgm        # <String> Shots Made       # => '13'
+  wade.first.fga        # <String> Shots Attempted  # => '25'
+  wade.first.tpm        # <String> 3P Made          # => '4'
+  wade.first.tpa        # <String> 3P Attempted     # => '6'
+  wade.first.ftm        # <String> Freethrows Made  # => '8'
+  wade.first.fta        # <String> Freethrows Att.  # => '8'
+  wade.first.oreb       # <String> Offensive Reb.   # => '1'
+  wade.first.dreb       # <String> Defensive Reb.   # => '7'
+  wade.first.rebounds   # <String> Total Rebounds   # => '8'
+  wade.first.assists    # <String> Assists          # => '4'
+  wade.first.steals     # <String> Steals           # => '0'
+  wade.first.blocks     # <String> Blocks           # => '0'
+  wade.first.tos        # <String> Turnovers        # => '4'
+  wade.first.fouls      # <String> Personal Fouls   # => '1'
+  wade.first.plusminus  # <String> Plus/Minus       # => '-8'
+  wade.first.points     # <String> Points           # => '38'
+  wade.first.starter    # <String> Starter?         # => 'true'
+  ```  
 
-+ #### Team Data  
-```ruby
-miami = bs.homeTotals   # <Struct> Access the team totals
-miami.team
-miami.fgm
-miami.fga
-miami.tpm
-miami.tpa
-miami.ftm
-miami.fta
-miami.oreb
-miami.dreb
-miami.rebounds
-miami.assists
-miami.steals
-miami.blocks
-miami.turnovers
-miami.fouls
-miami.points
-```  
+#### Team Data  
+  ```ruby
+  miami = bs.homeTotals   # <Struct> Access the team totals
+  miami.team
+  miami.fgm
+  miami.fga
+  miami.tpm
+  miami.tpa
+  miami.ftm
+  miami.fta
+  miami.oreb
+  miami.dreb
+  miami.rebounds
+  miami.assists
+  miami.steals
+  miami.blocks
+  miami.turnovers
+  miami.fouls
+  miami.points
+  ```  
 
-+ ### Roster
+### Roster
 Roster#players is a <[Navigator]>.
 ```ruby
 roster  = es.roster('UTA')        
@@ -261,7 +260,7 @@ r_structs[2].college             # College          # => 'Colorado'
 r_structs[2].salary              # Salary           # => '9463484'
 ```
 
-+ ### Player
+### Player
 ```ruby
 player = es.player(2991473) # Returns an NbaPlayer object
 player.name                 #=> "Anthony Bennett"
@@ -272,7 +271,7 @@ player.height_ft            #=> "6"
 player.height_in            #=> "8"
 ```
 
-+ ### Schedule
+### Schedule
 Schedule#allGames, #pastGames, #futureGames return <[Navigator]>
 
 ```ruby
@@ -286,7 +285,7 @@ past     = schedule.pastGames     # Completed Games : multidimensional array
 future   = schedule.futureGames   # Upcoming Games  : multidimensional array
 ```  
 
-+ #### Past Schedule Games as Structs
+#### Past Schedule Games as Structs
 ```ruby
 p_s = past.to_structs    # Returns array of Structs
 p_s.team                 # Team ID
@@ -304,7 +303,7 @@ p_s.datetime             # Game DateTime
 p_s.season_type          # Season Type
 ```  
 
-+ #### Future Schedule Games as Structs
+#### Future Schedule Games as Structs
 ```ruby
 f_s = future.to_structs  # Returns array of Structs
 f_s.team                 # Team ID
@@ -320,7 +319,7 @@ f_s.datetime             # Game DateTime
 f_s.season_type          # Season Type
 ```  
 
-+ #### Select a specific Season Type
+#### Select a specific Season Type
 ```ruby
 preseason = es.schedule('BOS', 1)   # Get Preseason schedule
 regular   = es.schedule('NYK', 2)   # Get Regular schedule
