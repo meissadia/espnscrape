@@ -186,7 +186,6 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
   bs.awayScore          # <Struct> Team Score
   bs.awayTotals         # <Struct> Access the cumulative team totals
   bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
-
   ```
 
     + #### Player Data  
