@@ -72,11 +72,12 @@ In your project dir, execute :
 
 ## Arrays, Hashes or Structs
 If you intend to work with a single format, you can specify it at initialization. When working with multiple formats you should start with the default, String Arrays [[String]], and convert as necessary using [Array#to_structs] or [Array#to_hashes].
-
+```
   require 'espnscrape'
-  es   = EspnScrape.new                              # String Arrays
-  es_h = EspnScrape.new({ :format => :to_hashes })   # Hash Arrays
+  es   = EspnScrape.new                              # String Arrays  
+  es_h = EspnScrape.new({ :format => :to_hashes })   # Hash Arrays  
   es_s = EspnScrape.new({ :format => :to_structs })  # Struct Arrays  
+```  
 
 #### Working With Multiple Formats
 You can easily convert Arrays to Hashes or Structs  
