@@ -289,6 +289,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
   ```
 
     + #### Past Schedule Games as Structs
+
     ```ruby
     p_s = past.to_structs    # Returns array of Structs
     p_s.team                 # Team ID
@@ -307,6 +308,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
     ```
 
     + #### Future Schedule Games as Structs
+
     ```ruby
     f_s = future.to_structs  # Returns array of Structs
     f_s.team                 # Team ID
@@ -323,6 +325,7 @@ Table data is wrapped in a [Navigator] class which provides helper methods for m
     ```
 
     + #### Select a specific Season Type
+    
     ```ruby
     preseason = es.schedule('BOS', 1)   # Get Preseason schedule
     regular   = es.schedule('NYK', 2)   # Get Regular schedule
