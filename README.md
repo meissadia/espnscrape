@@ -6,7 +6,6 @@
 [![Test Coverage](https://codeclimate.com/github/meissadia/espnscrape/badges/coverage.svg)](https://codeclimate.com/github/meissadia/espnscrape/coverage)
 
 ## Table of Contents
-+ [Table of Contents](#table-of-contents)
 + [Introduction](#introduction)
 + [Installation](#installation)
   + [Rails](#rails)
@@ -181,19 +180,19 @@ bs.id                 # <String> Boxscore ID    # => '400875892'
 bs.gameDate           # <String> Game DateTime  # => '2016-05-07 00:00:00'
 
 bs.homeName           # <String> Full Team Name
-bs.homeScore          # <Struct> Team Score
-bs.homeTotals         # <Struct> Access the cumulative team totals
+bs.homeScore          # <String> Team Score
+bs.homeTotals         # <Object> Access the cumulative team totals
 bs.homePlayers        # <Navigator> A Navigator for Home Player Stats Table
 
 bs.awayName           # <String> Full Team Name
-bs.awayScore          # <Struct> Team Score
-bs.awayTotals         # <Struct> Access the cumulative team totals
+bs.awayScore          # <String> Team Score
+bs.awayTotals         # <Object> Access the cumulative team totals
 bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
 ```  
 
 ##### Player Data  
   ```ruby
-  wade = bs.homePlayers[4] # <Struct> of data for Row 5
+  wade = bs.homePlayers[4] # <Object> of data for Row 5
 
   wade.team       # <String> Team ID          # => 'MIA'
   wade.id         # <String> Player ID        # => '1987'
@@ -221,7 +220,7 @@ bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
 
 ##### Team Data  
   ```ruby
-  miami = bs.homeTotals   # <Struct> Access the team totals
+  miami = bs.homeTotals   # <Object> Access the team totals
   miami.team
   miami.fgm
   miami.fga
@@ -285,14 +284,17 @@ schedule.lastGame                            # <Object> Previously completed gam
 schedule.nextTeamId                          # <String> Team ID of next opponent # => 'OKC'
 schedule.nextGameId                          # <Fixnum> Index of next unplayed game
 
-past     = schedule.pastGames                # Completed Games : multidimensional array
-future   = schedule.futureGames              # Upcoming Games  : multidimensional array
+schedule.pastGames[]                         # Completed Games : [Object]
+schedule.futureGames[]                       # Upcoming Games  : [Object]
+
+past     = schedule.pastGames                # Completed Games : <Navigator>
+future   = schedule.futureGames              # Upcoming Games  : <Navigator>
 ```  
 
 ##### Past Schedule Games as Structs
 ```ruby
-past = schedule.pastGames # Completed Games : multidimensional array
-game = past.next          # Returns array of Structs
+past = schedule.pastGames # Completed Games : <Navigator>
+game = past.next          # <Object> Game info
 game.team                 # Team ID
 game.game_num             # Game # in Season
 game.date                 # Game Date
@@ -310,8 +312,8 @@ game.season_type          # Season Type
 
 ##### Future Schedule Games as Structs
 ```ruby
-future = schedule.futureGames  # Upcoming Games  : multidimensional array
-game   = future.next           # Returns array of Structs
+future = schedule.futureGames  # Upcoming Games  : <Navigator>
+game   = future.next           # <Object> Game info
 game.team                      # Team ID
 game.game_num                  # Game # in Season
 game.date                      # Game Date
