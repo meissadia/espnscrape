@@ -5,7 +5,9 @@ Gem::Specification.new do |s|
   s.version     = EspnScrape::VERSION
   s.date        = Date.today.to_s
   s.summary     = 'Programmatic access to NBA statistical data'
-  s.description = %((NBA ONLY) Updated for the 2016 site redesign. EspnScrape allows you to easily integrate logistic and statistical information about your favorite sports and teams in your own development projects. Easily access data via Structs for dot notation, Hashes for ActiveRecord integration or String arrays.)
+  s.description = %((NBA ONLY) Updated for the 2016 site redesign. EspnScrape allows you to easily integrate logistic and statistical information about your favorite sports and teams in your own development projects. Easily access data via Structs for dot notation, Hashes for ActiveRecord integration or String arrays.
+
+  + 0.5.1 - Fixed Playoff record calculation)
   s.authors     = ['Meissa Dia']
   s.email       = ['meissadia@gmail.com']
   s.files       = Dir.glob('{bin,lib}/**/*') + ['README.md', 'LICENSE', '.yardopts', 'Rakefile', 'CHANGELOG.md']

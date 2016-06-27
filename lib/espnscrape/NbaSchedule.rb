@@ -18,7 +18,7 @@ class NbaSchedule
   # 	playoffs = NbaSchedule.new('GSW', '', 3)
   def initialize(args)
     doc, seasontype = getNokoDoc(args)
-    exit if doc.nil?
+    return if doc.nil?
 
     @game_list = []	# Processed Schedule Data
     @next_game = 0 	# Cursor to start of Future Games
@@ -27,6 +27,7 @@ class NbaSchedule
     season_valid = verifySeasonType(seasontype, indicator)
     seasontype   = findSeasonType(indicator) if seasontype.to_i.eql?(0)
 
+    @wins = @losses = 0
     processSeason(schedule, tid, year, seasontype, args[:format]) if season_valid && !seasontype.eql?(0)
     @allGames    = Navigator.new(@game_list)
     @futureGames = Navigator.new(@game_list[@next_game, game_list.size])
@@ -141,8 +142,7 @@ class NbaSchedule
         else # => Past Game
           @next_game = game_id
           game_time = '00:00:00'	# Game Time (Not shown for past games)
-          # tmp << game_time << 'false' # Game Time, TV
-          game_date, ws, ls = pastGame(row, tmp, ws, ls, seasontype)
+          game_date = pastGame(row, tmp, seasontype)
           game_in_past = true
         end
       end
@@ -151,7 +151,7 @@ class NbaSchedule
   end
 
   # Process Past Game Row
-  def pastGame(row, result, ws, ls, season_type)
+  def pastGame(row, result, season_type)
     row.children[0, 4].each_with_index do |cell, cnt|
       txt = cell.text.chomp
       if cnt == 0	# Game Date
@@ -161,11 +161,11 @@ class NbaSchedule
       elsif cnt == 2 			 									# Game Result
         saveGameResult(cell, result, txt)
       else # Team Record
-        saveTeamRecord(result, season_type, ws, ls, txt)
+        saveTeamRecord(result, season_type, txt)
       end
     end
     # Game Date, wins, losses
-    [result[2], ws, ls]
+    result[2]
   end
 
   # Process Future Game Row
@@ -215,10 +215,10 @@ class NbaSchedule
 
   # Store Team Record
   # Wins, Losses
-  def saveTeamRecord(result, season_type, ws, ls, text)
+  def saveTeamRecord(result, season_type, text)
     if season_type == 3 # Team Record Playoffs
-      result[7] ? ws += 1 : ls += 1
-      result << ws.to_s << ls.to_s
+      result[5].eql?('true') ? @wins += 1 : @losses += 1
+      result << @wins.to_s << @losses.to_s
     else # Team Record Pre/Regular
       wins, losses = text.split('-')
       result << wins << losses

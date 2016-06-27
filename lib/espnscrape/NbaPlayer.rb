@@ -24,9 +24,9 @@ class NbaPlayer
       url = playerUrl + espn_player_id
       doc = Nokogiri::HTML(open(url))
     else
-      doc = Nokogiri::HTML(open(file))
+      doc = Nokogiri::HTML(open(file)) rescue nil
     end
-    exit if doc.nil?
+    return if doc.nil?
 
     readInfo(doc)
   end

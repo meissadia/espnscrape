@@ -14,7 +14,7 @@ class NbaTeamList
   # @return [[String]] Resulting Team List
   def initialize(args = {})
     doc = args[:file] ? Nokogiri::HTML(open(args[:file])) : Nokogiri::HTML(open(teamListUrl))
-    exit if doc.nil?
+    return if doc.nil?
 
     # Collect
     @header = doc.xpath('//h2')[0].text.strip # Table Header

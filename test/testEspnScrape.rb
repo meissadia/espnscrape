@@ -24,9 +24,9 @@ class TestEspnScrape < Minitest::Test
 
     # Roster as an array of objects
     r_structs = roster.players
-    assert_equal 'Trevor Booker', r_structs.first.name,     'Roster.name'
-    assert_equal 'PF',            r_structs.first.position, 'Roster.position'
-    assert_equal '4775000',       r_structs.first.salary,   'Roster.salary'
+    assert_equal 'Trevor Booker', r_structs[1].name,     'Roster.name'
+    assert_equal 'PF',            r_structs[1].position, 'Roster.position'
+    assert_equal '4775000',       r_structs[1].salary,   'Roster.salary'
 
     #### Access a Schedule
     schedule = es.schedule('UTA')         # Gets schedule for latest available season type (Pre/Regular/Post)
@@ -35,8 +35,10 @@ class TestEspnScrape < Minitest::Test
 
     assert_equal nil, schedule.nextTeamId, 'Schedule.Next Team'
 
-    es.schedule('BOS', 1)                 # Get Preseason schedule
-    es.schedule('CLE', 3)                 # Get Playoff schedule
+    es.schedule('BOS', 1)                           # Get Preseason schedule
+    playoffs = es.schedule('CLE', 3, :to_structs)   # Get Playoff schedule
+    last_game = playoffs.allGames.last
+    assert_equal ['16','5'], [last_game.wins, last_game.losses]
 
     # Past Schedule Games as Objects
     assert_equal 'Oct 28', past.first.date,      'schedule.Game Date'
@@ -62,8 +64,8 @@ class TestEspnScrape < Minitest::Test
     m_rost = S_ROSTER.dup.change_sym!(:name, :full_name).change_sym!(:salary, :crazy_money)
     players = EspnScrape.roster('CLE').players[].to_structs(m_rost)
 
-    assert_equal 'LeBron James', players[3].full_name,   ':full_name => LeBron James'
-    assert_equal '22970500',     players[3].crazy_money, ':crazy_money => 22970500'
+    assert_equal 'LeBron James', players[4].full_name,   ':full_name => LeBron James'
+    assert_equal '22970500',     players[4].crazy_money, ':crazy_money => 22970500'
 
     # S_TEAM.replace [:short, :long, :div, :conf]
     # t = EspnScrape.teamList[].to_structs

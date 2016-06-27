@@ -32,7 +32,7 @@ include PrintUtils
 # EspnScrape main class
 class EspnScrape
   # Gem Version
-  VERSION = '0.5.0'.freeze
+  VERSION = '0.5.1'.freeze
   # initialize
   def initialize(config = {})
     @format = defaultFormat(config[:format])

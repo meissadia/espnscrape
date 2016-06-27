@@ -8,34 +8,34 @@
 ## Table of Contents
 + [Introduction](#introduction)
 + [Installation](#installation)
-  + [Rails](#rails)
-  + [Manual](#manual)
+	+ [Rails](#rails)
+	+ [Manual](#manual)
 + [Arrays, Hashes or Structs](#arrays-hashes-or-structs)
-  + [Working With Multiple Formats](#working-with-multiple-formats)
-    + [Default format](#default-format)
-    + [Same data using Hashes](#same-data-using-hashes)
-    + [Same data using Structs](#same-data-using-structs)
-  + [Customize Field Names in Hash or Struct Conversion](#customize-field-names-in-hash-or-struct-conversion)
-    + [Overwrite](#overwrite)
-    + [Use As Template](#use-as-template)
+	+ [Working With Multiple Formats](#working-with-multiple-formats)
+		+ [Default format](#default-format)
+		+ [Same data using Hashes](#same-data-using-hashes)
+		+ [Same data using Structs](#same-data-using-structs)
+	+ [Customize Field Names for Hash and Struct Conversion](#customize-field-names-for-hash-and-struct-conversion)
+		+ [Default As Template](#default-as-template)
+		+ [Overwrite Default](#overwrite-default)
 + [Working with Navigators](#working-with-navigators)
-  + [Navigator Methods](#navigator-methods)
+	+ [Navigator Methods](#navigator-methods)
 + [Data Access](#data-access)
-  + [NBA Team List](#nba-team-list)
-  + [Boxscore](#boxscore)
-    + [Player Data](#player-data)
-    + [Team Data](#team-data)
-  + [Roster](#roster)
-  + [Player](#player)
-  + [Schedule](#schedule)
-    + [Past Schedule Games as Objects](#past-schedule-games-as-objects)
-    + [Future Schedule Games as Objects](#future-schedule-games-as-objects)
-    + [Select a specific Season Type](#select-a-specific-season-type)
-  + [Chaining it all together](#chaining-it-all-together)
+	+ [NBA Team List](#nba-team-list)
+	+ [Boxscore](#boxscore)
+		+ [Player Data](#player-data)
+		+ [Team Data](#team-data)
+	+ [Roster](#roster)
+	+ [Player](#player)
+	+ [Schedule](#schedule)
+		+ [Past Schedule Games as Structs](#past-schedule-games-as-structs)
+		+ [Future Schedule Games as Structs](#future-schedule-games-as-structs)
+		+ [Select a specific Season Type](#select-a-specific-season-type)
++ [Chaining it all together](#chaining-it-all-together)
 + [Documentation](#documentation)
 + [Requirements](#requirements)
-  + [Ruby version](#ruby-version)
-  + [Dependencies](#dependencies)
+	+ [Ruby version](#ruby-version)
+	+ [Dependencies](#dependencies)
 + [Testing](#testing)
 
 ## Introduction
@@ -43,7 +43,7 @@ The EspnScrape Ruby GEM is a data scraper for the redesigned 2016 version of ESP
 It provides a number of ways to simplify data collection and interaction such as :  
 * Structs - Intuitively access data via dot notation.  
 * Hashes - Can be passed directly to ActiveRecord CRUD methods for easy database interaction.  
-* String arrays - Raw data for you to manipulate as you see fit.
+* String arrays - Raw data for you to manipulate as you see fit.  
 
 ```
 This GEM is subject to frequent, sometimes non-backwards compatible changes.
@@ -58,17 +58,17 @@ Utility and usability are the goal, so I hope the API evolution helps more than 
 In your application's Gemfile, include :  
 ```
 gem 'espnscrape'
-```
+```  
 
 In your project dir, execute :  
 ```
 > bundle install
-```
+```  
 
 #### Manual
 ```
 > gem install espnscrape
-```
+```  
 
 ## Arrays, Hashes or Structs
 If you intend to work with a single format, you can specify it at initialization. When working with multiple formats you should start with the default, String Arrays [[String]], and convert as necessary using [Array#to_structs] or [Array#to_hashes].
@@ -89,46 +89,46 @@ bs    = es.boxscore(400828991)   # Return an NbaBoxscore object
 stats = bs.homePlayers           # Returns a multidimensional array of Home Player stats
 stats[4][2]                      # Player Name   # => 'R. Hood'
 stats[4][20]                     # Player Points # => '30'
-```
+```  
 
 ##### Same data using Hashes
 ```ruby
 s_hashes = stats.to_hashes       # Returns array of Hashes
 s_hashes[4][:name]               # Player Name   # => 'R. Hood'
 s_hashes[4][:points]             # Player Points # => '30'
-```
+```  
 
 ##### Same data using Structs
 ```ruby
 s_structs = stats.to_structs     # Returns array of Structs
 s_structs[4].name                # Player Name   # => 'R. Hood'
 s_structs[4].points              # Player Points # => '30'
-```
+```  
 
-#### Customize Field Names in Hash or Struct Conversion
+#### Customize Field Names for Hash and Struct Conversion
 The [Array#to_hashes] and [Array#to_structs] methods can be passed an array of Symbols
 to use in place of the default field names.
 ```ruby
 team_list   = EspnScrape.teamList
 team_list_s = t.to_structs [:abbrev, :long_team_name, :div, :conf]
 team_list_s.last.long_team_name    # => 'Utah Jazz'
-```
+```  
 
 Defaults are defined in the [SymbolDefaults] module.
 You can overwrite them or use them as templates, replacing individual symbols using
 the [Array#change_sym!] method.
 
 
-##### Use As Template
+##### Default As Template
 `Safe method`
 ```ruby
 my_names = S_ROSTER.dup.change_sym!(:p_name, :full_name).change_sym!(:salary, :crazy_money)
 players  = EspnScrape.roster('CLE').players.to_structs(my_names)
 players[3].full_name    # => 'LeBron James'
 players[3].crazy_money  # => '22970500'
-```
+```  
 
-##### Overwrite  
+##### Overwrite Default  
 `Note: Changes affect all instances of EspnScrape`
 ```ruby
 S_TEAM    # => [:team,  :name, :division, :conference]
@@ -137,7 +137,7 @@ t = EspnScrape.teamList.to_structs
 
 t.first.short # => 'BOS'
 t.first.long  # => 'Boston Celtics'
-```
+```  
 
 
 ## Working with Navigators
@@ -156,7 +156,7 @@ navigator.last   # <Object> Access the last data row
 navigator.next   # <Object> Access the next data row     (nil if there is no more data)
 navigator.curr   # <Object> Access the current data row  (nil at initialization)
 navigator.prev   # <Object> Access the previous data row (nil if there is no more data)
-```
+```  
 
 ## Data Access
 
@@ -169,9 +169,11 @@ team_list.last[0]            # => 'UTA'
 team_list.last[1]            # => 'Utah Jazz'
 team_list.last[2]            # => 'Northwest'
 team_list.last[3]            # => 'Western'
-```
+```  
 
 ### Boxscore
+Boxscore #homePlayers, #awayPlayers return a [Navigator]
+
 ```ruby
 es    = EspnScrape.new({ :format => :to_structs })
 bs    = es.boxscore(400875892)   # Return an NbaBoxscore object
@@ -240,28 +242,28 @@ bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
   ```  
 
 ### Roster
-Roster#players is a <[Navigator]>.
+Roster #players is a [Navigator].
 ```ruby
 roster  = es.roster('UTA')        
 players = roster.players         # Returns multidimensional array of Roster info
 coach   = roster.coach           # Coach Name # => 'Quinn Snyder'
 
 # Roster as an array of objects
-structs = players.to_structs   # Returns array of Structs
+players = players.to_structs   # Returns array of Structs
 
-structs[2].team                # Team ID          # => 'UTA'
-structs[2].jersey              # Jersey Number    # => '11'
-structs[2].name                # Name             # => 'Alec Burks'
-structs[2].id                  # ID               # => '6429'
-structs[2].position            # Position         # => 'SG'
-structs[2].age                 # Age              # => '24'
-structs[2].height_ft           # Height (ft)      # => '6'
-structs[2].height_in           # Height (in)      # => '6'
-structs[2].salary              # Salary           # => '9463484'
-structs[2].weight              # Weight           # => '214'
-structs[2].college             # College          # => 'Colorado'
-structs[2].salary              # Salary           # => '9463484'
-```
+players[2].team                # Team ID          # => 'UTA'
+players[2].jersey              # Jersey Number    # => '11'
+players[2].name                # Name             # => 'Alec Burks'
+players[2].id                  # ID               # => '6429'
+players[2].position            # Position         # => 'SG'
+players[2].age                 # Age              # => '24'
+players[2].height_ft           # Height (ft)      # => '6'
+players[2].height_in           # Height (in)      # => '6'
+players[2].salary              # Salary           # => '9463484'
+players[2].weight              # Weight           # => '214'
+players[2].college             # College          # => 'Colorado'
+players[2].salary              # Salary           # => '9463484'
+```  
 
 ### Player
 ```ruby
@@ -272,10 +274,10 @@ player.weight               #=> "245"
 player.college              #=> "UNLV"
 player.height_ft            #=> "6"
 player.height_in            #=> "8"
-```
+```  
 
 ### Schedule
-Schedule#allGames, #pastGames, #futureGames return <[Navigator]>
+Schedule #allGames, #pastGames, #futureGames return a [Navigator]
 
 ```ruby
 schedule = es.schedule('UTA', :to_structs)   # Gets latest available season type (Pre/Regular/Post)
@@ -348,8 +350,7 @@ EspnScrape.boxscore(400827977).homeTotals[0].roster(:to_hashes).players.first[:n
 EspnScrape.teamList.last[0].schedule(:to_hashes).lastGame.boxscore
 
 'gsw'.schedule(:to_structs).lastGame.boxscore
-
-```
+```  
 
 ## Documentation
 Available on [RubyDoc.info] or locally:  
@@ -359,10 +360,10 @@ Available on [RubyDoc.info] or locally:
 ```
 
 ## Requirements
-##### Ruby version
+### Ruby version
 *Ruby >= 1.9.3*  
 
-##### Dependencies
+### Dependencies
 *Nokogiri 1.6*  
 *Rake ~> 10.4.2*  
 *minitest ~> 5.4*

@@ -24,7 +24,7 @@ class NbaRoster
     elsif args[:file]
       doc = Nokogiri::HTML(open(args[:file]))
     end
-    exit if doc.nil?
+    return if doc.nil?
 
     team_id ||= getTid(doc.title.split(/\d{4}/).first.strip)
     list      = doc.xpath('//div/div/table/tr')

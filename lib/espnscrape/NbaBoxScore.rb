@@ -45,7 +45,7 @@ class NbaBoxScore
   # 	bs = NbaBoxScore.new(400828035)
   def initialize(args)
     doc = getNokoDoc(args[:game_id], args[:file])
-    exit if doc.nil?
+    return if doc.nil?
     @id = args[:game_id].to_s
     @gameDate = readGameDate(doc)
     @awayName, @homeName = readTeamNames(doc)

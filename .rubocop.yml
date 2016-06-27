@@ -6,7 +6,6 @@ Style/FileName:
 Style/MethodName:
   Enabled: false
 
-
 Style/NumericLiterals:
   Enabled: false
 

@@ -1,4 +1,9 @@
 ### Change Log :: EspnScrape
+## 0.5.1 - June 27, 2016
+####&nbsp;&nbsp;&nbsp;Changed
++ Fixed Playoff record calculation
++ Player, Roster, Boxscore, Schedule, TeamList - return empty object on document error instead of halting program flow with exit.
+
 ## 0.5.0 - June 11, 2016
 ####&nbsp;&nbsp;&nbsp;New
 + Expanded dot-notation
