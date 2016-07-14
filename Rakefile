@@ -14,3 +14,9 @@ task :show_docs do
     `open #{doc} -a "Google Chrome"`
   end
 end
+
+desc 'Push latest version of gem to remote server'
+task :deploy_gem do
+  gemfile = `ls -t1 *.gem | head -n 1`
+  puts `gem push #{gemfile}`
+end

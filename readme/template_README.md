@@ -340,8 +340,8 @@ Available on [RubyDoc.info] or locally:
 ### Dependencies
 
 - Nokogiri 1.6
-- Rake ~&gt; 10.4.2
-- minitest ~&gt; 5.4
+- Rake
+- minitest
 
 ## Testing
 ```

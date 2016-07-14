@@ -1,29 +1,30 @@
 namespace :rubo do
   desc 'Generate and display Rubocop HTML report.'
   task :html do
-    htmlReport
+    `rubocop -f html -D --out rubocop/report.html`
   end
 
   desc 'Autofix Issues.'
   task :fix do
     `rubocop -a`
+    Rake::Task['rubo:html'].execute
   end
 
   desc 'AutoFix issues and display report.'
   task :fix_report do
     Rake::Task['rubo:fix'].execute
-    htmlReport
+    Rake::Task['rubo:report'].execute
   end
 
   desc 'Regenerate To Do .yml'
   task :autogen do
     `rubocop --auto-gen-config`
   end
+
+  desc 'Show rubocop HTML report'
+  task :report do
+    `open rubocop/report.html`
+  end
 end
 
-def htmlReport
-  `rubocop -f html -D --out rubocop/report.html`
-  `open rubocop/report.html`
-end
-
-task rubo: ['rubo:fix']
+task rubo: ['rubo:fix_report']

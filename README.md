@@ -56,7 +56,7 @@ Utility and usability are the goal, so I hope the API evolution helps more than 
 ### Restrictions
 **Currently only for NBA**
 + I do not currently have plans to extend this gem to support other leagues,
-though that may change in the future. Contributions to this project are welcome.
+though that may change in the future. Contributions to this project are very welcome.
 
 ### Change Summary
 Version 0.6 - See the [CHANGELOG] for additional information
@@ -375,7 +375,7 @@ Available on [RubyDoc.info] or locally:
 ### Dependencies
 
 - Nokogiri 1.6
-- Rake ~&gt; 10.4.2
+- Rake
 - minitest ~&gt; 5.4
 
 ## Testing

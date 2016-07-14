@@ -5,3 +5,4 @@ doc
 coverage
 rubocop
 _scratchpad.rb
+Gemfile.lock

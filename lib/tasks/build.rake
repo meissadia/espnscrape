@@ -1,6 +1,7 @@
 namespace :build do
   desc 'Build gem.'
   task :gem do
+    Rake::Task['build:readme'].execute
     `gem build espnscrape.gemspec`
   end
 
@@ -21,9 +22,6 @@ namespace :build do
     Rake::Task['rubo:fix'].execute
     puts Rake::Task['test'].execute
     puts Rake::Task['build:gem'].execute
-    puts Rake::Task['rubo:html'].execute
-    Rake::Task['build:readme'].execute
-    Rake::Task['show_docs'].execute
   end
 end
 
