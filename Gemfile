@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'json', '< 2.0.0'     # Ruby 1.9.3 compatability
+gem 'json', '< 2.0.0'     # Ruby 1.9.3 compatibility
 gem 'nokogiri', '~> 1.6'
 gem 'rake'
 gem 'minitest', '~> 5.4'
