@@ -1,3 +1,4 @@
+require_relative './test_helper'
 
 class TestNbaUrls < Minitest::Test
   include NbaUrls
@@ -19,5 +20,12 @@ class TestNbaUrls < Minitest::Test
     teams.each do |team_id, expected|
       assert_equal expected, formatTeamUrl(team_id, url)
     end
+  end
+
+  def test_season_years
+    assert_equal '2014-2015', seasonYears('2015-06-10')   # Started previous year
+    assert_equal '2015-2016', seasonYears('2015-07-10')   # Started current year
+    assert_equal '2016',      seasonYearEnd(20150710)     # Test string conversion
+    assert_equal nil,         seasonYearEnd('')
   end
 end

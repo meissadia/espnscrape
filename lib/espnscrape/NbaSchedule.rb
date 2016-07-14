@@ -4,18 +4,19 @@ class NbaSchedule
   include NbaUrls
   include PrintUtils
 
-  attr_reader :game_list, :next_game
+  attr_reader :game_list, :next_game, :year, :wins, :losses
 
   # Read Schedule data for a given Team
-  # @param tid [String] Team ID
+  # @param team_id [String] Team ID
   # @param file [String] HTML Test Data
-  # @param seasontype [Integer] Season Type
+  # @param season_type [Integer] Season Type
+  # @param year [Integer] Ending Year of Season
   # @note
   #  Season Types: 1-Preseason; 2-Regular Season; 3-Playoffs
   # @example
-  # 	test     = NbaSchedule.new('', 'test/data/testData.html')
-  # 	pre      = NbaSchedule.new('UTA', '', 1)
-  # 	playoffs = NbaSchedule.new('GSW', '', 3)
+  # 	test     = NbaSchedule.new('', file: 'test/data/testData.html')
+  # 	pre      = NbaSchedule.new('UTA', s_type: 1)
+  # 	playoffs = NbaSchedule.new('GSW', s_type: 3)
   def initialize(args)
     doc, seasontype = getNokoDoc(args)
     return if doc.nil?
@@ -23,16 +24,17 @@ class NbaSchedule
     @game_list = []	# Processed Schedule Data
     @next_game = 0 	# Cursor to start of Future Games
 
-    schedule, year, indicator, tid = collectNodeSets(doc)
+    schedule, @year, indicator, tid = collectNodeSets(doc)
     season_valid = verifySeasonType(seasontype, indicator)
     seasontype   = findSeasonType(indicator) if seasontype.to_i.eql?(0)
 
     @wins = @losses = 0
-    processSeason(schedule, tid, year, seasontype, args[:format]) if season_valid && !seasontype.eql?(0)
+    processSeason(schedule, tid, @year, seasontype, args[:format]) if season_valid && !seasontype.eql?(0)
     @allGames    = Navigator.new(@game_list)
     @futureGames = Navigator.new(@game_list[@next_game, game_list.size])
     @pastGames   = Navigator.new(@game_list[0, @next_game])
     @game_list   = nil
+    @year = "#{@year}-#{(@year + 1).to_s[2, 4]}"
   end
 
   # @return [Navigator] Navigator All Schedule data
@@ -88,7 +90,7 @@ class NbaSchedule
   # Return Nokogiri XML Document
   def getNokoDoc(args)
     return Nokogiri::HTML(open(args[:file])), args[:season_type] if args[:file] # Use File
-    url = formatTeamUrl(args[:team_id], teamScheduleUrl(args[:season_type]))
+    url = formatTeamUrl(args[:team_id], teamScheduleUrl(args[:season_type], args[:year]))
     [Nokogiri::HTML(open(url)), args[:season_type]] # Use Live Data
   end
 
@@ -124,7 +126,6 @@ class NbaSchedule
   def processSeason(schedule, tid, year1, seasontype, new_form)
     seasontype = seasontype.to_i
     game_id = 0 # 82-game counter
-    ws = ls	= 0 # Playoff Win/Loss Counters
 
     # Process Schedule lines
     schedule.each do |row|
@@ -146,7 +147,7 @@ class NbaSchedule
           game_in_past = true
         end
       end
-      saveProcessedScheduleRow(tmp, game_date, year1, game_time, seasontype, new_form, game_in_past)
+      saveProcessedScheduleRow(tmp, formatGameDate(game_date, year1, game_time), seasontype, new_form, game_in_past) unless tmp.nil?
     end
   end
 
@@ -164,7 +165,7 @@ class NbaSchedule
         saveTeamRecord(result, season_type, txt)
       end
     end
-    # Game Date, wins, losses
+    # Game Date
     result[2]
   end
 
@@ -221,6 +222,8 @@ class NbaSchedule
       result << @wins.to_s << @losses.to_s
     else # Team Record Pre/Regular
       wins, losses = text.split('-')
+      @wins   = wins.to_i
+      @losses = losses.to_i
       result << wins << losses
     end
   end
@@ -232,11 +235,10 @@ class NbaSchedule
   end
 
   # Store Processed Schedule Row
-  def saveProcessedScheduleRow(tmp, game_date, year1, game_time, season_type, new_form, game_in_past)
-    return if tmp.nil?
-    tmp << formatGameDate(game_date, year1, game_time) # Game DateTime
-    tmp << season_type.to_s                            # Season Type
-    @game_list << tmp if new_form.nil?                 # Save processed Array
+  def saveProcessedScheduleRow(tmp, game_date, season_type, new_form, game_in_past)
+    tmp << game_date                    # Game DateTime
+    tmp << season_type.to_s             # Season Type
+    @game_list << tmp if new_form.nil?  # Save processed Array
     @game_list += tmp.send(new_form, game_in_past ? S_GAME_P : S_GAME_F) unless new_form.nil? # Conversion
   end
 

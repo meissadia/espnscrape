@@ -5,42 +5,7 @@
 [![Test Coverage](https://codeclimate.com/github/meissadia/espnscrape/badges/coverage.svg)](https://codeclimate.com/github/meissadia/espnscrape/coverage)
 
 ## Table of Contents
-+ [Introduction](#introduction)
-	+ [Restrictions](#restrictions)
-	+ [Change Summary](#change-summary)
-	+ [Disclaimer](#disclaimer)
-+ [Installation](#installation)
-	+ [Rails](#rails)
-	+ [Manual](#manual)
-+ [Arrays, Hashes or Structs](#arrays-hashes-or-structs)
-	+ [Working With Multiple Formats](#working-with-multiple-formats)
-		+ [Default format](#default-format)
-		+ [Same data using Hashes](#same-data-using-hashes)
-		+ [Same data using Structs](#same-data-using-structs)
-	+ [Customize Field Names for Hash and Struct Conversion](#customize-field-names-for-hash-and-struct-conversion)
-		+ [Default As Template](#default-as-template)
-		+ [Overwrite Default](#overwrite-default)
-+ [Working with Navigators](#working-with-navigators)
-	+ [Navigator Methods](#navigator-methods)
-+ [Data Access](#data-access)
-	+ [NBA Team List](#nba-team-list)
-	+ [Boxscore](#boxscore)
-		+ [Player Data](#player-data)
-		+ [Team Data](#team-data)
-	+ [Roster](#roster)
-	+ [Player](#player)
-	+ [Schedule](#schedule)
-		+ [Past Schedule Games as Structs](#past-schedule-games-as-structs)
-		+ [Future Schedule Games as Structs](#future-schedule-games-as-structs)
-		+ [Select a specific Season Type](#select-a-specific-season-type)
-		+ [Select Historic Schedule data](#select-historic-schedule-data)
-+ [Chaining it all together](#chaining-it-all-together)
-+ [Documentation](#documentation)
-+ [Requirements](#requirements)
-	+ [Ruby version](#ruby-version)
-	+ [Dependencies](#dependencies)
-+ [Testing](#testing)
-
+{{TOC}}
 
 ## Introduction
 The EspnScrape Ruby gem is a data scraper for the redesigned 2016 version of ESPN.com.
@@ -56,7 +21,7 @@ Utility and usability are the goal, so I hope the API evolution helps more than 
 ### Restrictions
 **Currently only for NBA**
 + I do not currently have plans to extend this gem to support other leagues,
-though that may change in the future. Contributions to this project are welcome.
+though that may change in the future. Contributions to this project are very welcome.
 
 ### Change Summary
 Version 0.6 - See the [CHANGELOG] for additional information

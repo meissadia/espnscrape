@@ -1,4 +1,13 @@
 ### Change Log :: EspnScrape
+## 0.6.0 - July 14, 2016
+####&nbsp;&nbsp;&nbsp;New
++ Schedule API - New option year: added for accessing historical schedule data
++ Schedule API - Instance methods #wins and #losses to access team record
+
+####&nbsp;&nbsp;&nbsp;Changed
++ Roster, Schedule APIs now take keywords for options in an effort to eliminate the need for users to pass unused defaults as well as to make method calls more clear in their intent.  
+Ex. es.schedule('OKC', format: :to_structs, year: 2012, season: 3)
+
 ## 0.5.1 - June 27, 2016
 ####&nbsp;&nbsp;&nbsp;Changed
 + Fixed Playoff record calculation

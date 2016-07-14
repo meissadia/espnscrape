@@ -9,9 +9,7 @@ require 'time'
 require_relative 'espnscrape/Hash'
 require_relative 'espnscrape/Struct'
 require_relative 'espnscrape/String'
-
-# To Hash | Struct conversions
-require_relative 'espnscrape/ArrayConversions'
+require_relative 'espnscrape/ArrayConversions' # To Hash | Struct conversions
 
 require_relative 'espnscrape/Navigator'
 
@@ -32,7 +30,7 @@ include PrintUtils
 # EspnScrape main class
 class EspnScrape
   # Gem Version
-  VERSION = '0.5.1'.freeze
+  VERSION = '0.6.0'.freeze
   # initialize
   def initialize(config = {})
     @format = defaultFormat(config[:format])
@@ -62,9 +60,9 @@ class EspnScrape
   # @return [NbaRoster] NbaRoster
   # @example
   #   EspnScrape.roster('UTA')
-  def self.roster(team_id, f_mat = nil)
+  def self.roster(team_id, options = {})
     NbaRoster.new(team_id: team_id,
-                  format: defaultFormat(f_mat))
+                  format: defaultFormat(options.fetch(:format, nil)))
   end
 
   # Returns an {NbaRoster} object
@@ -72,14 +70,15 @@ class EspnScrape
   # @return (see .roster)
   # @example
   #  es.roster('UTA')
-  def roster(team_id, f_mat = nil)
-    EspnScrape.roster team_id, (f_mat || @format)
+  #  es.roster('UTA', format: :to_structs)
+  def roster(team_id, options = {})
+    EspnScrape.roster team_id, format: (options.fetch(:format, nil) || @format)
   end
 
   # Return Array of Team Data
   # @return [[[String]]] NBA Team Data
   # @example
-  #  EspnScrape.teamList
+  #  EspnScrape.teamList(:to_structs)
   def self.teamList(f_mat = nil)
     NbaTeamList.new(format: defaultFormat(f_mat)).teamList
   end
@@ -87,7 +86,7 @@ class EspnScrape
   # Return Array of Team Data
   # @return (see .teamList)
   # @example
-  #  es.teamList
+  #  es.teamList(:to_structs)
   def teamList(f_mat = nil)
     EspnScrape.teamList(f_mat || @format)
   end
@@ -97,12 +96,13 @@ class EspnScrape
   # @param s_type [Int] Season Type
   # @return [NbaSchedule] NbaSchedule
   # @example
-  #   EspnScrape.schedule('UTA')    # Schedule for Latest Season Type
-  #   EspnScrape.schedule('TOR', 3) # Playoff Schedule
-  def self.schedule(team_id, s_type = '', f_mat = nil)
-    NbaSchedule.new(team_id: team_id,
-                    season_type: s_type,
-                    format: defaultFormat(f_mat))
+  #   EspnScrape.schedule('UTA')            # Schedule for Latest Season Type
+  #   EspnScrape.schedule('TOR', s_type: 3) # Playoff Schedule
+  def self.schedule(team_id, options = {})
+    NbaSchedule.new team_id: team_id,
+                    season_type: options.fetch(:season, ''),
+                    format: defaultFormat(options.fetch(:format, nil)),
+                    year: options.fetch(:year, nil)
   end
 
   # Return an {NbaSchedule} object
@@ -110,9 +110,12 @@ class EspnScrape
   # @return (see .schedule)
   # @example
   #  es.schedule('MIA')     # Schedule for Latest Season Type
-  #  es.schedule('DET', 1)  # Preseason Schedule
-  def schedule(team_id, s_type = '', f_mat = nil)
-    EspnScrape.schedule team_id, s_type, (f_mat || @format)
+  #  es.schedule('DET', s_type: 1)  # Preseason Schedule
+  def schedule(team_id, options = {})
+    EspnScrape.schedule team_id,
+                        s_type: options.fetch(:season, ''),
+                        format: (options.fetch(:format, nil) || @format),
+                        year: options.fetch(:year, nil)
   end
 
   # Return new {NbaPlayer} object

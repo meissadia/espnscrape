@@ -46,6 +46,8 @@ class TestNbaSchedule < Minitest::Test
     assert_equal 7, schedule.allGames.size
     assert_equal 7, schedule.pastGames.size
     assert_equal 0, schedule.futureGames.size
+    assert_equal 4, schedule.losses
+    assert_equal 3, schedule.wins
 
     # Test Schedule with Non-NBA Teams
     schedule = NbaSchedule.new(team_id: 'BOS',
@@ -64,6 +66,8 @@ class TestNbaSchedule < Minitest::Test
     assert_equal 7,     schedule.futureGames.size
     assert_equal 24,    schedule.allGames.size
     assert_equal '3',   schedule.nextGame.last
+    assert_equal 12,    schedule.wins
+    assert_equal 5,     schedule.losses
   end
 
   def test_structs
@@ -75,5 +79,11 @@ class TestNbaSchedule < Minitest::Test
     assert_equal '2',   schedule.allGames.next.game_num
     assert_equal '2',   schedule.allGames.next.wins
     assert_equal 'OKC', schedule.nextGame.opponent
+  end
+
+  def test_historic_data
+    s = EspnScrape.schedule 'UTA', format: :to_structs, year: 2005
+    assert_equal '2004-05', s.year
+    assert_equal 'LAL',     s.allGames.first.opponent
   end
 end

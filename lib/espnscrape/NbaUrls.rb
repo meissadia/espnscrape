@@ -12,8 +12,10 @@ module NbaUrls
 
   # @param seasontype [INT] 1-Pre 2-Regular 3-Playoff
   # @return [String] URL to access Team Schedule
-  def teamScheduleUrl(seasontype = '')
-    "http://espn.go.com/nba/team/schedule/_/name/%s/seasontype/#{seasontype}"
+  def teamScheduleUrl(seasontype = nil, year = nil)
+    year ||= seasonYearEnd # Default to the current season
+    seasontype ||= 3       # Default to playoff data
+    "http://espn.go.com/nba/team/schedule/_/name/%s/year/#{year}/seasontype/#{seasontype}"
   end
 
   # @return [String] URL to access Team Roster
@@ -24,6 +26,20 @@ module NbaUrls
   # @return [String] URL to access Player profile
   def playerUrl
     'http://espn.go.com/nba/player/_/id/'
+  end
+
+  # @return [String] Season Years
+  # @example
+  #   seasonYears('2015-07-10') => '2015-2016'
+  def seasonYears(date = nil)
+    return seasonYears(Date.today) if date.nil?
+    date = Date.parse(date.to_s)
+    return "#{date.year - 1}-#{date.year}" if date.month < 7
+    "#{date.year}-#{date.year + 1}"
+  end
+
+  def seasonYearEnd(date = nil)
+    return seasonYears(date).split('-')[1] rescue nil
   end
 
   # Generate team specific URL
