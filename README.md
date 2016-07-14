@@ -60,7 +60,7 @@ though that may change in the future. Contributions to this project are very wel
 
 ### Change Summary
 Version 0.6 - See the [CHANGELOG] for additional information
-+ Schedule: Added ability to access historical schedule data
++ Schedule: Added ability to access [historical schedule data](#select-historic-schedule-data)
 + Roster and Schedule creation now take keyword parameters for options
 
 ### Disclaimer
@@ -376,7 +376,7 @@ Available on [RubyDoc.info] or locally:
 
 - Nokogiri 1.6
 - Rake
-- minitest ~&gt; 5.4
+- minitest
 
 ## Testing
 ```
