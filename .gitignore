@@ -1,7 +1,6 @@
 *.gem
 **.DS_Store
 .yardoc
-Gemfile.lock
 doc
 coverage
 rubocop
