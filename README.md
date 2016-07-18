@@ -40,6 +40,7 @@
 	+ [Ruby version](#ruby-version)
 	+ [Dependencies](#dependencies)
 + [Testing](#testing)
++ [Contributing](#contributing)
 
 
 ## Introduction
@@ -383,6 +384,13 @@ Available on [RubyDoc.info] or locally:
 > rake
 ```
 
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/meissadia/espnscape
+<br>
+<br>
+<br>
+&copy; 2016 Meissa Dia 
 [CHANGELOG]: ./CHANGELOG.md
 [RubyDoc.info]: http://www.rubydoc.info/gems/espnscrape/0.6.0
 [Navigator]: http://www.rubydoc.info/gems/espnscrape/0.6.0/Navigator
