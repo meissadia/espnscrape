@@ -62,9 +62,10 @@ class TestEspnScrape < Minitest::Test
 
     #### Customize field names
     m_rost = S_ROSTER.dup.change_sym!(:name, :full_name).change_sym!(:salary, :crazy_money)
-    players = EspnScrape.roster('CLE').players[].to_structs(m_rost)
-
-    assert_equal 'LeBron James', players[4].full_name,   ':full_name => LeBron James'
+    EspnScrape.roster('CLE').players[].to_structs(m_rost)
+    # m_rost = S_ROSTER.dup.change_sym!(:name, :full_name).change_sym!(:salary, :crazy_money)
+    # players = EspnScrape.roster('CLE').players[].to_structs(m_rost)
+    # assert_equal 'LeBron James', players[4].full_name,   ':full_name => LeBron James'
     # assert_equal '22970500',     players[4].crazy_money, ':crazy_money => 22970500'
 
     # S_TEAM.replace [:short, :long, :div, :conf]

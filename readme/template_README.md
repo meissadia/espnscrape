@@ -24,9 +24,9 @@ Utility and usability are the goal, so I hope the API evolution helps more than 
 though that may change in the future. Contributions to this project are very welcome.
 
 ### Change Summary
-Version 0.6 - See the [CHANGELOG] for additional information
-+ Schedule: Added ability to access [historical schedule data](#select-historic-schedule-data)
-+ Roster and Schedule creation now take keyword parameters for options
+Version 0.6.1 - See the [CHANGELOG] for additional information
++ Schedule: bug fix for "TypeError: no implicit conversion of nil into String"
+
 
 ### Disclaimer
 `EspnScrape is not associated with ESPN or the NBA`
@@ -354,7 +354,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/meissa
 <br>
 <br>
 <br>
-&copy; 2016 Meissa Dia 
+&copy; 2016 Meissa Dia
 [CHANGELOG]: ./CHANGELOG.md
 [RubyDoc.info]: http://www.rubydoc.info/gems/espnscrape/0.6.0
 [Navigator]: http://www.rubydoc.info/gems/espnscrape/0.6.0/Navigator

@@ -1,4 +1,7 @@
 ### Change Log :: EspnScrape
+## 0.6.1 - July 18, 2016
++ Schedule bugfix for "TypeError: no implicit conversion of nil into String"
+
 ## 0.6.0 - July 14, 2016
 ####&nbsp;&nbsp;&nbsp;New
 + Schedule API - New option year: added for accessing historical schedule data

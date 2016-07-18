@@ -209,9 +209,15 @@ class NbaSchedule
     else
       opp_score, team_score = final_score.split('-')
     end
-    box_id = cell.children.children.children[1].attributes['href']
-    result << win.to_s << team_score.to_s << opp_score.to_s   # Win?, Team Score, Opponent Score
-    result << (box_id.nil? ? '0' : box_id.text.split('=')[1]) # Boxscore ID
+    box_id = extract_boxscore_id(cell)
+    result << win.to_s << team_score.to_s << opp_score.to_s << box_id  # Win?, Team Score, Opponent Score, Boxcore ID
+  end
+
+  def extract_boxscore_id(cell)
+    boxscore_id = cell.children.children.children[1].attributes['href']
+    return 0 if boxscore_id.nil?
+    return boxscore_id.text.split('=')[1] if boxscore_id.text.include?('recap?id=')
+    boxscore_id.text.split('/').last
   end
 
   # Store Team Record

@@ -86,4 +86,8 @@ class TestNbaSchedule < Minitest::Test
     assert_equal '2004-05', s.year
     assert_equal 'LAL',     s.allGames.first.opponent
   end
+
+  def test_historic_schedule
+    assert_equal '400829115', 'uta'.schedule(:to_structs).lastGame.boxscore_id
+  end
 end
