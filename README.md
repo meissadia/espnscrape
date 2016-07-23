@@ -60,8 +60,8 @@ Utility and usability are the goal, so I hope the API evolution helps more than 
 though that may change in the future. Contributions to this project are very welcome.
 
 ### Change Summary
-Version 0.6.1 - See the [CHANGELOG] for additional information
-+ Schedule: bug fix for "TypeError: no implicit conversion of nil into String"
+Version 0.6.2 - See the [CHANGELOG] for additional information
++ Team List Special Case: LA Clippers
 
 
 ### Disclaimer
