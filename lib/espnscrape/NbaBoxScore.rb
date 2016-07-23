@@ -70,7 +70,6 @@ class NbaBoxScore
   # 	Times will be Local to the system Timezone
   #
   def readGameDate(d)
-    puts "Page Title: #{d.title}"
     date = d.title.split('-')[2].delete(',')
     time = d.xpath('//span[contains(@class,"game-time")]')[0].text.strip rescue ''
     time = '00:00:00' if time == 'Final' || time.empty?
