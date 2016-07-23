@@ -1,4 +1,7 @@
 ### Change Log :: EspnScrape
+## 0.6.2 - July 23, 2016
++ Team List - Special Case: Los Angeles Clippers
+
 ## 0.6.1 - July 18, 2016
 + Schedule bugfix for "TypeError: no implicit conversion of nil into String"
 

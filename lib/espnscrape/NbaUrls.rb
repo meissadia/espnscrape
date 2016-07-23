@@ -74,7 +74,13 @@ module NbaUrls
   # Adjust Outlier Abbreviations
   def checkSpecial(abbr)
     abbr.upcase!
-    special = { 'OCT' => 'OKC', 'PTB' => 'POR', 'BRO' => 'BKN' }
+    special = { 'OCT' => 'OKC', 'PTB' => 'POR', 'BRO' => 'BKN', 'LA' => 'LAC' }
     special.keys.include?(abbr) ? special[abbr] : abbr
+  end
+
+  # Adjust Team Names
+  def adjustTeamName(team_name)
+    special = { 'LA Clippers' => 'Los Angeles Clippers' }
+    special.keys.include?(team_name) ? special[team_name] : team_name
   end
 end

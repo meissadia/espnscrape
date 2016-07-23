@@ -1,36 +1,9 @@
-# gems
-require 'nokogiri'
-
-# libraries
-require 'open-uri'
-require 'time'
-
-# Core Extensions
-require_relative 'espnscrape/Hash'
-require_relative 'espnscrape/Struct'
-require_relative 'espnscrape/String'
-require_relative 'espnscrape/ArrayConversions' # To Hash | Struct conversions
-
-require_relative 'espnscrape/Navigator'
-
-# espnscrape
-require_relative 'espnscrape/NbaUrls'
-require_relative 'espnscrape/NbaBoxScore'
-require_relative 'espnscrape/NbaRoster'
-require_relative 'espnscrape/NbaTeamList'
-require_relative 'espnscrape/NbaSchedule'
-require_relative 'espnscrape/NbaPlayer'
-
-# Modules
-require_relative 'espnscrape/SymbolDefaults'
-require_relative 'espnscrape/PrintUtils'
-include SymbolDefaults
-include PrintUtils
+require_relative 'espnscrape/requires'
 
 # EspnScrape main class
 class EspnScrape
   # Gem Version
-  VERSION = '0.6.1'.freeze
+  VERSION = '0.6.2'.freeze
   # initialize
   def initialize(config = {})
     @format = defaultFormat(config[:format])

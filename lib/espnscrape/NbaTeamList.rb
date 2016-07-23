@@ -49,7 +49,7 @@ class NbaTeamList
     result = []
     team_names.each do |tname|
       tmp  = []	# Stage Team Data
-      full = tname.text.strip	# Full Team Name
+      full = adjustTeamName(tname.text.strip)	# Full Team Name
       tmp << getTid(full)	# Derive Team Abbreviation
       tmp << full.strip
       tmp << division
