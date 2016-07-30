@@ -60,8 +60,9 @@ Utility and usability are the goal, so I hope the API evolution helps more than 
 though that may change in the future. Contributions to this project are very welcome.
 
 ### Change Summary
-Version 0.6.2 - See the [CHANGELOG] for additional information
-+ Team List Special Case: LA Clippers
+Version 0.6.3 - See the [CHANGELOG] for additional information
++ Schedule bug fix: Incorrect season type was returned when accessing schedules from an EspnScrape instance.
++ Note about Schedules: There are some offseason data inconsistencies on ESPN's side (ex. some teams already display 2016-17 preseason data and an empty regular season page, others don't and will default to displaying 2015-16 data) so for best results specify a year: and season: when reading team schedules.  
 
 
 ### Disclaimer

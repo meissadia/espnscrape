@@ -3,7 +3,7 @@ require_relative 'espnscrape/requires'
 # EspnScrape main class
 class EspnScrape
   # Gem Version
-  VERSION = '0.6.2'.freeze
+  VERSION = '0.6.3'.freeze
   # initialize
   def initialize(config = {})
     @format = defaultFormat(config[:format])
@@ -66,16 +66,18 @@ class EspnScrape
 
   # Return an {NbaSchedule} object
   # @param team_id [String] Team ID
-  # @param s_type [Int] Season Type
+  # @param options[:season] [Int] Season Type
+  # @param options[:year] [Int] Ending Year of Season (i.e. 2016 for 2015-16)
+  # @param options[:format] [Sym] Table Format (:to_structs/:to_hashes)
   # @return [NbaSchedule] NbaSchedule
   # @example
   #   EspnScrape.schedule('UTA')            # Schedule for Latest Season Type
   #   EspnScrape.schedule('TOR', s_type: 3) # Playoff Schedule
   def self.schedule(team_id, options = {})
     NbaSchedule.new team_id: team_id,
-                    season_type: options.fetch(:season, ''),
-                    format: defaultFormat(options.fetch(:format, nil)),
-                    year: options.fetch(:year, nil)
+                    season_type: options[:season],
+                    format: defaultFormat(options[:format]),
+                    year: options[:year]
   end
 
   # Return an {NbaSchedule} object
@@ -83,12 +85,12 @@ class EspnScrape
   # @return (see .schedule)
   # @example
   #  es.schedule('MIA')     # Schedule for Latest Season Type
-  #  es.schedule('DET', s_type: 1)  # Preseason Schedule
+  #  es.schedule('DET', season: 1, year: 2016)  # Preseason Schedule
   def schedule(team_id, options = {})
     EspnScrape.schedule team_id,
-                        s_type: options.fetch(:season, ''),
-                        format: (options.fetch(:format, nil) || @format),
-                        year: options.fetch(:year, nil)
+                        season: options[:season],
+                        format: (options[:format] || @format),
+                        year: options[:year]
   end
 
   # Return new {NbaPlayer} object

@@ -1,4 +1,9 @@
 ### Change Log :: EspnScrape
+## 0.6.3 - July 30, 2016
++ Schedule: Incorrect season type returned when reading schedule with EspnScrape instance  
+This was a case of forwarding the wrong parameter name to the options hash.  
+(ex: es.schedule 'CLE', year:2016, season:3 => preseason schedule).
+
 ## 0.6.2 - July 23, 2016
 + Team List - Special Case: Los Angeles Clippers
 

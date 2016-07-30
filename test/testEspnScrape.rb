@@ -29,14 +29,14 @@ class TestEspnScrape < Minitest::Test
     refute_nil r_structs[1].salary,   'Roster.salary'
 
     #### Access a Schedule
-    schedule = es.schedule('UTA')         # Gets schedule for latest available season type (Pre/Regular/Post)
+    schedule = es.schedule('UTA', year: 2016)         # Gets schedule for latest available season type (Pre/Regular/Post)
     past     = schedule.pastGames         # multidimensional array of completed games
     schedule.futureGames                  # multidimensional array of upcoming games
 
     assert_equal nil, schedule.nextTeamId, 'Schedule.Next Team'
 
     es.schedule('BOS', season: 1)                                  # Get Preseason schedule
-    playoffs = es.schedule('CLE', season: 3, f_mat: :to_structs)   # Get Playoff schedule
+    playoffs = es.schedule('CLE', season: 3, year: 2016, f_mat: :to_structs)   # Get Playoff schedule
     last_game = playoffs.allGames.last
     assert_equal %w(16 5), [last_game.wins, last_game.losses]
 
@@ -75,7 +75,7 @@ class TestEspnScrape < Minitest::Test
 
   def test_chaining
     # Get a Boxscore from a past game        vvvvvvvvvvvvvvvvvvvvv
-    EspnScrape.schedule('OKC', season: 2).allGames[42].boxscore(:to_structs).awayPlayers.first.name
+    EspnScrape.schedule('OKC', season: 2, year: 2016).allGames[42].boxscore(:to_structs).awayPlayers.first.name
 
     # Get a Roster from a Team ID            vvvvvvvvvvvvvvvvvvvvvv
     EspnScrape.boxscore(400827977).homeTotals[0].roster(:to_hashes).players.first[:name]
