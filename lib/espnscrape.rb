@@ -3,7 +3,7 @@ require_relative 'espnscrape/requires'
 # EspnScrape main class
 class EspnScrape
   # Gem Version
-  VERSION = '0.6.4'.freeze
+  VERSION = '0.6.5'.freeze
   # initialize
   def initialize(config = {})
     @format = defaultFormat(config[:format])
