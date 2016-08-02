@@ -41,11 +41,11 @@ gem 'espnscrape'
 In your project dir, execute :
 
 ```
-> bundle install
+$ bundle install
 ```
 #### Manual
 ```
-> gem install espnscrape
+$ gem install espnscrape
 ```
 ## Arrays, Hashes or Structs
 If you intend to work with a single format, you can specify it at initialization. When working with multiple formats you should start with the default and convert as necessary using [Array#to_structs] or [Array#to_hashes].
@@ -329,8 +329,8 @@ EspnScrape.teamList.last[0].schedule(:to_hashes).lastGame.boxscore
 Available on [RubyDoc.info] or locally:
 
 ```
-> yard doc
-> yard server
+$ yard doc
+$ yard server
 ```
 ## Requirements
 ### Ruby version
@@ -345,7 +345,7 @@ Available on [RubyDoc.info] or locally:
 
 ## Testing
 ```
-> rake
+$ rake
 ```
 
 ## Contributing
