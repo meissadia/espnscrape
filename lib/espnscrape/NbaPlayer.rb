@@ -45,9 +45,9 @@ class NbaPlayer
 
   # Extract basic bio info info class attributes
   def readInfo(d)
-    @name = d.xpath("//div[@class='mod-content']/*/h1 | //div[@class='mod-content']/h1")[0].text.strip
+    @name     = d.xpath("//div[@class='mod-content']/*/h1 | //div[@class='mod-content']/h1")[0].text.strip
     @position = d.xpath("//ul[@class='general-info']/li")[0].text.gsub(/#\d*\s*/, '')
-    @college = d.xpath('//span[text() = "College"]/parent::li').text.gsub('College', '')
+    @college  = d.xpath('//span[text() = "College"]/parent::li').text.gsub('College', '')
 
     height, weight = gatherHeightWeight(d)
 

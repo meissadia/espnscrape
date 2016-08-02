@@ -1,4 +1,5 @@
-# EspnScrape v0.6.0
+![espnscrape](./readme/logo.png)  
+espnscrape is not associated with ESPN or the NBA  
 [![Gem Version](https://badge.fury.io/rb/espnscrape.svg)](https://badge.fury.io/rb/espnscrape)
 [![Code Climate](https://codeclimate.com/github/meissadia/espnscrape/badges/gpa.svg)](https://codeclimate.com/github/meissadia/espnscrape)
 [![Build Status](https://travis-ci.org/meissadia/espnscrape.svg?branch=master)](https://travis-ci.org/meissadia/espnscrape)
@@ -8,7 +9,6 @@
 + [Introduction](#introduction)
 	+ [Restrictions](#restrictions)
 	+ [Change Summary](#change-summary)
-	+ [Disclaimer](#disclaimer)
 + [Installation](#installation)
 	+ [Rails](#rails)
 	+ [Manual](#manual)
@@ -44,7 +44,7 @@
 
 
 ## Introduction
-The EspnScrape Ruby gem is a data scraper for the redesigned 2016 version of ESPN.com.
+The espnscrape Ruby gem is a data scraper for the redesigned 2016 version of ESPN.com.
 It provides a number of ways to simplify data interaction, including :
 + Structs - Intuitively access data via dot notation.
 + Hashes - Pass data directly to ActiveRecord CRUD methods for easy database interaction.
@@ -60,13 +60,11 @@ Utility and usability are the goal, so I hope the API evolution helps more than 
 though that may change in the future. Contributions to this project are very welcome.
 
 ### Change Summary
-Version 0.6.3 - See the [CHANGELOG] for additional information
-+ Schedule bug fix: Incorrect season type was returned when accessing schedules from an EspnScrape instance.
+Version 0.6.5 - See the [CHANGELOG] for additional information
++ Schedule bug fix: Incorrect season type was returned when accessing schedules from an espnscrape instance.
 + Note about Schedules: There are some offseason data inconsistencies on ESPN's side (ex. some teams already display 2016-17 preseason data and an empty regular season page, others don't and will default to displaying 2015-16 data) so for best results specify a year: and season: when reading team schedules.  
++ Restrict Rubocop version to preserve Ruby 1.9.3 compatability
 
-
-### Disclaimer
-`EspnScrape is not associated with ESPN or the NBA`
 
 ## Installation
 #### Rails
@@ -139,7 +137,7 @@ players[3].full_name    # => 'LeBron James'
 players[3].crazy_money  # => '22970500'
 ```
 ##### Overwrite Default
-`Note: Changes affect all instances of EspnScrape`
+`Note: Changes affect all instances of espnscrape`
 
 ```ruby
 S_TEAM    # => [:team,  :name, :division, :conference]
@@ -150,7 +148,7 @@ t.first.short # => 'BOS'
 t.first.long  # => 'Boston Celtics'
 ```
 ## Working with Navigators
-Table data is wrapped in a [Navigator] class which provides helper methods for moving through the table. The type of object the Navigator returns matches the format provided at EspnScrape instantiation.
+Table data is wrapped in a [Navigator] class which provides helper methods for moving through the table. The type of object the Navigator returns matches the format provided at espnscrape instantiation.
 
 Note: Data converted using [Array#to_structs] or [Array#to_hashes] is not wrapped in a Navigator.
 
