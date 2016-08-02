@@ -164,50 +164,50 @@ bs.awayPlayers        # <Navigator> A Navigator for Home Player Stats Table
 ```
 ##### Player Data
 ```ruby
-  wade = bs.homePlayers[4] # <Object> of data for Row 5
+wade = bs.homePlayers[4] # <Object> of data for Row 5
 
-  wade.team       # <String> Team ID          # => 'MIA'
-  wade.id         # <String> Player ID        # => '1987'
-  wade.name       # <String> Short Name       # => 'D. Wade'
-  wade.position   # <String> Position         # => 'SG'
-  wade.minutes    # <String> Minutes          # => '36'
-  wade.fgm        # <String> Shots Made       # => '13'
-  wade.fga        # <String> Shots Attempted  # => '25'
-  wade.tpm        # <String> 3P Made          # => '4'
-  wade.tpa        # <String> 3P Attempted     # => '6'
-  wade.ftm        # <String> Freethrows Made  # => '8'
-  wade.fta        # <String> Freethrows Att.  # => '8'
-  wade.oreb       # <String> Offensive Reb.   # => '1'
-  wade.dreb       # <String> Defensive Reb.   # => '7'
-  wade.rebounds   # <String> Total Rebounds   # => '8'
-  wade.assists    # <String> Assists          # => '4'
-  wade.steals     # <String> Steals           # => '0'
-  wade.blocks     # <String> Blocks           # => '0'
-  wade.tos        # <String> Turnovers        # => '4'
-  wade.fouls      # <String> Personal Fouls   # => '1'
-  wade.plusminus  # <String> Plus/Minus       # => '-8'
-  wade.points     # <String> Points           # => '38'
-  wade.starter    # <String> Starter?         # => 'true'
+wade.team       # <String> Team ID          # => 'MIA'
+wade.id         # <String> Player ID        # => '1987'
+wade.name       # <String> Short Name       # => 'D. Wade'
+wade.position   # <String> Position         # => 'SG'
+wade.minutes    # <String> Minutes          # => '36'
+wade.fgm        # <String> Shots Made       # => '13'
+wade.fga        # <String> Shots Attempted  # => '25'
+wade.tpm        # <String> 3P Made          # => '4'
+wade.tpa        # <String> 3P Attempted     # => '6'
+wade.ftm        # <String> Freethrows Made  # => '8'
+wade.fta        # <String> Freethrows Att.  # => '8'
+wade.oreb       # <String> Offensive Reb.   # => '1'
+wade.dreb       # <String> Defensive Reb.   # => '7'
+wade.rebounds   # <String> Total Rebounds   # => '8'
+wade.assists    # <String> Assists          # => '4'
+wade.steals     # <String> Steals           # => '0'
+wade.blocks     # <String> Blocks           # => '0'
+wade.tos        # <String> Turnovers        # => '4'
+wade.fouls      # <String> Personal Fouls   # => '1'
+wade.plusminus  # <String> Plus/Minus       # => '-8'
+wade.points     # <String> Points           # => '38'
+wade.starter    # <String> Starter?         # => 'true'
 ```
 ##### Team Data
 ```ruby
-  miami = bs.homeTotals   # <Object> Access the team totals
-  miami.team
-  miami.fgm
-  miami.fga
-  miami.tpm
-  miami.tpa
-  miami.ftm
-  miami.fta
-  miami.oreb
-  miami.dreb
-  miami.rebounds
-  miami.assists
-  miami.steals
-  miami.blocks
-  miami.turnovers
-  miami.fouls
-  miami.points
+miami = bs.homeTotals   # <Object> Access the team totals
+miami.team
+miami.fgm
+miami.fga
+miami.tpm
+miami.tpa
+miami.ftm
+miami.fta
+miami.oreb
+miami.dreb
+miami.rebounds
+miami.assists
+miami.steals
+miami.blocks
+miami.turnovers
+miami.fouls
+miami.points
 ```
 ### Roster
 Roster #players is a [Navigator].
