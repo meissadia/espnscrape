@@ -1,7 +1,0 @@
---readme README.md
---title 'EspnScrape API Documentation'
---charset utf-8
-'lib/**/*.rb'
--
-*.md
-LICENSE
